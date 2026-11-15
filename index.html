@@ -63,6 +63,7 @@ summary{grid-template-columns:2.4rem minmax(0,1fr) 1rem}summary h3{overflow-wrap
 .clock-builder{padding:.8rem;background:var(--paper);border:1px solid var(--line);border-radius:7px}.clock-builder .tool-fields{margin-top:0}.clock-duration{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.55rem}.clock-duration label{font-size:.88rem}.clock-list{list-style:none;margin:1rem 0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:.65rem}.clock-entry{padding:.75rem;border:1px solid var(--line);border-radius:7px;background:var(--cream)}.clock-entry[data-running=true]{border-left:4px solid var(--accent)}.clock-entry[data-finished=true]{border-left:4px solid var(--rust)}.clock-entry .clock-name{background:#f1efdf;font-weight:730}.clock-entry .tool-note{margin:.4rem 0 0}.clock-entry .timer-clock{font-size:clamp(1.45rem,4.2vw,2rem)}@media(max-width:420px){.clock-builder .tool-fields{grid-template-columns:1fr}}
 .clock-alarm-banner{margin:.6rem auto;padding:.55rem .75rem;background:#f7e7dd;border:1px solid #dbac9b;border-radius:6px;color:#662716;display:flex;flex-wrap:wrap;gap:.45rem 1rem;align-items:center}.clock-alarm-banner a{color:inherit}.clock-alarm-option{display:inline-flex;align-items:center;gap:.25rem;font-size:.9rem}.tool-actions .alarm-stop{background:#812e1d;color:white;border-color:#812e1d;font-weight:750}.tool-actions .alarm-stop:hover{background:#9d412b}
 #clocks-start-sound{background:var(--deep);color:var(--cream);border-color:var(--deep);font-weight:750}#clocks-start-sound:hover{background:var(--accent)}
+.clock-entry{background:var(--clock-bg,var(--cream))}.clock-entry .clock-name{background:var(--cream)}.clock-identity{display:flex;gap:.45rem;align-items:center;margin-bottom:.45rem;color:var(--clock-fg,var(--ink));font-size:.85rem;font-weight:750}.clock-preset-icon{display:grid;place-items:center;width:1.8rem;height:1.8rem;flex:none;border:1px solid currentColor;border-radius:5px;background:var(--cream);font-size:1rem}.clock-preset-badge{overflow-wrap:anywhere}
 </style>
 <link rel="manifest" href="./manifest.webmanifest">
 <link rel="apple-touch-icon" href="./icons/apple-touch-icon.png">
@@ -1753,11 +1754,30 @@ for (const button of document.querySelectorAll('[data-quick-group]')) {
 
   const clocks=new Map();
   const views=new Map();
+  const styles={
+    hike:['🥾','#e7efdf','#24432c'],
+    exercise:['⚡','#f8e5d6','#673317'],
+    rest:['☕','#f3ead9','#553c24'],
+    cooking:['🍳','#faecd0','#694710'],
+    boil:['💧','#dceef2','#164452'],
+    'boil-high':['⛰','#e0e9f5','#2a4266'],
+    thunder:['⛈','#e9e1f3','#483363'],
+    departure:['↗','#e0efea','#1c4e42'],
+    overdue:['🔔','#f8e1e5','#6c2936'],
+    stopwatch:['⏱','#e8eddf','#2d482f'],
+    timer:['⌛','#f5ead1','#634715'],
+    target:['▣','#e3ebf4','#294267']
+  };
+  function clockPreset(clock) {
+    return presets.find(([id])=>id===clock.preset) ||
+      (clock.preset === undefined ? presets.find(([,fr,en,kind])=>kind===clock.type && (clock.name===fr||clock.name===en)) : undefined);
+  }
   try {
     const saved=JSON.parse(localStorage.getItem(key) || '[]');
     if(Array.isArray(saved)) for(const clock of saved) {
       if(clock && typeof clock.id==='string' && typeof clock.name==='string' &&
         types.some(([id])=>id===clock.type) && [clock.duration,clock.value,clock.started,clock.deadline].every(Number.isFinite)) {
+        clock.preset=clockPreset(clock)?.[0] || '';
         clocks.set(clock.id,clock);
       }
     }
@@ -1821,6 +1841,9 @@ for (const button of document.querySelectorAll('[data-quick-group]')) {
     const [,fr,en]=types.find(([id])=>id===clock.type);
     const label=text(fr,en)+(clock.type==='target' ? ' · '+new Intl.DateTimeFormat(text('fr','en'),{dateStyle:'medium',timeStyle:'short'}).format(clock.deadline) : '');
     if(view.meta.textContent!==label)view.meta.textContent=label;
+    const choice=clockPreset(clock);
+    const badge=choice ? text(choice[1],choice[2]) : text('Personnalisé','Custom');
+    if(view.badge.textContent!==badge)view.badge.textContent=badge;
     const action=clock.type==='target'
       ? finished ? text('Échu','Elapsed') : clock.running ? text('Arrêter','Stop') : text('Arrêté','Stopped')
       : clock.running && !finished ? text('Pause','Pause') : finished ? text('Relancer','Restart') : text('Démarrer','Start');
@@ -1861,8 +1884,12 @@ for (const button of document.querySelectorAll('[data-quick-group]')) {
   function addView(clock) {
     const card=document.createElement('li');
     card.className='clock-entry';
-    card.innerHTML='<input class="clock-name" maxlength="80" autocomplete="off"><p class="tool-note clock-meta"></p><output class="timer-clock" aria-live="off"></output><p class="tool-note clock-status"></p><label class="clock-alarm-option"><input type="checkbox" data-action="alarm"> <span></span></label><div class="tool-actions"><button type="button" data-action="stop-alarm" class="alarm-stop" hidden>Stop</button><button type="button" data-action="toggle"></button><button type="button" data-action="reset"></button><button type="button" data-action="remove"></button></div>';
-    const view={card,name:card.querySelector('input'),meta:card.querySelector('.clock-meta'),status:card.querySelector('.clock-status'),
+    card.innerHTML='<div class="clock-identity"><span class="clock-preset-icon" aria-hidden="true"></span><span class="clock-preset-badge"></span></div><input class="clock-name" maxlength="80" autocomplete="off"><p class="tool-note clock-meta"></p><output class="timer-clock" aria-live="off"></output><p class="tool-note clock-status"></p><label class="clock-alarm-option"><input type="checkbox" data-action="alarm"> <span></span></label><div class="tool-actions"><button type="button" data-action="stop-alarm" class="alarm-stop" hidden>Stop</button><button type="button" data-action="toggle"></button><button type="button" data-action="reset"></button><button type="button" data-action="remove"></button></div>';
+    const [icon, background, foreground]=styles[clockPreset(clock)?.[0] || clock.type];
+    card.style.setProperty('--clock-bg',background);
+    card.style.setProperty('--clock-fg',foreground);
+    card.querySelector('.clock-preset-icon').textContent=icon;
+    const view={card,name:card.querySelector('.clock-name'),badge:card.querySelector('.clock-preset-badge'),meta:card.querySelector('.clock-meta'),status:card.querySelector('.clock-status'),
       output:card.querySelector('output'),action:card.querySelector('[data-action=toggle]'),
       reset:card.querySelector('[data-action=reset]'),remove:card.querySelector('[data-action=remove]'),
       alarmGroup:card.querySelector('.clock-alarm-option'),alarmLabel:card.querySelector('.clock-alarm-option span'),
@@ -1926,7 +1953,7 @@ for (const button of document.querySelectorAll('[data-quick-group]')) {
     const id=crypto.randomUUID ? crypto.randomUUID() : Array.from(crypto.getRandomValues(new Uint32Array(4))).join('-');
     const label=types.find(([id])=>id===kind);
     const alarm=Boolean(Audio && kind!=='stopwatch' && event.submitter===startWithSound);
-    const clock={id,name:name.value.trim()||text(label[1],label[2]),type:kind,duration,deadline,started:now,value:0,running:true,alarm};
+    const clock={id,name:name.value.trim()||text(label[1],label[2]),type:kind,preset:preset.value,duration,deadline,started:now,value:0,running:true,alarm};
     clocks.set(id,clock);
     addView(clock);
     save();
