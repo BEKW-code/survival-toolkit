@@ -570,7 +570,7 @@ summary{grid-template-columns:2.4rem minmax(0,1fr) 1rem}summary h3{overflow-wrap
 <p id="clocks-empty" class="tool-note"><span lang="fr">Aucun chrono ajouté.</span><span lang="en">No clocks yet.</span></p>
 <ul class="clock-list" id="clocks-list"></ul>
 <p id="clocks-announcement" class="sr-only" role="status"></p>
-<p class="tool-note"><span lang="fr">Les chronos sont enregistrés sur cet appareil si le navigateur le permet. Ils se recalculent quand tu reviens dans l’app. Le navigateur peut suspendre le son en arrière-plan ou sur l’écran verrouillé. Après une réouverture, il peut demander de réautoriser le son.</span><span lang="en">Clocks are saved on this device when browser storage is available. They update when you return to the app. The browser may suspend sound in the background or on the lock screen, and may ask you to enable it again after reopening.</span> <a href="#timer-tool"><span lang="fr">Consignes pour l’eau et le tonnerre</span><span lang="en">Water and thunder guidance</span></a></p>
+<p class="tool-note"><span lang="fr">Les chronos sont enregistrés dans ce navigateur. À la réouverture, les chronos en cours tiennent compte du temps écoulé et les chronos en pause gardent leur valeur. Le navigateur peut suspendre le son en arrière-plan ou sur l’écran verrouillé. Après une réouverture, il peut demander de réautoriser le son.</span><span lang="en">Clocks are saved in this browser. When you reopen the page, running clocks account for the time away, and paused clocks keep their value. The browser may suspend sound in the background or on the lock screen, and may ask you to enable it again after reopening.</span> <a href="#timer-tool"><span lang="fr">Consignes pour l’eau et le tonnerre</span><span lang="en">Water and thunder guidance</span></a></p>
 </article>
 </div>
 </section>
@@ -1685,7 +1685,9 @@ for (const button of document.querySelectorAll('[data-quick-group]')) {
   const inputs=['hours','minutes','seconds'].map(unit=>el('clocks-'+unit));
   const startWithSound=el('clocks-start-sound');
   const target=el('clocks-target'), list=el('clocks-list'), message=el('clocks-form-status');
-  const key='survival-toolkit-clocks-v1';
+  const legacyKey='survival-toolkit-clocks-v1';
+  const clockPrefix='survival-toolkit-clock-v2:';
+  const migrationKey='survival-toolkit-clock-storage-v2';
   const Audio=window.AudioContext || window.webkitAudioContext;
   const banner=el('clock-alarm-banner');
   const enableAudio=el('clock-alarm-enable');
@@ -1772,21 +1774,68 @@ for (const button of document.querySelectorAll('[data-quick-group]')) {
     return presets.find(([id])=>id===clock.preset) ||
       (clock.preset === undefined ? presets.find(([,fr,en,kind])=>kind===clock.type && (clock.name===fr||clock.name===en)) : undefined);
   }
-  try {
-    const saved=JSON.parse(localStorage.getItem(key) || '[]');
-    if(Array.isArray(saved)) for(const clock of saved) {
+  function decodeClock(raw) {
+    if (!raw) return null;
+    try {
+      const clock=JSON.parse(raw);
       if(clock && typeof clock.id==='string' && typeof clock.name==='string' &&
         types.some(([id])=>id===clock.type) && [clock.duration,clock.value,clock.started,clock.deadline].every(Number.isFinite)) {
         clock.preset=clockPreset(clock)?.[0] || '';
-        clocks.set(clock.id,clock);
+        return clock;
       }
-    }
-  } catch {}
-
-  function save() {
-    try { localStorage.setItem(key,JSON.stringify([...clocks.values()])); }
-    catch { message.textContent=text('Le navigateur ne peut plus enregistrer les chronos. Ils restent actifs dans cette page.','The browser could not save the clocks. They remain active on this page.'); }
+    } catch {}
+    return null;
   }
+  function storageError() {
+    message.textContent=text('Le navigateur ne peut pas enregistrer les chronos. Ils restent actifs dans cette page.','The browser could not save the clocks. They remain active on this page.');
+  }
+  try {
+    if(localStorage.getItem(migrationKey)!=='done') {
+      const legacy=JSON.parse(localStorage.getItem(legacyKey)||'[]');
+      if(Array.isArray(legacy)) for(const record of legacy) {
+        const clock=decodeClock(JSON.stringify(record));
+        if(!clock)continue;
+        const key=clockPrefix+clock.id;
+        if(localStorage.getItem(key)===null)localStorage.setItem(key,JSON.stringify(clock));
+      }
+      localStorage.setItem(migrationKey,'done');
+    }
+    for(let index=0;index<localStorage.length;index++) {
+      const key=localStorage.key(index);
+      if(!key?.startsWith(clockPrefix))continue;
+      const clock=decodeClock(localStorage.getItem(key));
+      if(clock)clocks.set(clock.id,clock);
+    }
+  } catch { storageError(); }
+
+  function save(clock) {
+    try { localStorage.setItem(clockPrefix+clock.id,JSON.stringify(clock)); }
+    catch { storageError(); }
+  }
+  function removeClock(id) {
+    clocks.delete(id);
+    views.get(id)?.card.remove();
+    views.delete(id);
+    el('clocks-empty').hidden=clocks.size>0;
+  }
+  window.addEventListener('storage',event=>{
+    if (!event.key?.startsWith(clockPrefix))return;
+    const id=event.key.slice(clockPrefix.length);
+    const fresh=decodeClock(event.newValue);
+    if(!fresh)removeClock(id);
+    else if(clocks.has(id)) {
+      const current=clocks.get(id);
+      Object.assign(current,fresh);
+      const field=views.get(id).name;
+      if(document.activeElement!==field)field.value=current.name;
+    } else {
+      clocks.set(id,fresh);
+      addView(fresh);
+      el('clocks-empty').hidden=true;
+    }
+    syncTicker();
+  });
+
   function updateBuilder() {
     const presetType=presets.find(item=>item[0]===preset.value)?.[3];
     const selectedType=presetType || type.value || 'stopwatch';
@@ -1878,7 +1927,7 @@ for (const button of document.querySelectorAll('[data-quick-group]')) {
       clock.running=true;
       clock.started=now;
     }
-    save();
+    save(clock);
     paint(clock,now,false);
   }
   function addView(clock) {
@@ -1895,11 +1944,11 @@ for (const button of document.querySelectorAll('[data-quick-group]')) {
       alarmGroup:card.querySelector('.clock-alarm-option'),alarmLabel:card.querySelector('.clock-alarm-option span'),
       alarm:card.querySelector('[data-action=alarm]'),stop:card.querySelector('[data-action=stop-alarm]')};
     view.name.value=clock.name;
-    view.name.addEventListener('input',()=>{clock.name=view.name.value;save();});
+    view.name.addEventListener('input',()=>{clock.name=view.name.value;save(clock);});
     view.name.addEventListener('change',()=>{
       clock.name=view.name.value.trim() || text('Chrono','Clock');
       view.name.value=clock.name;
-      save();
+      save(clock);
     });
     view.action.addEventListener('click',()=>run(clock));
     view.alarm.addEventListener('change',()=>{
@@ -1910,13 +1959,13 @@ for (const button of document.querySelectorAll('[data-quick-group]')) {
         if(ended)clock.acknowledged=true;
         unlockSound();
       }
-      save();
+      save(clock);
       paint(clock,Date.now(),false);
       syncTicker();
     });
     view.stop.addEventListener('click',()=>{
       clock.acknowledged=true;
-      save();
+      save(clock);
       paint(clock,Date.now(),false);
       syncTicker();
     });
@@ -1925,16 +1974,14 @@ for (const button of document.querySelectorAll('[data-quick-group]')) {
       clock.acknowledged=false;
       clock.running=false;
       clock.value=0;
-      save();
+      save(clock);
       paint(clock,Date.now(),false);
     });
     view.remove.addEventListener('click',()=>{
       if(ringing(clock))return;
-      clocks.delete(clock.id);
-      views.delete(clock.id);
-      card.remove();
-      save();
-      el('clocks-empty').hidden=clocks.size>0;
+      removeClock(clock.id);
+      try { localStorage.removeItem(clockPrefix+clock.id); } catch { storageError(); }
+      syncTicker();
       name.focus();
     });
     views.set(clock.id,view);
@@ -1956,7 +2003,7 @@ for (const button of document.querySelectorAll('[data-quick-group]')) {
     const clock={id,name:name.value.trim()||text(label[1],label[2]),type:kind,preset:preset.value,duration,deadline,started:now,value:0,running:true,alarm};
     clocks.set(id,clock);
     addView(clock);
-    save();
+    save(clock);
     if(alarm)unlockSound();
     syncTicker();
     el('clocks-empty').hidden=true;
@@ -2000,6 +2047,7 @@ for (const button of document.querySelectorAll('[data-quick-group]')) {
   const panelObserver=new MutationObserver(syncTicker);
   for(const id of ['clocks-tool','tools'])panelObserver.observe(el(id),{attributes:true,attributeFilter:['hidden']});
   document.addEventListener('visibilitychange',syncTicker);
+  window.addEventListener('pageshow',syncTicker);
   new MutationObserver(localize).observe(document.documentElement,{attributes:true,attributeFilter:['lang']});
   localize();
   syncTicker();
