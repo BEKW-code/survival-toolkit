@@ -144,7 +144,7 @@ summary{grid-template-columns:2.4rem minmax(0,1fr) 1rem}summary h3{overflow-wrap
 .tool-menu-empty{padding:1rem;border:1px solid var(--line);border-radius:8px;background:var(--cream);color:var(--muted)}
 .guide-share{margin-top:.75rem;padding-top:.6rem;border-top:1px solid var(--line)}
 .guide-share .tool-actions{margin-top:0}
-.guide-share input{width:100%;margin-top:.45rem;padding:.45rem;border:1px solid var(--line);border-radius:5px;background:var(--paper);color:var(--ink)}
+.guide-share textarea{width:100%;margin-top:.45rem;padding:.45rem;border:1px solid var(--line);border-radius:5px;background:var(--paper);color:var(--ink);font:inherit;resize:vertical}
 @media print{.guide-share{display:none!important}}
 @media(max-width:760px){.tool-workspace:has(>.tool-choices:not([hidden])){grid-template-columns:minmax(0,1fr)}.tool-workspace>.tool-choices{max-width:29rem}}
 @media print{.tool-menu-toggle,.tool-menu-empty,.tool-workspace>.tool-choices{display:none!important}.tool-workspace{display:block}}
@@ -1326,39 +1326,81 @@ function openLinkedGuide() {
   }
   getDetails(linked).open = true;
 }
+function guideShareContent(body,title) {
+  const copy = body.cloneNode(true);
+  const alternate = root.dataset.zoe === 'true' ? '.instruction-classic' : '.zoe-voice, .zoe-note';
+  copy.querySelectorAll('.guide-share, [aria-hidden=true], [lang]:not([lang="' + language + '"]), ' + alternate)
+    .forEach(element => element.remove());
+  for (const element of copy.querySelectorAll('p > strong, br')) element.after(' ');
+  const clean = value => value.replace(/\s+/g,' ').trim();
+  function paragraph(element) {
+    if (element.matches('ol, ul')) {
+      return [...element.children].map((item,index) => (element.tagName === 'OL' ? (index+1)+'. ' : '• ') + clean(item.textContent)).join('\n');
+    }
+    const text = clean(element.textContent);
+    if (element.matches('a[href]')) return text + '\n' + element.href;
+    return text;
+  }
+  const text = [title,...Array.from(copy.children,paragraph).filter(Boolean)].join('\n\n');
+  return {text, images:[...copy.querySelectorAll('img[src^="data:image/"]')]};
+}
+function guideImageAttachments(images) {
+  return images.map((image,index) => {
+    const match = image.getAttribute('src').match(/^data:image\/(jpeg|png|webp);base64,(.+)$/);
+    if (!match) return null;
+    const [,format,data] = match;
+    const bytes = Uint8Array.from(atob(data),character => character.charCodeAt(0));
+    return new File([bytes], 'illustration-' + (index+1) + '.' + (format === 'jpeg' ? 'jpg' : format), {type:'image/'+format});
+  }).filter(Boolean);
+}
 for (const card of cards) {
+  const body = getDetails(card).querySelector('.body');
   const share = document.createElement('div');
   share.className = 'guide-share';
-  share.innerHTML = '<div class="tool-actions"><button type="button"><span lang="fr">Partager</span><span lang="en">Share</span></button></div>'
-    + '<p class="tool-note" role="status"></p><input type="text" readonly hidden>';
-  const button = share.querySelector('button');
+  share.innerHTML = '<div class="tool-actions"><button type="button" data-share="content"><span lang="fr">Partager la fiche complète</span><span lang="en">Share full guide</span></button>'
+    + '<button type="button" data-share="link"><span lang="fr">Partager le lien</span><span lang="en">Share link</span></button></div>'
+    + '<p class="tool-note" role="status"></p><textarea rows="5" readonly hidden></textarea>';
   const status = share.querySelector('[role=status]');
-  const field = share.querySelector('input');
-  button.addEventListener('click', async () => {
+  const field = share.querySelector('textarea');
+  async function shareGuide(full) {
+    const french = language === 'fr';
+    const title = card.querySelector('h3 [lang="' + language + '"]').textContent.trim();
     const link = new URL('https://sheiszoe-art.github.io/survival-toolkit/');
     link.searchParams.set('lang', language);
     link.hash = card.id;
     const url = link.href;
-    const title = card.querySelector('h3 [lang="' + language + '"]').textContent.trim();
+    const content = full ? guideShareContent(body,title) : null;
+    const value = full ? content.text : url;
     status.textContent = '';
     field.hidden = true;
     if (typeof navigator.share === 'function') {
-      try { await navigator.share({title, url}); return; }
+      const payload = full ? {title,text:value} : {title,url};
+      if (content?.images.length && typeof navigator.canShare === 'function') {
+        try {
+          const files = guideImageAttachments(content.images);
+          if (files.length && navigator.canShare({...payload,files})) payload.files = files;
+        } catch {}
+      }
+      try { await navigator.share(payload); return; }
       catch (error) { if (error.name === 'AbortError') return; }
     }
     try {
-      await navigator.clipboard.writeText(url);
-      status.textContent = language === 'fr' ? 'Lien de la fiche copié.' : 'Guide link copied.';
+      await navigator.clipboard.writeText(value);
+      status.textContent = full ? (french ? 'Texte de la fiche copié.' : 'Guide text copied.')
+        : (french ? 'Lien de la fiche copié.' : 'Guide link copied.');
     } catch {
-      field.value = url;
-      field.setAttribute('aria-label', language === 'fr' ? 'Lien de la fiche' : 'Guide link');
+      field.value = value;
+      field.setAttribute('aria-label',full ? (french ? 'Texte de la fiche' : 'Guide text') : (french ? 'Lien de la fiche' : 'Guide link'));
       field.hidden = false;
       field.focus();
       field.select();
-      status.textContent = language === 'fr' ? 'Copie le lien sélectionné pour partager la fiche.' : 'Copy the selected link to share this guide.';
+      status.textContent = french ? 'Copie la sélection pour la partager.' : 'Copy the selection to share it.';
     }
-  });
-  getDetails(card).querySelector('.body').append(share);
+  }
+  for (const button of share.querySelectorAll('[data-share]')) {
+    button.addEventListener('click', () => shareGuide(button.dataset.share === 'content'));
+  }
+  body.append(share);
 }
 for (const link of document.querySelectorAll('[hreflang]')) {
   link.addEventListener('click', event => {
