@@ -66,6 +66,7 @@ summary{grid-template-columns:2.4rem minmax(0,1fr) 1rem}summary h3{overflow-wrap
 .clock-entry{background:var(--clock-bg,var(--cream))}.clock-entry .clock-name{background:var(--cream)}.clock-identity{display:flex;gap:.45rem;align-items:center;margin-bottom:.45rem;color:var(--clock-fg,var(--ink));font-size:.85rem;font-weight:750}.clock-preset-icon{display:grid;place-items:center;width:1.8rem;height:1.8rem;flex:none;border:1px solid currentColor;border-radius:5px;background:var(--cream);font-size:1rem}.clock-preset-badge{overflow-wrap:anywhere}
 .tool-box>label:not(.tool-picker){display:block;margin-top:.55rem}.tool-box>label>textarea,#evac-preview{margin-top:.4rem}.evac-fields label:has(textarea),.tool-fields label:has(#journal-note){grid-column:1/-1}.tool-preview{padding:.7rem;background:var(--paper);border:1px solid var(--line);border-radius:5px;white-space:pre-wrap;overflow-wrap:anywhere}.utility-list{list-style:none;display:grid;gap:.55rem;margin:.6rem 0;padding:0}.utility-list li{border:1px solid var(--line);border-radius:6px;padding:.6rem .75rem;overflow-wrap:anywhere}.utility-list li[data-due=soon]{background:#faf0d7}.utility-list li[data-due=late]{background:#f7e7dd}.utility-list p{white-space:pre-wrap}.tool-box textarea{resize:vertical}@media print{body.print-evac header,body.print-evac footer,body.print-evac main>[data-view]:not(#tools),body.print-evac .clock-alarm-banner{display:none!important}body.print-evac #tools,body.print-evac #evac-tool{display:block!important}body.print-evac #tools>h2,body.print-evac #tools>.zoe-intro,body.print-evac .tool-choices,body.print-evac #evac-tool>*:not(h3):not(#evac-preview),body.print-evac .tool-grid>.tool-box:not(#evac-tool){display:none!important}body.print-evac #evac-tool{border:0}}
 .js .teams-protection{display:block}.teams-protection{margin:1.25rem auto 2.5rem}.teams-protection h2{font-size:clamp(2rem,4.5vw,3rem);margin-bottom:.45rem}.tp-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.75rem;margin-top:1rem;align-items:start}.tp-grid>.tool-box{min-width:0;max-width:none}.tp-grid label{display:block;font-size:.9rem;font-weight:680}.tp-grid input:not([type=checkbox]),.tp-grid select,.tp-grid textarea{margin-top:.2rem}.tp-grid>section>label{margin:.6rem 0}.tp-grid label:has(textarea){grid-column:1/-1}.tp-grid .utility-list li{margin:0}.tp-member-head{display:flex;justify-content:space-between;align-items:center;gap:.5rem;flex-wrap:wrap}.tp-roster-row label{margin-top:.45rem}.tp-kit-list{list-style:none;display:grid;gap:.3rem;padding:0;max-height:23rem;overflow:auto;margin:.5rem 0}.tp-kit-list li{display:grid;grid-template-columns:minmax(0,1fr) 4.8rem;align-items:center;gap:.45rem;border-bottom:1px solid var(--line);padding:.3rem}.tp-kit-list li label{display:flex;align-items:center;gap:.5rem}.tp-kit-list input[type=checkbox]{min-width:1.15rem;min-height:1.15rem;accent-color:var(--accent)}.tp-kit-list input[type=number]{margin:0!important}.tp-owner-list{color:var(--muted);white-space:pre-wrap}.tp-grid details>summary{display:list-item;list-style:revert;padding:.6rem 0}.tp-grid details>summary::after{content:none}.clock-assignee{display:block;margin:.45rem 0;color:var(--muted);font-size:.85rem}.clock-assignee select{margin-top:.2rem}@media(max-width:760px){.tp-grid{grid-template-columns:1fr}}@media print{.teams-protection{display:none!important}}
+.tp-card-browser{border-top:1px solid var(--line);margin-top:1rem;padding-top:.85rem}.tp-card-browser h4,.tp-entity-card h5{margin:0}.tp-card-browser h4{font-size:1.05rem;margin-bottom:.45rem}.tp-entity-card h5{font-size:1rem;overflow-wrap:anywhere}.tp-cards li.tp-entity-card{padding:.7rem .8rem;border-left:4px solid var(--accent);background:#f3f2e8}.tp-cards li.tp-team-card{background:#edf1e1}.tp-card-badge{display:inline-block;padding:.12rem .4rem;background:var(--cream);border:1px solid var(--line);border-radius:4px;color:var(--muted);font-size:.8rem}.tp-card-browser label input[type=search]{margin-bottom:.35rem}#tp-member-search,#tp-inventory-team{scroll-margin-top:9rem}
 </style>
 <link rel="manifest" href="./manifest.webmanifest">
 <link rel="apple-touch-icon" href="./icons/apple-touch-icon.png">
@@ -1005,10 +1006,7 @@ summary{grid-template-columns:2.4rem minmax(0,1fr) 1rem}summary h3{overflow-wrap
 <label for="tp-team-name"><span lang="fr">Nom de l’équipe</span><span lang="en">Team name</span><input id="tp-team-name" type="text" maxlength="80" autocomplete="off" required></label>
 <div class="tool-actions"><button type="submit" id="tp-team-save" ><span lang="fr">Créer l’équipe</span><span lang="en">Create team</span></button><button type="button" id="tp-team-cancel" hidden><span lang="fr">Annuler</span><span lang="en">Cancel</span></button></div>
 </form>
-<label for="tp-team-filter"><span lang="fr">Afficher les équipiers de</span><span lang="en">Show members of</span><select id="tp-team-filter"></select></label>
-<div class="tool-actions"><button type="button" id="tp-team-edit" hidden><span lang="fr">Renommer l’équipe</span><span lang="en">Rename team</span></button><button type="button" id="tp-team-delete" hidden><span lang="fr">Supprimer l’équipe</span><span lang="en">Delete team</span></button></div>
-<ul id="tp-roster" class="utility-list"></ul>
-<p id="tp-roster-empty" class="tool-note" hidden><span lang="fr">Aucun équipier dans cette vue.</span><span lang="en">No members in this view.</span></p>
+<div class="tp-card-browser"><h4><span lang="fr">Toutes les équipes</span><span lang="en">All teams</span></h4><label for="tp-team-search"><span lang="fr">Rechercher une équipe</span><span lang="en">Search teams</span><input type="search" id="tp-team-search" maxlength="100" autocomplete="off"></label><p id="tp-team-count" class="tool-note" role="status"></p><ul id="tp-team-cards" class="utility-list tp-cards"></ul></div>
 </section>
 <section class="tool-box" id="tp-profile" aria-labelledby="tp-profile-title">
 <h3 id="tp-profile-title"><span lang="fr">Fiche équipier</span><span lang="en">Member profile</span></h3>
@@ -1027,6 +1025,10 @@ summary{grid-template-columns:2.4rem minmax(0,1fr) 1rem}summary h3{overflow-wrap
 <p class="tool-note"><span lang="fr">Seul le nom est obligatoire. Ces données restent dans ce navigateur : renseigne les informations sensibles avec l’accord de l’équipier.</span><span lang="en">Only a name is required. These details stay in this browser. Add sensitive information with the member’s agreement.</span></p>
 <div class="tool-actions"><button type="submit" id="tp-member-save" ><span lang="fr">Créer l’équipier</span><span lang="en">Create member</span></button><button type="button" id="tp-member-new" hidden><span lang="fr">Nouvelle fiche</span><span lang="en">New profile</span></button><button type="button" id="tp-member-delete" hidden><span lang="fr">Supprimer l’équipier</span><span lang="en">Delete member</span></button></div>
 </form>
+<div class="tp-card-browser" id="tp-member-browser"><h4><span lang="fr">Équipiers</span><span lang="en">Members</span></h4><div class="tool-fields"><label for="tp-member-search"><span lang="fr">Rechercher par nom ou rôle</span><span lang="en">Search by name or role</span><input type="search" id="tp-member-search" maxlength="100" autocomplete="off"></label><label for="tp-team-filter"><span lang="fr">Afficher les équipiers de</span><span lang="en">Show members of</span><select id="tp-team-filter"></select></label>
+</div><p id="tp-member-count" class="tool-note" role="status"></p><ul id="tp-roster" class="utility-list tp-cards"></ul>
+<p id="tp-roster-empty" class="tool-note" hidden><span lang="fr">Aucun équipier dans cette vue.</span><span lang="en">No members in this view.</span></p>
+</div>
 </section>
 <section class="tool-box" id="tp-kit" aria-labelledby="tp-kit-title">
 <h3 id="tp-kit-title"><span lang="fr">Sac individuel</span><span lang="en">Individual kit</span></h3>
@@ -2517,21 +2519,60 @@ for (const button of document.querySelectorAll('[data-quick-group]')) {
     person.team=teamId;
     if(editingMember===person.id)teamSelect.value=teamId;
     save();
+    renderTeamCards();
     renderRoster();
     renderInventory();
   }
+  function renderTeamCards() {
+    const query=normal(el('tp-team-search').value);
+    const rows=order(state.teams).filter(row=>normal(row.name).includes(query));
+    el('tp-team-count').textContent=t(rows.length+' / '+state.teams.length+' équipes',rows.length+' / '+state.teams.length+' teams');
+    el('tp-team-cards').replaceChildren(...rows.map(row=>{
+      const card=node('li','','tp-entity-card tp-team-card');
+      const people=state.members.filter(person=>person.team===row.id);
+      const heading=node('h5',row.name);
+      const badge=node('span',t(people.length+' équipier(s)',people.length+' member(s)'),'tp-card-badge');
+      const head=node('div','','tp-member-head');
+      head.append(heading,badge);
+      const actions=node('div','','tool-actions');
+      actions.append(
+        button(t('Voir les équipiers','View members'),()=>{
+          filter.value=row.id;el('tp-member-search').value='';inventoryTeam.value=row.id;
+          if(!editingMember)teamSelect.value=row.id;
+          renderRoster();renderInventory();
+          el('tp-member-search').focus();
+        }),
+        button(t('Voir l’inventaire','View inventory'),()=>{
+          inventoryTeam.value=row.id;renderInventory();inventoryTeam.focus();
+        }),
+        button(t('Renommer','Rename'),()=>editTeam(row)),
+        button(t('Supprimer','Delete'),()=>deleteTeam(row))
+      );
+      card.append(head,actions);
+      return card;
+    }));
+    if(!rows.length)el('tp-team-cards').append(node('li',t('Aucune équipe dans cette vue.','No teams in this view.'),'tool-note'));
+  }
   function renderRoster() {
     const teamId=filter.value;
-    const rows=order(state.members).filter(person=>teamId==='all' || (person.team||'')===teamId);
+    const query=normal(el('tp-member-search').value).split(/\s+/).filter(Boolean);
+    const rows=order(state.members).filter(person=>{
+      const index=normal(person.name+' '+(person.role||''));
+      return (teamId==='all' || (person.team||'')===teamId) && query.every(word=>index.includes(word));
+    });
+    el('tp-member-count').textContent=t(rows.length+' / '+state.members.length+' équipiers',rows.length+' / '+state.members.length+' members');
     el('tp-roster').replaceChildren(...rows.map(person=>{
-      const row=node('li','','tp-roster-row');
+      const row=node('li','','tp-roster-row tp-entity-card');
       const title=node('div','','tp-member-head');
-      title.append(node('strong',person.name),button(t('Ouvrir la fiche et le sac','Open profile and kit'),()=>{
+      title.append(node('h5',person.name),button(t('Ouvrir la fiche et le sac','Open profile and kit'),()=>{
         loadMember(person);
         el('tp-name').focus();
       }));
       row.append(title);
-      if(person.role)row.append(node('p',person.role,'tool-note'));
+      const info=[team(person.team)?.name || t('Sans équipe','Unassigned'),person.role].filter(Boolean).join(' · ');
+      row.append(node('p',info,'tool-note'));
+      const checked=catalogue().filter(item=>quantity(person,item.id)).length;
+      row.append(node('span',t('Sac · '+checked+' référence(s)','Kit · '+checked+' item type(s)'),'tp-card-badge'));
       const label=node('label',t('Équipe','Team'));
       const move=node('select');
       move.setAttribute('aria-label',t('Équipe de ','Team for ')+person.name);
@@ -2541,8 +2582,7 @@ for (const button of document.querySelectorAll('[data-quick-group]')) {
       return row;
     }));
     el('tp-roster-empty').hidden=Boolean(rows.length);
-    const canEdit=Boolean(team(teamId));
-    el('tp-team-edit').hidden=el('tp-team-delete').hidden=!canEdit;
+
   }
   function loadMember(person) {
     editingMember=person?.id||'';
@@ -2569,7 +2609,7 @@ for (const button of document.querySelectorAll('[data-quick-group]')) {
   function saveKit(person,id,value) {
     const bag=kits(person);
     if(value>0)bag[id]=value; else delete bag[id];
-    save();renderInventory();renderKitCount(person);
+    save();renderRoster();renderInventory();renderKitCount(person);
   }
   function renderKit() {
     const person=member(selectedOwner);
@@ -2609,7 +2649,7 @@ for (const button of document.querySelectorAll('[data-quick-group]')) {
         if(!window.confirm(question))return;
         state.catalogue=state.catalogue.filter(row=>row.id!==item.id);
         for(const person of state.members)delete kits(person)[item.id];
-        save();renderKit();renderCustom();renderInventory();
+        save();renderRoster();renderKit();renderCustom();renderInventory();
         el('tp-item-name').focus();
       }));
       return row;
@@ -2641,7 +2681,7 @@ for (const button of document.querySelectorAll('[data-quick-group]')) {
     renderOwners();
   }
   function renderAll() {
-    renderMenus();renderRoster();renderKit();renderCustom();renderInventory();
+    renderMenus();renderTeamCards();renderRoster();renderKit();renderCustom();renderInventory();
     el('tp-team-save').textContent=editingTeam?t('Enregistrer le nom','Save team name'):t('Créer l’équipe','Create team');
     el('tp-team-cancel').hidden=!editingTeam;
     el('tp-member-save').textContent=editingMember?t('Enregistrer la fiche','Save profile'):t('Créer l’équipier','Create member');
@@ -2656,24 +2696,24 @@ for (const button of document.querySelectorAll('[data-quick-group]')) {
     const id=editingTeam||newId();
     if(editingTeam && team(id))team(id).name=name;else state.teams.push({id,name});
     editingTeam='';teamName.value='';
-    save();renderMenus();filter.value=inventoryTeam.value=id;
+    save();renderMenus();inventoryTeam.value=id;
     if(!editingMember)teamSelect.value=id;
     renderAll();
   });
-  el('tp-team-edit').addEventListener('click',()=>{
-    const selected=team(filter.value);if(!selected)return;
+  function editTeam(selected) {
     editingTeam=selected.id;teamName.value=selected.name;renderAll();teamName.focus();
-  });
+  }
   el('tp-team-cancel').addEventListener('click',()=>{editingTeam='';teamName.value='';renderAll();});
-  el('tp-team-delete').addEventListener('click',()=>{
-    const selected=team(filter.value);
+  function deleteTeam(selected) {
     if(!selected||!window.confirm(t('Supprimer « '+selected.name+' » ? Ses équipiers et leurs sacs seront conservés sans équipe.','Delete “'+selected.name+'”? Its members and their kits will be kept as unassigned.')))return;
     state.teams=state.teams.filter(row=>row.id!==selected.id);
     for(const person of state.members)if(person.team===selected.id)person.team='';
     if(editingTeam===selected.id){editingTeam='';teamName.value='';}
-    filter.value='all';
+    if(filter.value===selected.id)filter.value='all';
     save();renderAll();
-  });
+  }
+  el('tp-team-search').addEventListener('input',renderTeamCards);
+  el('tp-member-search').addEventListener('input',renderRoster);
   filter.addEventListener('change',()=>{
     if(team(filter.value))inventoryTeam.value=filter.value;
     if(!editingMember)teamSelect.value=team(filter.value)?filter.value:'';
