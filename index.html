@@ -758,6 +758,15 @@ summary{grid-template-columns:2.4rem minmax(0,1fr) 1rem}summary h3{overflow-wrap
 <div class="tool-actions" id="compass-waypoint-actions" hidden><button id="compass-waypoint-gps" type="button"><span lang="fr">Actualiser ma position GPS</span><span lang="en">Refresh my GPS position</span></button></div>
 <p id="compass-waypoint-gps-status" class="tool-note" role="status"></p>
 <ul id="compass-waypoint-list" class="utility-list" hidden></ul>
+<div class="navigation-box">
+  <label for="compass-waypoint-picker"><span lang="fr">Repère enregistré</span><span lang="en">Saved waypoint</span></label>
+  <select id="compass-waypoint-picker"></select>
+  <div class="tool-actions">
+    <button id="compass-waypoint-add" type="button" disabled><span lang="fr">Afficher ce repère</span><span lang="en">Show this waypoint</span></button>
+    <a href="#waypoints-tool"><span lang="fr">Carnet de repères</span><span lang="en">Waypoint notebook</span></a>
+  </div>
+  <p id="compass-waypoint-add-status" class="tool-note" role="status"></p>
+</div>
 </article>
 <article id="level-tool" class="tool-box" aria-labelledby="level-title" hidden>
 <h3 id="level-title"><span lang="fr">Niveau à bulle</span><span lang="en">Spirit level</span></h3>
@@ -4283,13 +4292,40 @@ for (const {button, group, options} of quickFilters) {
   }
   let waypoints=loadWaypoints(), editing='', followed='';
   const wayList=el('way-list'), wayMap=el('way-map'), wayStatus=el('way-form-status');
-  function saveWaypoints() {
+  const compassPicker=el('compass-waypoint-picker'), compassAdd=el('compass-waypoint-add');
+  const compassAddStatus=el('compass-waypoint-add-status');
+  function saveWaypoints(status=wayStatus) {
     // Confirm storage before reporting that a change will survive a reload.
     try {localStorage.setItem(key,JSON.stringify(waypoints));return true;}
-    catch {wayStatus.textContent=t('Le repère est disponible dans cette page. Le navigateur n’a pas pu l’enregistrer.','The waypoint is available in this page. The browser could not save it.');return false;}
+    catch {status.textContent=t('Le repère est disponible dans cette page. Le navigateur n’a pas pu l’enregistrer.','The waypoint is available in this page. The browser could not save it.');return false;}
   }
+  function updateCompassPicker() {
+    const previous=compassPicker.value;
+    const placeholder=waypoints.length?t('Choisir un repère','Choose a waypoint')
+      : t('Aucun repère enregistré','No saved waypoints');
+    compassPicker.replaceChildren(new Option(placeholder,''),...waypoints.map(row=>
+      new Option(row.name+(row.onCompass?t(' · affiché',' · shown'):''),row.id)));
+    compassPicker.value=waypoints.some(row=>row.id===previous)?previous:'';
+    compassPicker.disabled=!waypoints.length;
+    compassAdd.disabled=!waypoints.some(row=>row.id===compassPicker.value&&!row.onCompass);
+  }
+  compassPicker.addEventListener('change',()=>{
+    compassAddStatus.textContent='';
+    compassAdd.disabled=!waypoints.some(row=>row.id===compassPicker.value&&!row.onCompass);
+  });
+  compassAdd.addEventListener('click',()=>{
+    const row=waypoints.find(item=>item.id===compassPicker.value);
+    if(!row||row.onCompass)return;
+    row.onCompass=true;
+    if(saveWaypoints(compassAddStatus))compassAddStatus.textContent=readOrigin()
+      ? t('Repère ajouté à la boussole.','Waypoint added to the compass.')
+      : t('Repère ajouté. Actualise ta position GPS pour calculer son cap.','Waypoint added. Refresh your GPS position to calculate its bearing.');
+    renderWaypoints();
+    compassPicker.focus();
+  });
   function sendCompass() {
     const origin=readOrigin();
+    updateCompassPicker();
     el('compass-waypoint-actions').hidden=!waypoints.some(row=>row.onCompass||row.id===followed);
     const markers=origin?waypoints.flatMap((row,index)=>{
       if(!row.onCompass)return [];
