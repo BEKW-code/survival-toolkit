@@ -65,13 +65,14 @@ summary{grid-template-columns:2.4rem minmax(0,1fr) 1rem}summary h3{overflow-wrap
 #clocks-start-sound{background:var(--deep);color:var(--cream);border-color:var(--deep);font-weight:750}#clocks-start-sound:hover{background:var(--accent)}
 .clock-entry{background:var(--clock-bg,var(--cream))}.clock-entry .clock-name{background:var(--cream)}.clock-identity{display:flex;gap:.45rem;align-items:center;margin-bottom:.45rem;color:var(--clock-fg,var(--ink));font-size:.85rem;font-weight:750}.clock-preset-icon{display:grid;place-items:center;width:1.8rem;height:1.8rem;flex:none;border:1px solid currentColor;border-radius:5px;background:var(--cream);font-size:1rem}.clock-preset-badge{overflow-wrap:anywhere}
 .tool-box>label:not(.tool-picker){display:block;margin-top:.55rem}.tool-box>label>textarea,#evac-preview{margin-top:.4rem}.evac-fields label:has(textarea),.tool-fields label:has(#journal-note){grid-column:1/-1}.tool-preview{padding:.7rem;background:var(--paper);border:1px solid var(--line);border-radius:5px;white-space:pre-wrap;overflow-wrap:anywhere}.utility-list{list-style:none;display:grid;gap:.55rem;margin:.6rem 0;padding:0}.utility-list li{border:1px solid var(--line);border-radius:6px;padding:.6rem .75rem;overflow-wrap:anywhere}.utility-list li[data-due=soon]{background:#faf0d7}.utility-list li[data-due=late]{background:#f7e7dd}.utility-list p{white-space:pre-wrap}.tool-box textarea{resize:vertical}@media print{body.print-evac header,body.print-evac footer,body.print-evac main>[data-view]:not(#tools),body.print-evac .clock-alarm-banner{display:none!important}body.print-evac #tools,body.print-evac #evac-tool{display:block!important}body.print-evac #tools>h2,body.print-evac #tools>.zoe-intro,body.print-evac .tool-choices,body.print-evac #evac-tool>*:not(h3):not(#evac-preview),body.print-evac .tool-grid>.tool-box:not(#evac-tool){display:none!important}body.print-evac #evac-tool{border:0}}
+.js .teams-protection{display:block}.teams-protection{margin:1.25rem auto 2.5rem}.teams-protection h2{font-size:clamp(2rem,4.5vw,3rem);margin-bottom:.45rem}.tp-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.75rem;margin-top:1rem;align-items:start}.tp-grid>.tool-box{min-width:0;max-width:none}.tp-grid label{display:block;font-size:.9rem;font-weight:680}.tp-grid input:not([type=checkbox]),.tp-grid select,.tp-grid textarea{margin-top:.2rem}.tp-grid>section>label{margin:.6rem 0}.tp-grid label:has(textarea){grid-column:1/-1}.tp-grid .utility-list li{margin:0}.tp-member-head{display:flex;justify-content:space-between;align-items:center;gap:.5rem;flex-wrap:wrap}.tp-roster-row label{margin-top:.45rem}.tp-kit-list{list-style:none;display:grid;gap:.3rem;padding:0;max-height:23rem;overflow:auto;margin:.5rem 0}.tp-kit-list li{display:grid;grid-template-columns:minmax(0,1fr) 4.8rem;align-items:center;gap:.45rem;border-bottom:1px solid var(--line);padding:.3rem}.tp-kit-list li label{display:flex;align-items:center;gap:.5rem}.tp-kit-list input[type=checkbox]{min-width:1.15rem;min-height:1.15rem;accent-color:var(--accent)}.tp-kit-list input[type=number]{margin:0!important}.tp-owner-list{color:var(--muted);white-space:pre-wrap}.tp-grid details>summary{display:list-item;list-style:revert;padding:.6rem 0}.tp-grid details>summary::after{content:none}.clock-assignee{display:block;margin:.45rem 0;color:var(--muted);font-size:.85rem}.clock-assignee select{margin-top:.2rem}@media(max-width:760px){.tp-grid{grid-template-columns:1fr}}@media print{.teams-protection{display:none!important}}
 </style>
 <link rel="manifest" href="./manifest.webmanifest">
 <link rel="apple-touch-icon" href="./icons/apple-touch-icon.png">
 <meta name="theme-color" content="#202d24">
 </head>
 <body>
-<header class="top"><div class="wrap"><a href="#survival-guides" class="mark">Survival Toolkit</a><nav class="view-menu" aria-label="Sections"><a href="#survival-guides" data-view-link="survival-guides" aria-current="page"><span lang="fr">Guides de survie</span><span lang="en">Survival guides</span></a><a href="#tools" data-view-link="tools"><span lang="fr">Outils</span><span lang="en">Tools</span></a><a href="#emergency-numbers" data-view-link="emergency-numbers"><span lang="fr">Numéros de secours</span><span lang="en">Emergency numbers</span></a></nav><div class="top-actions"><button id="zoe-mode" class="zoe-mode" type="button" aria-pressed="false" aria-describedby="zoe-mode-help"><span lang="fr">Voix de Zoé</span><span lang="en">Zoé’s voice</span><span class="zoe-switch" aria-hidden="true"></span></button><span id="zoe-mode-help" class="sr-only"><span lang="fr">Remplace les explications classiques par la version de Zoé.</span><span lang="en">Switch the guide instructions to Zoé’s version.</span></span><nav class="language-menu" aria-label="Langue / Language"><button type="button" id="install-app" class="install-app"><span lang="fr">Installer</span><span lang="en">Install</span></button><a href="?lang=fr" hreflang="fr" lang="fr" aria-current="true">FR</a><a href="?lang=en" hreflang="en" lang="en">EN</a></nav></div></div></header>
+<header class="top"><div class="wrap"><a href="#survival-guides" class="mark">Survival Toolkit</a><nav class="view-menu" aria-label="Sections"><a href="#survival-guides" data-view-link="survival-guides" aria-current="page"><span lang="fr">Guides de survie</span><span lang="en">Survival guides</span></a><a href="#tools" data-view-link="tools"><span lang="fr">Outils</span><span lang="en">Tools</span></a><a href="#emergency-numbers" data-view-link="emergency-numbers"><span lang="fr">Numéros de secours</span><span lang="en">Emergency numbers</span></a><a href="#teams-protection" data-view-link="teams-protection">Teams Protection</a></nav><div class="top-actions"><button id="zoe-mode" class="zoe-mode" type="button" aria-pressed="false" aria-describedby="zoe-mode-help"><span lang="fr">Voix de Zoé</span><span lang="en">Zoé’s voice</span><span class="zoe-switch" aria-hidden="true"></span></button><span id="zoe-mode-help" class="sr-only"><span lang="fr">Remplace les explications classiques par la version de Zoé.</span><span lang="en">Switch the guide instructions to Zoé’s version.</span></span><nav class="language-menu" aria-label="Langue / Language"><button type="button" id="install-app" class="install-app"><span lang="fr">Installer</span><span lang="en">Install</span></button><a href="?lang=fr" hreflang="fr" lang="fr" aria-current="true">FR</a><a href="?lang=en" hreflang="en" lang="en">EN</a></nav></div></div></header>
 <aside id="clock-alarm-banner" class="wrap clock-alarm-banner" hidden><p id="clock-alarm-count" role="status"></p><a href="#clocks-tool"><span lang="fr">Voir les chronos</span><span lang="en">View clocks</span></a><button id="clock-alarm-enable" type="button" hidden><span lang="fr">Autoriser le son</span><span lang="en">Enable sound</span></button></aside>
 <main>
 <div id="survival-guides" data-view="survival-guides">
@@ -564,6 +565,7 @@ summary{grid-template-columns:2.4rem minmax(0,1fr) 1rem}summary h3{overflow-wrap
 <legend><span lang="fr">Durée</span><span lang="en">Duration</span></legend>
 <div class="clock-duration"><label><span lang="fr">Heures</span><span lang="en">Hours</span><input type="number" id="clocks-hours" min="0" max="999" step="1" value="0" inputmode="numeric"></label><label><span lang="fr">Minutes</span><span lang="en">Minutes</span><input type="number" id="clocks-minutes" min="0" max="59" step="1" value="5" inputmode="numeric"></label><label><span lang="fr">Secondes</span><span lang="en">Seconds</span><input type="number" id="clocks-seconds" min="0" max="59" step="1" value="0" inputmode="numeric"></label></div>
 </fieldset>
+<label class="clock-assignee" for="clocks-assignee"><span lang="fr">Équipe ou équipier (facultatif)</span><span lang="en">Team or member (optional)</span><select id="clocks-assignee"></select></label>
 <p id="clocks-hint" class="tool-note"></p>
 <div class="tool-actions"><button type="submit"><span lang="fr">Ajouter et démarrer</span><span lang="en">Add and start</span></button><button type="submit" id="clocks-start-sound" hidden><span lang="fr">Ajouter et démarrer avec son</span><span lang="en">Add and start with sound</span></button></div>
 <p id="clocks-form-status" role="status" class="tool-note"></p>
@@ -992,6 +994,63 @@ summary{grid-template-columns:2.4rem minmax(0,1fr) 1rem}summary h3{overflow-wrap
 <p class="country-note directory-more"><span lang="fr">Pour une destination absente, consultez les conseils officiels par pays.</span><span lang="en">For an unlisted destination, check official travel advice by country.</span> <a href="https://www.diplomatie.gouv.fr/fr/conseils-aux-voyageurs" lang="fr">France Diplomatie</a> · <a href="https://www.gov.uk/foreign-travel-advice" lang="en">GOV.UK</a></p>
 </section>
 
+<section id="teams-protection" data-view="teams-protection" class="wrap teams-protection js-only" aria-labelledby="tp-title">
+<h2 id="tp-title">Teams Protection</h2>
+<p><span lang="fr">Organise tes équipes, leurs fiches de secours et le matériel que chacun emporte.</span><span lang="en">Organize your teams, their emergency information and what each person carries.</span></p>
+<p id="tp-status" class="tool-note" role="status"></p>
+<div class="tp-grid">
+<section class="tool-box" aria-labelledby="tp-teams-title">
+<h3 id="tp-teams-title"><span lang="fr">Équipes</span><span lang="en">Teams</span></h3>
+<form id="tp-team-form">
+<label for="tp-team-name"><span lang="fr">Nom de l’équipe</span><span lang="en">Team name</span><input id="tp-team-name" type="text" maxlength="80" autocomplete="off" required></label>
+<div class="tool-actions"><button type="submit" id="tp-team-save" ><span lang="fr">Créer l’équipe</span><span lang="en">Create team</span></button><button type="button" id="tp-team-cancel" hidden><span lang="fr">Annuler</span><span lang="en">Cancel</span></button></div>
+</form>
+<label for="tp-team-filter"><span lang="fr">Afficher les équipiers de</span><span lang="en">Show members of</span><select id="tp-team-filter"></select></label>
+<div class="tool-actions"><button type="button" id="tp-team-edit" hidden><span lang="fr">Renommer l’équipe</span><span lang="en">Rename team</span></button><button type="button" id="tp-team-delete" hidden><span lang="fr">Supprimer l’équipe</span><span lang="en">Delete team</span></button></div>
+<ul id="tp-roster" class="utility-list"></ul>
+<p id="tp-roster-empty" class="tool-note" hidden><span lang="fr">Aucun équipier dans cette vue.</span><span lang="en">No members in this view.</span></p>
+</section>
+<section class="tool-box" id="tp-profile" aria-labelledby="tp-profile-title">
+<h3 id="tp-profile-title"><span lang="fr">Fiche équipier</span><span lang="en">Member profile</span></h3>
+<form id="tp-member-form">
+<div class="tool-fields">
+<label for="tp-name"><span lang="fr">Nom ou indicatif</span><span lang="en">Name or callsign</span><input id="tp-name" type="text" maxlength="100" autocomplete="off" required></label>
+<label for="tp-team"><span lang="fr">Équipe</span><span lang="en">Team</span><select id="tp-team"></select></label>
+</div>
+<details id="tp-profile-details"><summary><span lang="fr">Infos utiles en cas d’incident</span><span lang="en">Details for an emergency</span></summary><div class="tool-fields"><label for="tp-role"><span lang="fr">Rôle ou compétence utile</span><span lang="en">Role or useful skill</span><input id="tp-role" type="text" maxlength="100" autocomplete="off" ></label>
+<label for="tp-phone"><span lang="fr">Téléphone de l’équipier</span><span lang="en">Member phone</span><input id="tp-phone" type="tel" maxlength="60" autocomplete="off" ></label>
+<label for="tp-contact"><span lang="fr">Personne à prévenir</span><span lang="en">Emergency contact name</span><input id="tp-contact" type="text" maxlength="100" autocomplete="off" ></label>
+<label for="tp-contact-phone"><span lang="fr">Téléphone à prévenir</span><span lang="en">Emergency contact phone</span><input id="tp-contact-phone" type="tel" maxlength="60" autocomplete="off" ></label>
+<label for="tp-medical"><span lang="fr">Allergies, traitements ou autres infos utiles aux secours</span><span lang="en">Allergies, medication or other emergency information</span><textarea id="tp-medical" maxlength="600" rows="3" autocomplete="off"></textarea></label>
+<label for="tp-needs"><span lang="fr">Besoins d’assistance ou consignes particulières</span><span lang="en">Assistance needs or special instructions</span><textarea id="tp-needs" maxlength="600" rows="3" autocomplete="off"></textarea></label>
+</div></details>
+<p class="tool-note"><span lang="fr">Seul le nom est obligatoire. Ces données restent dans ce navigateur : renseigne les informations sensibles avec l’accord de l’équipier.</span><span lang="en">Only a name is required. These details stay in this browser. Add sensitive information with the member’s agreement.</span></p>
+<div class="tool-actions"><button type="submit" id="tp-member-save" ><span lang="fr">Créer l’équipier</span><span lang="en">Create member</span></button><button type="button" id="tp-member-new" hidden><span lang="fr">Nouvelle fiche</span><span lang="en">New profile</span></button><button type="button" id="tp-member-delete" hidden><span lang="fr">Supprimer l’équipier</span><span lang="en">Delete member</span></button></div>
+</form>
+</section>
+<section class="tool-box" id="tp-kit" aria-labelledby="tp-kit-title">
+<h3 id="tp-kit-title"><span lang="fr">Sac individuel</span><span lang="en">Individual kit</span></h3>
+<label for="tp-kit-owner"><span lang="fr">Équipier</span><span lang="en">Member</span><select id="tp-kit-owner"></select></label>
+<p id="tp-kit-empty" class="tool-note"><span lang="fr">Choisis ou crée un équipier pour ouvrir son sac.</span><span lang="en">Choose or create a member to open their kit.</span></p>
+<div id="tp-kit-controls" hidden>
+<label for="tp-kit-search"><span lang="fr">Filtrer le catalogue</span><span lang="en">Filter catalogue</span><input id="tp-kit-search" type="search" maxlength="100" autocomplete="off" ></label>
+<p id="tp-kit-count" class="tool-note" role="status"></p>
+<ul id="tp-catalogue" class="tp-kit-list"></ul>
+</div>
+<form id="tp-item-form">
+<label for="tp-item-name"><span lang="fr">Nouvel élément pour le catalogue</span><span lang="en">New catalogue item</span><input id="tp-item-name" type="text" maxlength="80" autocomplete="off" required></label>
+<div class="tool-actions"><button type="submit" id="tp-item-add" ><span lang="fr">Ajouter au catalogue</span><span lang="en">Add to catalogue</span></button></div>
+</form>
+<details id="tp-custom-details"><summary><span lang="fr">Éléments personnalisés</span><span lang="en">Custom items</span></summary><ul id="tp-custom-list" class="utility-list"></ul></details>
+</section>
+<section class="tool-box" aria-labelledby="tp-inventory-title">
+<h3 id="tp-inventory-title"><span lang="fr">Inventaire de l’équipe</span><span lang="en">Team inventory</span></h3>
+<label for="tp-inventory-team"><span lang="fr">Équipe à inventorier</span><span lang="en">Team to inventory</span><select id="tp-inventory-team"></select></label>
+<p id="tp-inventory-status" class="tool-note" role="status"></p>
+<ul id="tp-inventory" class="utility-list"></ul>
+</section>
+</div>
+</section>
 </main>
 <footer class="wrap"><span lang="fr">En situation réelle, suivez les consignes des secours et des autorités locales.</span><span lang="en">In an emergency, follow instructions from dispatchers and local authorities.</span> <a href="#emergency-numbers"><span lang="fr">Numéros de secours</span><span lang="en">Emergency numbers</span></a> · <a href="index.html" download="survival-toolkit.html"><span lang="fr">Télécharger pour consulter hors ligne</span><span lang="en">Download for offline use</span></a></footer>
 <script>
@@ -1734,6 +1793,7 @@ for (const button of document.querySelectorAll('[data-quick-group]')) {
   const form=el('clocks-form'), preset=el('clocks-preset'), type=el('clocks-type'), name=el('clocks-name');
   const inputs=['hours','minutes','seconds'].map(unit=>el('clocks-'+unit));
   const startWithSound=el('clocks-start-sound');
+  const assignment=el('clocks-assignee');
   const target=el('clocks-target'), list=el('clocks-list'), message=el('clocks-form-status');
   const legacyKey='survival-toolkit-clocks-v1';
   const clockPrefix='survival-toolkit-clock-v2:';
@@ -1876,6 +1936,7 @@ for (const button of document.querySelectorAll('[data-quick-group]')) {
     else if(clocks.has(id)) {
       const current=clocks.get(id);
       Object.assign(current,fresh);
+      assignmentOptions(views.get(id).assignee,current.assignee);
       const field=views.get(id).name;
       if(document.activeElement!==field)field.value=current.name;
     } else {
@@ -1980,10 +2041,36 @@ for (const button of document.querySelectorAll('[data-quick-group]')) {
     save(clock);
     paint(clock,now,false);
   }
+  function assignmentOptions(select,selected) {
+    const people=window.teamProtection?.choices() || {teams:[],members:[]};
+    const teamNames=new Map(people.teams.map(team=>[team.id,team.name]));
+    const groups=[
+      [text('Équipes','Teams'),people.teams.map(team=>['team:'+team.id,team.name])],
+      [text('Équipiers','Members'),people.members.map(person=>['member:'+person.id,person.name+(teamNames.has(person.team)?' · '+teamNames.get(person.team):'')])]
+    ];
+    select.replaceChildren(new Option(text('Sans attribution','Unassigned'),''));
+    for(const [label,entries] of groups) {
+      if(!entries.length)continue;
+      const group=document.createElement('optgroup');
+      group.label=label;
+      group.append(...entries.map(([key,name])=>new Option(name,key)));
+      select.append(group);
+    }
+    if(selected && !Array.from(select.options).some(option=>option.value===selected)) {
+      select.append(new Option(text('Équipe ou équipier supprimé','Deleted team or member'),selected));
+    }
+    select.value=selected||'';
+  }
+  function refreshAssignments() {
+    assignmentOptions(assignment,assignment.value);
+    for(const [id,view] of views) assignmentOptions(view.assignee,clocks.get(id)?.assignee);
+  }
+  window.addEventListener('teamsprotectionchange',refreshAssignments);
+
   function addView(clock) {
     const card=document.createElement('li');
     card.className='clock-entry';
-    card.innerHTML='<div class="clock-identity"><span class="clock-preset-icon" aria-hidden="true"></span><span class="clock-preset-badge"></span></div><input class="clock-name" maxlength="80" autocomplete="off"><p class="tool-note clock-meta"></p><output class="timer-clock" aria-live="off"></output><p class="tool-note clock-status"></p><label class="clock-alarm-option"><input type="checkbox" data-action="alarm"> <span></span></label><div class="tool-actions"><button type="button" data-action="stop-alarm" class="alarm-stop" hidden>Stop</button><button type="button" data-action="toggle"></button><button type="button" data-action="reset"></button><button type="button" data-action="remove"></button></div>';
+    card.innerHTML='<div class="clock-identity"><span class="clock-preset-icon" aria-hidden="true"></span><span class="clock-preset-badge"></span></div><input class="clock-name" maxlength="80" autocomplete="off"><p class="tool-note clock-meta"></p><output class="timer-clock" aria-live="off"></output><p class="tool-note clock-status"></p><label class="clock-assignee"><span lang="fr">Équipe ou équipier</span><span lang="en">Team or member</span><select></select></label><label class="clock-alarm-option"><input type="checkbox" data-action="alarm"> <span></span></label><div class="tool-actions"><button type="button" data-action="stop-alarm" class="alarm-stop" hidden>Stop</button><button type="button" data-action="toggle"></button><button type="button" data-action="reset"></button><button type="button" data-action="remove"></button></div>';
     const [icon, background, foreground]=styles[clockPreset(clock)?.[0] || clock.type];
     card.style.setProperty('--clock-bg',background);
     card.style.setProperty('--clock-fg',foreground);
@@ -1992,7 +2079,9 @@ for (const button of document.querySelectorAll('[data-quick-group]')) {
       output:card.querySelector('output'),action:card.querySelector('[data-action=toggle]'),
       reset:card.querySelector('[data-action=reset]'),remove:card.querySelector('[data-action=remove]'),
       alarmGroup:card.querySelector('.clock-alarm-option'),alarmLabel:card.querySelector('.clock-alarm-option span'),
-      alarm:card.querySelector('[data-action=alarm]'),stop:card.querySelector('[data-action=stop-alarm]')};
+      alarm:card.querySelector('[data-action=alarm]'),stop:card.querySelector('[data-action=stop-alarm]'),assignee:card.querySelector('.clock-assignee select')};
+    assignmentOptions(view.assignee,clock.assignee);
+    view.assignee.addEventListener('change',()=>{clock.assignee=view.assignee.value;save(clock);});
     view.name.value=clock.name;
     view.name.addEventListener('input',()=>{clock.name=view.name.value;save(clock);});
     view.name.addEventListener('change',()=>{
@@ -2050,7 +2139,7 @@ for (const button of document.querySelectorAll('[data-quick-group]')) {
     const id=crypto.randomUUID ? crypto.randomUUID() : Array.from(crypto.getRandomValues(new Uint32Array(4))).join('-');
     const label=types.find(([id])=>id===kind);
     const alarm=Boolean(Audio && kind!=='stopwatch' && event.submitter===startWithSound);
-    const clock={id,name:name.value.trim()||text(label[1],label[2]),type:kind,preset:preset.value,duration,deadline,started:now,value:0,running:true,alarm};
+    const clock={id,name:name.value.trim()||text(label[1],label[2]),type:kind,preset:preset.value,assignee:assignment.value,duration,deadline,started:now,value:0,running:true,alarm};
     clocks.set(id,clock);
     addView(clock);
     save(clock);
@@ -2078,6 +2167,7 @@ for (const button of document.querySelectorAll('[data-quick-group]')) {
     updateBuilder();
     const now=Date.now();
     clocks.forEach(clock=>paint(clock,now,false));
+    refreshAssignments();
   }
   let ticker;
   function update() {
@@ -2353,6 +2443,290 @@ for (const button of document.querySelectorAll('[data-quick-group]')) {
   }
   new MutationObserver(refresh).observe(document.documentElement,{attributes:true,attributeFilter:['lang']});
   refresh();
+})();
+</script>
+
+<script>
+(() => {
+  const el=id=>document.getElementById(id);
+  const locale=()=>document.documentElement.lang==='en'?'en':'fr';
+  const t=(fr,en)=>locale()==='en'?en:fr;
+  const base=[["water","Eau potable","Drinking water"],["bottle","Gourde","Water bottle"],["filter","Filtre à eau","Water filter"],["tablets","Pastilles de traitement de l’eau","Water purification tablets"],["food","Rations","Food rations"],["aid","Trousse de premiers secours","First-aid kit"],["bandage","Pansements ou compresses","Dressings or gauze"],["blanket","Couverture de survie","Emergency blanket"],["lamp","Lampe frontale ou torche","Headlamp or flashlight"],["batteries","Piles de rechange","Spare batteries"],["power","Batterie externe","Power bank"],["radio","Radio","Radio"],["whistle","Sifflet","Whistle"],["map","Carte papier","Paper map"],["compass","Boussole","Compass"],["tarp","Bâche ou abri","Tarp or shelter"],["cord","Cordelette","Cordage"],["warm","Vêtement chaud","Warm layer"],["rain","Protection pluie","Rain gear"],["gloves","Gants de protection","Protective gloves"],["mask","Masque filtrant","Particulate mask"],["hygiene","Kit d’hygiène","Hygiene kit"],["multitool","Outil multifonction","Multitool"],["notebook","Carnet et crayon","Notebook and pencil"],["fire","Briquet ou allumettes étanches","Lighter or waterproof matches"],["documents","Pochette de documents","Document pouch"]];
+  const key='survival-toolkit-teams-protection-v1';
+  const changes='teamsprotectionchange';
+  const empty=()=>({teams:[],members:[],catalogue:[]});
+  const memberFields=['name','role','phone','contact','contact-phone','medical','needs'];
+  const status=el('tp-status'), filter=el('tp-team-filter'), inventoryTeam=el('tp-inventory-team'), owner=el('tp-kit-owner');
+  const teamSelect=el('tp-team'), teamName=el('tp-team-name'), search=el('tp-kit-search');
+  let editingTeam='',editingMember='',selectedOwner='';
+  const validRow=row=>row && typeof row.id==='string' && typeof row.name==='string';
+  function read(raw) {
+    try {
+      const data=JSON.parse(raw);
+      if(data && [data.teams,data.members,data.catalogue].every(Array.isArray)) {
+        return {teams:data.teams.filter(validRow),members:data.members.filter(validRow),catalogue:data.catalogue.filter(validRow)};
+      }
+    } catch {}
+    return empty();
+  }
+  let state=empty();
+  try {state=read(localStorage.getItem(key));}
+  catch {status.textContent=t('Le stockage local est indisponible.','Local storage is unavailable.');}
+  const team=id=>state.teams.find(row=>row.id===id);
+  const member=id=>state.members.find(row=>row.id===id);
+  const newId=()=>crypto.randomUUID ? crypto.randomUUID() : Array.from(crypto.getRandomValues(new Uint32Array(4))).join('-');
+  function save() {
+    status.textContent='';
+    try {localStorage.setItem(key,JSON.stringify(state));}
+    catch {status.textContent=t('Sauvegarde impossible. Les changements restent dans cette page.','Could not save changes. They remain on this page.');}
+    window.dispatchEvent(new Event(changes));
+  }
+  function showStatus(fr,en) {status.textContent=t(fr,en);}
+  function order(items) {return [...items].sort((a,b)=>a.name.localeCompare(b.name,locale()));}
+  function catalogue() {
+    return order([...base.map(([id,fr,en])=>({id:'base:'+id,name:t(fr,en)})),...state.catalogue]);
+  }
+  function normal(value) {return value.trim().toLowerCase().normalize('NFD').replace(/\p{M}/gu,'');}
+  function quantity(person,id) {
+    const value=Number(person?.kit?.[id]);
+    return Number.isInteger(value)&&value>0&&value<=9999?value:0;
+  }
+  function kits(person) {
+    if(!person.kit || typeof person.kit!=='object' || Array.isArray(person.kit))person.kit={};
+    return person.kit;
+  }
+  function node(tag,content,css) {
+    const element=document.createElement(tag);
+    if(content)element.textContent=content;
+    if(css)element.className=css;
+    return element;
+  }
+  function button(label,handler) {
+    const element=node('button',label);
+    element.type='button';element.addEventListener('click',handler);
+    return element;
+  }
+  function options(select,entries,selected=select.value) {
+    select.replaceChildren(...entries.map(([id,name])=>new Option(name,id)));
+    if(entries.some(([id])=>id===selected))select.value=selected;
+  }
+  function teamsOptions(blankLabel=t('Sans équipe','Unassigned')) {
+    return [['',blankLabel],...order(state.teams).map(row=>[row.id,row.name])];
+  }
+  function setTeam(person,teamId) {
+    person.team=teamId;
+    if(editingMember===person.id)teamSelect.value=teamId;
+    save();
+    renderRoster();
+    renderInventory();
+  }
+  function renderRoster() {
+    const teamId=filter.value;
+    const rows=order(state.members).filter(person=>teamId==='all' || (person.team||'')===teamId);
+    el('tp-roster').replaceChildren(...rows.map(person=>{
+      const row=node('li','','tp-roster-row');
+      const title=node('div','','tp-member-head');
+      title.append(node('strong',person.name),button(t('Ouvrir la fiche et le sac','Open profile and kit'),()=>{
+        loadMember(person);
+        el('tp-name').focus();
+      }));
+      row.append(title);
+      if(person.role)row.append(node('p',person.role,'tool-note'));
+      const label=node('label',t('Équipe','Team'));
+      const move=node('select');
+      move.setAttribute('aria-label',t('Équipe de ','Team for ')+person.name);
+      options(move,teamsOptions(),person.team||'');
+      move.addEventListener('change',()=>setTeam(person,move.value));
+      label.append(move);row.append(label);
+      return row;
+    }));
+    el('tp-roster-empty').hidden=Boolean(rows.length);
+    const canEdit=Boolean(team(teamId));
+    el('tp-team-edit').hidden=el('tp-team-delete').hidden=!canEdit;
+  }
+  function loadMember(person) {
+    editingMember=person?.id||'';
+    el('tp-profile-details').open=Boolean(person && memberFields.some(id=>id!=='name' && person[id]));
+    for(const id of memberFields)el('tp-'+id).value=person?.[id]||'';
+    const defaultTeam=person?.team || (!person && team(filter.value) ? filter.value : '');
+    options(teamSelect,teamsOptions(),defaultTeam);
+    el('tp-member-save').textContent=person?t('Enregistrer la fiche','Save profile'):t('Créer l’équipier','Create member');
+    el('tp-member-new').hidden=el('tp-member-delete').hidden=!person;
+    if(person) {
+      selectedOwner=person.id;
+      renderOwners();
+      renderKit();
+    }
+  }
+  function renderOwners() {
+    options(owner,[['',t('Choisir un équipier','Choose a member')],...order(state.members).map(person=>[person.id,person.name])],selectedOwner);
+    selectedOwner=owner.value;
+  }
+  function renderKitCount(person) {
+    const count=catalogue().filter(item=>quantity(person,item.id)).length;
+    el('tp-kit-count').textContent=t(count+' références cochées',count+' item types checked');
+  }
+  function saveKit(person,id,value) {
+    const bag=kits(person);
+    if(value>0)bag[id]=value; else delete bag[id];
+    save();renderInventory();renderKitCount(person);
+  }
+  function renderKit() {
+    const person=member(selectedOwner);
+    el('tp-kit-empty').hidden=Boolean(person);
+    el('tp-kit-controls').hidden=!person;
+    const list=el('tp-catalogue');
+    if(!person){list.replaceChildren();return;}
+    const query=normal(search.value);
+    const entries=catalogue().filter(item=>normal(item.name).includes(query));
+    list.replaceChildren(...entries.map(item=>{
+      const row=node('li'), label=node('label'), checkbox=node('input'), qty=node('input');
+      checkbox.type='checkbox';checkbox.checked=quantity(person,item.id)>0;
+      label.append(checkbox,node('span',item.name));
+      qty.type='number';qty.min='1';qty.max='9999';qty.step='1';qty.value=String(quantity(person,item.id)||1);qty.disabled=!checkbox.checked;
+      qty.setAttribute('aria-label',t('Quantité : ','Quantity: ')+item.name);
+      checkbox.addEventListener('change',()=>{
+        qty.disabled=!checkbox.checked;
+        saveKit(person,item.id,checkbox.checked?(Number(qty.value)||1):0);
+      });
+      qty.addEventListener('change',()=>{
+        if(!qty.validity.valid || !qty.value) {qty.value=String(quantity(person,item.id)||1);return;}
+        saveKit(person,item.id,Number(qty.value));
+      });
+      row.append(label,qty);
+      return row;
+    }));
+    if(!entries.length)list.append(node('li',t('Aucun élément ne correspond.','No matching items.'),'tool-note'));
+    renderKitCount(person);
+  }
+  function renderCustom() {
+    const list=el('tp-custom-list');
+    list.replaceChildren(...order(state.catalogue).map(item=>{
+      const row=node('li','','tp-member-head');
+      row.append(node('strong',item.name),button(t('Supprimer du catalogue','Delete from catalogue'),()=>{
+        const used=state.members.filter(person=>quantity(person,item.id)).length;
+        const question=used?t('Supprimer « '+item.name+' » du catalogue et de '+used+' sac(s) ?','Delete “'+item.name+'” from the catalogue and '+used+' kit(s)?'):t('Supprimer « '+item.name+' » du catalogue ?','Delete “'+item.name+'” from the catalogue?');
+        if(!window.confirm(question))return;
+        state.catalogue=state.catalogue.filter(row=>row.id!==item.id);
+        for(const person of state.members)delete kits(person)[item.id];
+        save();renderKit();renderCustom();renderInventory();
+        el('tp-item-name').focus();
+      }));
+      return row;
+    }));
+    if(!state.catalogue.length)list.append(node('li',t('Aucun élément personnalisé.','No custom items.'),'tool-note'));
+  }
+  function renderInventory() {
+    const selected=team(inventoryTeam.value);
+    const list=el('tp-inventory'), summary=el('tp-inventory-status');
+    if(!selected) {
+      list.replaceChildren();summary.textContent=t('Choisis une équipe pour afficher son inventaire.','Choose a team to see its inventory.');return;
+    }
+    const people=order(state.members.filter(person=>person.team===selected.id));
+    const totals=catalogue().map(item=>({item,owners:people.map(person=>[person,quantity(person,item.id)]).filter(([,qty])=>qty)})).filter(row=>row.owners.length);
+    summary.textContent=totals.length
+      ? t(people.length+' équipier(s) · '+totals.length+' références',people.length+' member(s) · '+totals.length+' item types')
+      : t('Aucun matériel coché dans les sacs de cette équipe.','No gear has been checked in this team’s kits.');
+    list.replaceChildren(...totals.map(({item,owners})=>{
+      const row=node('li');
+      row.append(node('strong',item.name+' × '+owners.reduce((sum,[,qty])=>sum+qty,0)));
+      row.append(node('p',owners.map(([person,qty])=>person.name+' × '+qty).join('\n'),'tp-owner-list'));
+      return row;
+    }));
+  }
+  function renderMenus() {
+    options(filter,[['all',t('Toutes les équipes et équipiers','All teams and members')],...teamsOptions()],filter.options.length?filter.value:'all');
+    options(teamSelect,teamsOptions());
+    options(inventoryTeam,teamsOptions(t('Choisir une équipe','Choose a team')));
+    renderOwners();
+  }
+  function renderAll() {
+    renderMenus();renderRoster();renderKit();renderCustom();renderInventory();
+    el('tp-team-save').textContent=editingTeam?t('Enregistrer le nom','Save team name'):t('Créer l’équipe','Create team');
+    el('tp-team-cancel').hidden=!editingTeam;
+    el('tp-member-save').textContent=editingMember?t('Enregistrer la fiche','Save profile'):t('Créer l’équipier','Create member');
+  }
+  el('tp-team-form').addEventListener('submit',event=>{
+    event.preventDefault();
+    const name=teamName.value.trim();
+    if(!name){showStatus('Indique un nom d’équipe.','Enter a team name.');return;}
+    if(state.teams.some(row=>row.id!==editingTeam&&normal(row.name)===normal(name))) {
+      showStatus('Une équipe porte déjà ce nom.','A team already uses that name.');return;
+    }
+    const id=editingTeam||newId();
+    if(editingTeam && team(id))team(id).name=name;else state.teams.push({id,name});
+    editingTeam='';teamName.value='';
+    save();renderMenus();filter.value=inventoryTeam.value=id;
+    if(!editingMember)teamSelect.value=id;
+    renderAll();
+  });
+  el('tp-team-edit').addEventListener('click',()=>{
+    const selected=team(filter.value);if(!selected)return;
+    editingTeam=selected.id;teamName.value=selected.name;renderAll();teamName.focus();
+  });
+  el('tp-team-cancel').addEventListener('click',()=>{editingTeam='';teamName.value='';renderAll();});
+  el('tp-team-delete').addEventListener('click',()=>{
+    const selected=team(filter.value);
+    if(!selected||!window.confirm(t('Supprimer « '+selected.name+' » ? Ses équipiers et leurs sacs seront conservés sans équipe.','Delete “'+selected.name+'”? Its members and their kits will be kept as unassigned.')))return;
+    state.teams=state.teams.filter(row=>row.id!==selected.id);
+    for(const person of state.members)if(person.team===selected.id)person.team='';
+    if(editingTeam===selected.id){editingTeam='';teamName.value='';}
+    filter.value='all';
+    save();renderAll();
+  });
+  filter.addEventListener('change',()=>{
+    if(team(filter.value))inventoryTeam.value=filter.value;
+    if(!editingMember)teamSelect.value=team(filter.value)?filter.value:'';
+    renderRoster();renderInventory();
+  });
+  inventoryTeam.addEventListener('change',renderInventory);
+
+  el('tp-member-form').addEventListener('submit',event=>{
+    event.preventDefault();
+    const fields=Object.fromEntries(memberFields.map(id=>[id,el('tp-'+id).value.trim()]));
+    if(!fields.name){showStatus('Indique un nom ou un indicatif.','Enter a name or callsign.');return;}
+    let person=member(editingMember);
+    if(!person){person={id:newId(),kit:{}};state.members.push(person);}
+    Object.assign(person,fields,{team:teamSelect.value});
+    if(filter.value!=='all' && filter.value!==person.team)filter.value=person.team;
+    if(person.team)inventoryTeam.value=person.team;
+    save();loadMember(person);renderAll();
+  });
+  el('tp-member-new').addEventListener('click',()=>{loadMember();el('tp-name').focus();});
+  el('tp-member-delete').addEventListener('click',()=>{
+    const person=member(editingMember);
+    if(!person||!window.confirm(t('Supprimer la fiche et le sac de « '+person.name+' » ?','Delete the profile and kit for “'+person.name+'”?')))return;
+    state.members=state.members.filter(row=>row.id!==person.id);
+    if(selectedOwner===person.id)selectedOwner='';
+    save();loadMember();renderAll();el('tp-name').focus();
+  });
+  owner.addEventListener('change',()=>{selectedOwner=owner.value;search.value='';renderKit();});
+  search.addEventListener('input',renderKit);
+  el('tp-item-form').addEventListener('submit',event=>{
+    event.preventDefault();
+    const input=el('tp-item-name');const name=input.value.trim();
+    if(!name){showStatus('Indique un nom d’élément.','Enter an item name.');return;}
+    if([...base.flatMap(([,fr,en])=>[fr,en]),...state.catalogue.map(item=>item.name)].some(label=>normal(label)===normal(name))) {
+      showStatus('Cet élément existe déjà dans le catalogue.','This item is already in the catalogue.');return;
+    }
+    const item={id:'custom:'+newId(),name};
+    state.catalogue.push(item);input.value='';
+    search.value='';save();renderKit();renderCustom();renderInventory();
+  });
+
+  window.teamProtection={
+    choices:()=>({teams:order(state.teams).map(({id,name})=>({id,name})),members:order(state.members).map(({id,name,team})=>({id,name,team}))})
+  };
+  window.addEventListener('storage',event=>{
+    if(event.key!==key)return;
+    state=read(event.newValue);
+    if(editingMember&&!member(editingMember))loadMember();
+    if(editingTeam&&!team(editingTeam)){editingTeam='';teamName.value='';}
+    renderAll();window.dispatchEvent(new Event(changes));
+  });
+  new MutationObserver(renderAll).observe(document.documentElement,{attributes:true,attributeFilter:['lang']});
+  renderAll();
+  window.dispatchEvent(new Event(changes));
 })();
 </script>
 
