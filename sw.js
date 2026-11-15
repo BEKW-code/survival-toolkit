@@ -1,5 +1,5 @@
 const CACHE_PREFIX = 'survival-toolkit-app-';
-const CACHE = CACHE_PREFIX + 'v5';
+const CACHE = CACHE_PREFIX + 'v6';
 const scope = new URL(self.registration.scope);
 const url = path => new URL(path, scope).href;
 const shell = url('index.html');
@@ -30,7 +30,7 @@ self.addEventListener('fetch', event => {
     event.respondWith((async () => {
       const cache = await caches.open(CACHE);
       try {
-        const response = await fetch(request, {signal: AbortSignal.timeout(5000)});
+        const response = await fetch(request, {cache: 'no-cache', signal: AbortSignal.timeout(5000)});
         if (response.ok && response.headers.get('content-type')?.includes('text/html')) {
           await cache.put(shell, response.clone()).catch(() => {});
           return response;
