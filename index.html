@@ -70,6 +70,7 @@ summary{grid-template-columns:2.4rem minmax(0,1fr) 1rem}summary h3{overflow-wrap
 
 .tp-grid{grid-template-columns:1fr}.tp-nav{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:.45rem;margin:1rem 0}.tp-nav button{display:flex;justify-content:center;align-items:center;gap:.45rem;min-height:2.75rem;padding:.4rem .45rem;border:1px solid var(--line);background:var(--cream);border-radius:6px;color:var(--ink);font:inherit;font-weight:720;cursor:pointer}.tp-nav button[aria-pressed=true],.tp-primary{background:var(--deep);color:var(--cream);border-color:var(--deep)}.tp-primary{font:inherit;font-weight:730;cursor:pointer;border:1px solid var(--deep);border-radius:5px;padding:.45rem .75rem}.tp-primary:hover,.tp-nav button[aria-pressed=true]:hover{background:var(--accent)}.tp-nav button:not([aria-pressed=true]):hover{background:#ebefdf}.tp-panel-heading{display:flex;align-items:center;justify-content:space-between;gap:.5rem;flex-wrap:wrap}.tp-panel-heading h3{margin:0}.tp-editor,.tp-kit-editor{margin:.8rem 0;padding:.75rem;border:1px solid var(--line);border-radius:7px;background:var(--paper)}.tp-editor h4{margin:0 0 .4rem}.tp-card-browser{border-top:0;margin-top:.55rem;padding-top:0}.tp-cards{grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));align-items:start}.tp-cards li.tp-entity-card{min-height:8rem;display:grid;align-content:start;gap:.2rem}.tp-entity-card .tool-actions{margin-top:.4rem}.tp-entity-card .tool-actions button,.tp-entity-card select{min-height:2.4rem}.tp-entity-card .tp-card-badge{justify-self:start}.tp-card-browser>label{max-width:32rem}.tp-kit-editor>summary{padding:.2rem 0!important}#tp-name,#tp-team-name,#tp-kit-owner{scroll-margin-top:9rem}@media(max-width:500px){.tp-nav{grid-template-columns:repeat(2,minmax(0,1fr))}.tp-card-browser .tool-fields{grid-template-columns:1fr}}
 .tp-cards li.tp-identity-card,.tp-inventory-group{border-left:4px solid var(--team-color);background:color-mix(in srgb,var(--team-color) 13%,var(--cream))}.tp-team-icon{display:inline-grid;place-items:center;width:1.8rem;height:1.8rem;flex:none;color:white;background:var(--team-color);border:1px solid color-mix(in srgb,var(--team-color) 60%,#18231b);border-radius:5px;font-weight:800;text-shadow:0 1px 3px #000,0 0 2px #000}.tp-identity-card .tp-member-head{justify-content:flex-start}.tp-identity-card .tp-member-head h4,.tp-inline-members,.tp-bag-contents{margin:0}.tp-inline-members{display:flex;gap:.3rem;flex-wrap:wrap;list-style:none;padding:0}.tp-inline-members li{border:0!important;padding:0!important}.tp-inline-members button{border-radius:999px;border:1px solid var(--line);padding:.2rem .55rem;font:inherit;background:var(--cream);cursor:pointer}.tp-bag-contents{padding-left:1.1rem}.tp-bag-contents li{border:0;padding:.15rem 0}.tp-inventory-items{margin:.4rem 0 0}.tp-grid input[type=color]{min-height:2.45rem;max-width:12rem;padding:.15rem}#tp-kit-dialog{width:min(42rem,calc(100% - 1.3rem));max-height:88dvh;overflow:auto;border:1px solid var(--line);border-top:5px solid var(--team-color);border-radius:8px;background:var(--cream);color:var(--ink);padding:1rem}#tp-kit-dialog::backdrop{background:rgb(0 0 0 / .55)}#tp-kit-dialog h4{margin:0}#tp-kit-dialog form button{padding:.35rem .55rem;cursor:pointer}#tp-kit-dialog .tp-kit-list{max-height:48dvh}
+.tp-roster-groups{list-style:none;display:grid;gap:1rem;padding:0;margin:.7rem 0}.tp-roster-heading{display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;padding:.4rem .6rem;border-left:4px solid var(--team-color);border-radius:5px;background:color-mix(in srgb,var(--team-color) 13%,var(--cream))}.tp-card-browser .tp-roster-heading h4{margin:0}.tp-roster-group>.tp-cards{margin-top:.4rem}
 </style>
 <link rel="manifest" href="./manifest.webmanifest">
 <link rel="apple-touch-icon" href="./icons/apple-touch-icon.png">
@@ -1030,7 +1031,7 @@ summary{grid-template-columns:2.4rem minmax(0,1fr) 1rem}summary h3{overflow-wrap
 <div class="tool-actions"><button type="submit" id="tp-member-save" ><span lang="fr">Créer l’équipier</span><span lang="en">Create member</span></button><button type="button" id="tp-member-close"><span lang="fr">Fermer la fiche</span><span lang="en">Close profile</span></button><button type="button" id="tp-member-new" hidden><span lang="fr">Nouvelle fiche</span><span lang="en">New profile</span></button><button type="button" id="tp-member-delete" hidden><span lang="fr">Supprimer l’équipier</span><span lang="en">Delete member</span></button></div>
 </form>
 <div class="tp-card-browser" id="tp-member-browser"><div class="tool-fields"><label for="tp-member-search"><span lang="fr">Rechercher par nom ou rôle</span><span lang="en">Search by name or role</span><input type="search" id="tp-member-search" maxlength="100" autocomplete="off"></label><label for="tp-team-filter"><span lang="fr">Afficher les équipiers de</span><span lang="en">Show members of</span><select id="tp-team-filter"></select></label>
-</div><p id="tp-member-count" class="tool-note" role="status"></p><ul id="tp-roster" class="utility-list tp-cards"></ul>
+</div><p id="tp-member-count" class="tool-note" role="status"></p><ul id="tp-roster" class="tp-roster-groups"></ul>
 <p id="tp-roster-empty" class="tool-note" hidden><span lang="fr">Aucun équipier dans cette vue.</span><span lang="en">No members in this view.</span></p>
 </div>
 </section>
@@ -2638,7 +2639,7 @@ for (const button of document.querySelectorAll('[data-quick-group]')) {
       return (teamId==='all' || (person.team||'')===teamId) && query.every(word=>index.includes(word));
     });
     el('tp-member-count').textContent=t(rows.length+' / '+state.members.length+' équipiers',rows.length+' / '+state.members.length+' members');
-    el('tp-roster').replaceChildren(...rows.map(person=>{
+    function cardFor(person) {
       const row=node('li','','tp-roster-row tp-entity-card');
       const title=node('div','','tp-member-head');
       const parent=team(person.team);
@@ -2662,6 +2663,27 @@ for (const button of document.querySelectorAll('[data-quick-group]')) {
       move.addEventListener('change',()=>setTeam(person,move.value));
       label.append(move);row.append(label,actions);
       return row;
+    }
+    const buckets=new Map();
+    for(const person of rows) {
+      const key=team(person.team)?.id||'';
+      if(!buckets.has(key))buckets.set(key,[]);
+      buckets.get(key).push(person);
+    }
+    const groupOrder=[...order(state.teams).map(row=>row.id),''];
+    el('tp-roster').replaceChildren(...groupOrder.filter(id=>buckets.has(id)).map(id=>{
+      const parent=team(id);
+      const people=buckets.get(id);
+      const group=node('li','','tp-roster-group');
+      const heading=node('div','','tp-roster-heading');
+      applyIdentity(group,parent);
+      heading.append(teamIcon(parent),node('h4',parent?.name||t('Sans équipe','Unassigned')));
+      const count=people.length;
+      heading.append(node('span',t(count+(count===1?' équipier':' équipiers'),count+(count===1?' member':' members')),'tp-card-badge'));
+      const cards=node('ul','','utility-list tp-cards');
+      cards.append(...people.map(cardFor));
+      group.append(heading,cards);
+      return group;
     }));
     el('tp-roster-empty').hidden=Boolean(rows.length);
 
