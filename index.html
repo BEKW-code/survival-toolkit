@@ -133,6 +133,10 @@ summary{grid-template-columns:2.4rem minmax(0,1fr) 1rem}summary h3{overflow-wrap
 .journal-subjects span{background:var(--cream);border:1px solid var(--journal-border,#bdccb6);border-radius:999px;padding:.1rem .45rem;font-size:.8rem}
 .journal-event p{white-space:pre-wrap}
 .journal-event .tool-actions{justify-content:flex-end}
+.journal-day,.journal-day-events{display:grid;gap:.75rem;min-width:0}
+.journal-day-events{list-style:none;padding:0;margin:0}
+.journal-day-heading{position:relative;justify-self:start;margin:0;padding:.3rem .7rem;border-radius:999px;background:var(--deep);color:var(--cream);font-size:.92rem;text-transform:capitalize}
+.journal-day-heading::before{content:"";position:absolute;top:50%;left:calc(-1 * (var(--journal-rail) + .65rem) + var(--journal-rail) / 2);width:.65rem;height:.65rem;transform:translate(-50%,-50%);background:var(--deep);border:2px solid var(--cream);box-shadow:0 0 0 1px var(--deep);border-radius:2px}
 #tp-events .tool-fields>label{min-width:0}
 @media(min-width:501px){.tp-nav{grid-template-columns:repeat(5,minmax(0,1fr))}}
 #journal-form .tool-fields>label{min-width:0}
@@ -2335,7 +2339,6 @@ for (const {button, group, options} of quickFilters) {
       status.textContent=t('Sélectionne le texte avec la commande Copier de ton appareil.','Use the Copy command on your device to copy the text.');
     }
   }
-  const dateTime=value=>new Intl.DateTimeFormat(locale(),{dateStyle:'medium',timeStyle:'short'}).format(value);
   function action(label,handler) {
     const button=document.createElement('button');
     button.type='button';button.textContent=label;
@@ -2564,13 +2567,13 @@ for (const {button, group, options} of quickFilters) {
     ].filter(Boolean);
   }
   const latestEvents=()=>[...logs].reverse().sort((a,b)=>b.when-a.when);
-  function journalEvent(item) {
+  function journalEvent(item,clock) {
     const row=block('li','','journal-event');
     row.dataset.kind=Object.hasOwn(journalIcons,item.kind)?item.kind:'observation';
     const point=block('span',journalIcons[row.dataset.kind],'journal-point');
     point.setAttribute('aria-hidden','true');
     const head=block('div','','journal-event-head');
-    const when=block('time',dateTime(item.when));
+    const when=block('time',clock.format(item.when));
     when.dateTime=new Date(item.when).toISOString();
     head.append(block('strong',journalLabel(item.kind)),when);
     row.append(point,head);
@@ -2582,6 +2585,32 @@ for (const {button, group, options} of quickFilters) {
     }
     row.append(block('p',item.note));
     return row;
+  }
+  function renderTimeline(list,items,addActions) {
+    const calendar=new Intl.DateTimeFormat(locale(),{dateStyle:'full'});
+    const clock=new Intl.DateTimeFormat(locale(),{timeStyle:'short'});
+    const days=new Map();
+    const fragment=document.createDocumentFragment();
+    for(const item of items) {
+      const date=new Date(item.when);
+      const day=[date.getFullYear(),date.getMonth()+1,date.getDate()]
+        .map((part,index)=>String(part).padStart(index===0?4:2,'0')).join('-');
+      if(!days.has(day)) {
+        const group=block('li','','journal-day');
+        const heading=block('h4','','journal-day-heading');
+        const label=block('time',calendar.format(date));
+        label.dateTime=day;
+        heading.append(label);
+        const events=block('ol','','journal-day-events');
+        group.append(heading,events);
+        fragment.append(group);
+        days.set(day,events);
+      }
+      const row=journalEvent(item,clock);
+      addActions?.(row,item);
+      days.get(day).append(row);
+    }
+    list.replaceChildren(fragment);
   }
   function renderTeamEvents() {
     const linked=latestEvents().filter(item=>item.teamId||item.memberId);
@@ -2604,7 +2633,7 @@ for (const {button, group, options} of quickFilters) {
     const rows=latestEvents().filter(item=>(item.teamId||item.memberId)
       && (!eventTeam.value||item.teamId===eventTeam.value)
       && (!eventMember.value||item.memberId===eventMember.value));
-    eventList.replaceChildren(...rows.map(journalEvent));
+    renderTimeline(eventList,rows);
     const count=rows.length;
     el('tp-events-status').textContent=count?t(count+(count===1?' événement':' événements'),count+(count===1?' event':' events'))
       : t('Aucun événement associé pour cette sélection.','No linked events for this selection.');
@@ -2616,15 +2645,14 @@ for (const {button, group, options} of quickFilters) {
   });
   function renderJournal() {
     const sorted=latestEvents();
-    journalList.replaceChildren(...sorted.map(item=>{
-      const row=journalEvent(item);
+    renderTimeline(journalList,sorted,(row,item)=>{
       const controls=block('div','','tool-actions');
       controls.append(action(t('Supprimer','Delete'),()=>{
         logs=logs.filter(entry=>entry.id!==item.id);
         journalStatus.textContent='';persist('situation-log',logs,journalStatus);renderJournal();el('journal-note').focus();
       }));
-      row.append(controls);return row;
-    }));
+      row.append(controls);
+    });
     journalExport.value=[t('Journal de situation','Situation log'),...sorted.slice().reverse().map(item=>
       [formatTime(item.when)+' · '+journalLabel(item.kind),...subjectLabels(item),item.note].join('\n'))].join('\n\n');
     journalExport.hidden=true;
