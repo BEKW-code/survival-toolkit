@@ -59,6 +59,7 @@ summary{grid-template-columns:2.4rem minmax(0,1fr) 1rem}summary h3{overflow-wrap
 .tool-choices{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.7rem;margin:1rem 0}.tool-choices button{display:grid;grid-template-columns:2.2rem minmax(0,1fr) auto;align-items:center;gap:.65rem;min-height:3.6rem;border:1px solid var(--line);border-radius:8px;background:var(--cream);color:var(--ink);text-align:left;padding:.5rem .75rem;font:inherit;font-weight:720;cursor:pointer}.tool-icon{display:grid;place-items:center;width:2.2rem;height:2.2rem;border-radius:5px;background:#e7ebda;color:var(--accent);font-weight:800}.tool-arrow{color:var(--accent)}.tool-choices button:hover{border-color:var(--accent);background:#ebefdf}.tool-choices button[aria-expanded=true]{background:var(--deep);color:var(--cream);border-color:var(--deep)}.tool-choices button[aria-expanded=true] .tool-arrow{color:var(--fern);transform:rotate(90deg)}.tool-box{scroll-margin-top:9rem}@media(max-width:560px){.tool-choices{grid-template-columns:1fr;gap:.45rem}}@media print{.tool-choices{display:none}}
 .morse-audio{margin-top:.85rem}.morse-audio select{width:auto}.morse-audio button:not(:disabled){border-color:var(--accent)}.morse-audio button:disabled{cursor:default;opacity:.62}
 .country-matches{list-style:none;display:flex;flex-wrap:wrap;gap:.45rem;margin:.5rem 0;padding:0}.country-matches button{border:1px solid var(--line);background:var(--paper);border-radius:5px;color:var(--ink);font:inherit;padding:.38rem .65rem}.country-matches button:hover{border-color:var(--accent);background:#ebefdf}.country-panel h3{scroll-margin-top:9.5rem}
+.field-timers{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.65rem}.field-timer{border:1px solid var(--line);border-radius:6px;padding:.7rem .8rem;margin-top:.65rem}.field-timer h4{margin:0;font-size:1.05rem}.timer-clock{display:block;font:700 clamp(1.5rem,5vw,2.7rem)/1.15 ui-monospace,monospace;margin:.6rem 0}.trip-fields label:first-child{grid-column:1/-1}#trip-summary,#trip-route{resize:vertical}@media(max-width:650px){.field-timers,.trip-fields{grid-template-columns:1fr}}
 </style>
 <link rel="manifest" href="./manifest.webmanifest">
 <link rel="apple-touch-icon" href="./icons/apple-touch-icon.png">
@@ -445,7 +446,7 @@ summary{grid-template-columns:2.4rem minmax(0,1fr) 1rem}summary h3{overflow-wrap
 </div>
 <section id="tools" data-view="tools" class="wrap toolkit-tools js-only" aria-labelledby="tools-title">
 <h2 id="tools-title"><span lang="fr">Outils pratiques</span><span lang="en">Practical tools</span></h2>
-<p class="zoe-voice zoe-intro"><strong>Zoé</strong> <span lang="fr">On sort le matos : compte ton eau, coche ton sac et prépare les mots à dire aux secours.</span><span lang="en">Gear out: count your water, check your pack and get the words ready for dispatch.</span></p><div class="tool-choices" role="group" aria-label="Choix des outils / Tool selection"><button type="button" data-tool="water-tool" aria-controls="water-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">◉</span><span class="tool-button-label"><span lang="fr">Réserve d’eau</span><span lang="en">Water reserve</span></span><span class="tool-arrow" aria-hidden="true">→</span></button><button type="button" data-tool="checklist-tool" aria-controls="checklist-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">✓</span><span class="tool-button-label"><span lang="fr">Listes de préparation</span><span lang="en">Preparedness checklists</span></span><span class="tool-arrow" aria-hidden="true">→</span></button><button type="button" data-tool="call-tool" aria-controls="call-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">✚</span><span class="tool-button-label"><span lang="fr">Fiche d’appel aux secours</span><span lang="en">Emergency call prompt</span></span><span class="tool-arrow" aria-hidden="true">→</span></button><button type="button" data-tool="morse-tool" aria-controls="morse-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">·−</span><span class="tool-button-label"><span lang="fr">Traducteur morse</span><span lang="en">Morse translator</span></span><span class="tool-arrow" aria-hidden="true">→</span></button></div>
+<p class="zoe-voice zoe-intro"><strong>Zoé</strong> <span lang="fr">On sort le matos : compte ton eau, coche ton sac et prépare les mots à dire aux secours.</span><span lang="en">Gear out: count your water, check your pack and get the words ready for dispatch.</span></p><div class="tool-choices" role="group" aria-label="Choix des outils / Tool selection"><button type="button" data-tool="water-tool" aria-controls="water-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">◉</span><span class="tool-button-label"><span lang="fr">Réserve d’eau</span><span lang="en">Water reserve</span></span><span class="tool-arrow" aria-hidden="true">→</span></button><button type="button" data-tool="checklist-tool" aria-controls="checklist-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">✓</span><span class="tool-button-label"><span lang="fr">Listes de préparation</span><span lang="en">Preparedness checklists</span></span><span class="tool-arrow" aria-hidden="true">→</span></button><button type="button" data-tool="call-tool" aria-controls="call-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">✚</span><span class="tool-button-label"><span lang="fr">Fiche d’appel aux secours</span><span lang="en">Emergency call prompt</span></span><span class="tool-arrow" aria-hidden="true">→</span></button><button type="button" data-tool="morse-tool" aria-controls="morse-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">·−</span><span class="tool-button-label"><span lang="fr">Traducteur morse</span><span lang="en">Morse translator</span></span><span class="tool-arrow" aria-hidden="true">→</span></button><button type="button" data-tool="trip-tool" aria-controls="trip-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">↗</span><span class="tool-button-label"><span lang="fr">Plan de sortie</span><span lang="en">Trip plan</span></span><span class="tool-arrow" aria-hidden="true">→</span></button><button type="button" data-tool="timer-tool" aria-controls="timer-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">◷</span><span class="tool-button-label"><span lang="fr">Minuteurs de terrain</span><span lang="en">Field timers</span></span><span class="tool-arrow" aria-hidden="true">→</span></button><button type="button" data-tool="runtime-tool" aria-controls="runtime-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">≈</span><span class="tool-button-label"><span lang="fr">Calculateur d’autonomie</span><span lang="en">Supply and battery runtime</span></span><span class="tool-arrow" aria-hidden="true">→</span></button></div>
 <div class="tool-grid">
 <article class="tool-box" id="water-tool" aria-labelledby="water-title" hidden>
 <h3 id="water-title"><span lang="fr">Calculateur de réserve d’eau</span><span lang="en">Water reserve calculator</span></h3>
@@ -496,6 +497,52 @@ summary{grid-template-columns:2.4rem minmax(0,1fr) 1rem}summary h3{overflow-wrap
 <p id="morse-audio-status" class="tool-note" role="status"></p>
 <p id="morse-status" class="tool-note" role="status"></p>
 <p class="tool-note"><span lang="fr">Le signal de détresse SOS se transmet d’un seul tenant (···−−−···), sans les pauses entre lettres. L’exemple affiche ce signal en mode décodage.</span><span lang="en">The SOS distress signal is sent as one group (···−−−···), without letter gaps. The example shows that signal in decode mode.</span> <a href="https://www.itu.int/rec/R-REC-M.1677/en"><span lang="fr">Code international UIT-R M.1677</span><span lang="en">International code ITU-R M.1677</span></a></p>
+</article><article id="trip-tool" class="tool-box" aria-labelledby="trip-title" hidden>
+<h3 id="trip-title"><span lang="fr">Plan de sortie à partager</span><span lang="en">Trip plan to share</span></h3>
+<p><span lang="fr">Envoie le plan à un proche avant de partir et convenez ensemble de l’heure d’alerte. Les horaires sont ceux de ton appareil.</span><span lang="en">Send the plan to someone you trust before leaving and agree when they should raise the alarm. Times use your device’s time zone.</span></p>
+<div class="tool-fields trip-fields"><label><span lang="fr">Itinéraire, départ et points de repère</span><span lang="en">Route, trailhead and landmarks</span><textarea id="trip-route" maxlength="1000" rows="3" required></textarea></label><label><span lang="fr">Participants et moyen de contact</span><span lang="en">People and contact details</span><input id="trip-people" type="text" maxlength="300" autocomplete="off"></label><label><span lang="fr">Retour prévu</span><span lang="en">Expected return</span><input id="trip-return" type="datetime-local" required></label><label><span lang="fr">Donner l’alerte si aucune nouvelle à</span><span lang="en">Raise the alarm if there’s no word by</span><input id="trip-alert" type="datetime-local" required></label></div>
+<label class="tool-label" for="trip-summary"><span lang="fr">Plan à relire</span><span lang="en">Review your plan</span></label>
+<textarea id="trip-summary" rows="6" readonly></textarea>
+<div class="tool-actions"><button type="button" id="trip-copy" disabled><span lang="fr">Copier</span><span lang="en">Copy</span></button><button type="button" id="trip-share" disabled hidden><span lang="fr">Partager…</span><span lang="en">Share…</span></button><button type="button" id="trip-clear"><span lang="fr">Effacer</span><span lang="en">Clear</span></button></div>
+<p id="trip-status" role="status" class="tool-note"></p>
+<p class="tool-note"><span lang="fr">Le plan reste dans cette page jusqu’à ce que tu le copies ou le partages.</span><span lang="en">The plan stays on this page until you copy or share it.</span> <a href="https://www.nps.gov/subjects/healthandsafety/trip-planning-guide.htm"><span lang="fr">Plan de sortie · National Park Service</span><span lang="en">Trip planning · National Park Service</span></a></p>
+</article><article id="timer-tool" class="tool-box" aria-labelledby="timer-title" hidden>
+<h3 id="timer-title"><span lang="fr">Minuteurs de terrain</span><span lang="en">Field timers</span></h3>
+<div class="field-timers">
+<section class="field-timer" id="boil-timer" aria-labelledby="boil-title">
+<h4 id="boil-title"><span lang="fr">Ébullition de l’eau</span><span lang="en">Boiling water</span></h4>
+<p><span lang="fr">Lance le chrono dès que l’eau bout à gros bouillons. Maintiens l’ébullition pendant toute la durée.</span><span lang="en">Start when the water reaches a rolling boil. Keep it boiling for the full duration.</span></p>
+<label class="tool-label" for="boil-altitude"><span lang="fr">Altitude du lieu</span><span lang="en">Your elevation</span></label><select id="boil-altitude"><option value="60" data-fr="Jusqu’à 1 980 m d’altitude · 1 min" data-en="Up to 6,500 ft · 1 min">Jusqu’à 1 980 m d’altitude · 1 min</option><option value="180" data-fr="Au-dessus de 1 980 m d’altitude · 3 min" data-en="Above 6,500 ft · 3 min">Au-dessus de 1 980 m d’altitude · 3 min</option></select>
+<output class="timer-clock" id="boil-clock" aria-live="off">01:00</output>
+<p class="tool-note" id="boil-message" role="status"></p>
+<div class="tool-actions"><button type="button" id="boil-start"><span lang="fr">Lancer / relancer</span><span lang="en">Start / restart</span></button><button type="button" id="boil-reset"><span lang="fr">Remettre à zéro</span><span lang="en">Reset</span></button></div>
+<p class="tool-note"><span lang="fr">Si l’ébullition s’interrompt, relance le chrono quand les gros bouillons reprennent.</span><span lang="en">If boiling stops, restart the timer when the rolling boil resumes.</span> <a href="https://www.cdc.gov/water-emergency/about/index.html">CDC</a></p>
+</section>
+<section class="field-timer" id="thunder-timer" aria-labelledby="thunder-title">
+<h4 id="thunder-title"><span lang="fr">Après le tonnerre</span><span lang="en">After thunder</span></h4>
+<p><span lang="fr">Une fois à l’abri, compte au moins 30 minutes depuis le dernier coup de tonnerre. Si tu en entends un autre, repars de zéro.</span><span lang="en">Once sheltered, wait at least 30 minutes after the last thunder. If you hear another rumble, restart the timer.</span></p>
+<output class="timer-clock" id="thunder-clock" aria-live="off">30:00</output>
+<p class="tool-note" id="thunder-message" role="status"></p>
+<div class="tool-actions"><button type="button" id="thunder-start"><span lang="fr">Dernier tonnerre : lancer / relancer</span><span lang="en">Last thunder: start / restart</span></button><button type="button" id="thunder-reset"><span lang="fr">Remettre à zéro</span><span lang="en">Reset</span></button></div>
+<p class="tool-note"><a href="https://www.weather.gov/safety/lightning-tips">National Weather Service</a></p>
+</section></div>
+<p class="tool-note"><span lang="fr">Le temps restant s’actualise quand tu reviens à la page. Sur un écran verrouillé, aucun rappel système n’est prévu.</span><span lang="en">The remaining time updates when you return to the page. There is no lock-screen system alert.</span></p>
+</article><article id="runtime-tool" class="tool-box" aria-labelledby="runtime-title" hidden>
+<h3 id="runtime-title"><span lang="fr">Calculateur d’autonomie</span><span lang="en">Supply and battery runtime</span></h3>
+<section class="field-timer">
+<h4><span lang="fr">Réserve d’eau</span><span lang="en">Water supply</span></h4>
+<div class="tool-fields"><label><span lang="fr">Réserve disponible (L)</span><span lang="en">Water on hand (L)</span><input id="runtime-litres" type="number" min="0" max="100000" step="any" inputmode="decimal" value="20" required></label><label><span lang="fr">Personnes</span><span lang="en">People</span><input id="runtime-people" type="number" min="1" max="500" step="1" inputmode="decimal" value="2" required></label><label><span lang="fr">Consommation par personne et par jour (L)</span><span lang="en">Use per person per day (L)</span><input id="runtime-use" type="number" min="0.01" max="100" step="any" inputmode="decimal" value="3.8" required></label><label><span lang="fr">Autres besoins du groupe par jour (L)</span><span lang="en">Other group needs per day (L)</span><input id="runtime-extra" type="number" min="0" max="10000" step="any" inputmode="decimal" value="0" required></label></div>
+<output class="water-total" id="runtime-water-result"></output>
+<p class="tool-note"><span lang="fr">Ajoute les besoins des animaux, de la cuisine ou du nettoyage s’ils ne sont pas déjà comptés. Le résultat dépend de ta consommation prévue.</span><span lang="en">Add pets, cooking or cleaning if they are not already included. The result is based on your planned usage.</span></p>
+</section>
+<section class="field-timer">
+<h4><span lang="fr">Batterie externe</span><span lang="en">Power bank</span></h4>
+<label class="tool-label" for="runtime-unit"><span lang="fr">Unité indiquée sur la batterie</span><span lang="en">Capacity unit on the battery</span></label>
+<select id="runtime-unit"><option value="wh">Wh</option><option value="mah">mAh</option></select>
+<div class="tool-fields"><label><span lang="fr">Capacité indiquée</span><span lang="en">Rated capacity</span><input id="runtime-capacity" type="number" min="0.01" max="1000000" step="any" inputmode="decimal" value="37" required></label><div id="runtime-voltage-field" hidden><label><span lang="fr">Tension nominale des cellules (V)</span><span lang="en">Nominal cell voltage (V)</span><input id="runtime-voltage" type="number" min="0.1" max="100" step="any" inputmode="decimal" value="3.7" required></label></div><label><span lang="fr">Énergie utilisable estimée (%)</span><span lang="en">Estimated usable energy (%)</span><input id="runtime-efficiency" type="number" min="1" max="100" step="any" inputmode="decimal" value="80" required></label><label><span lang="fr">Consommation moyenne (W)</span><span lang="en">Average load (W)</span><input id="runtime-watts" type="number" min="0.01" max="10000" step="any" inputmode="decimal" value="5" required></label></div>
+<output class="water-total" id="runtime-battery-result"></output>
+<p class="tool-note"><span lang="fr">Les 80 % sont une hypothèse modifiable. En mAh, prends la tension nominale des cellules indiquée sur la batterie. Si tu connais déjà l’énergie mesurée à la sortie en Wh, entre cette valeur et règle l’énergie utilisable à 100 %.</span><span lang="en">80% is an editable assumption. For mAh, use the nominal cell voltage shown on the battery. If you already know measured output energy in Wh, enter it and set usable energy to 100%.</span></p>
+</section>
 </article>
 </div>
 </section>
@@ -1464,6 +1511,140 @@ for (const button of document.querySelectorAll('[data-quick-group]')) {
   new MutationObserver(refreshLanguage).observe(document.documentElement, {attributes:true,attributeFilter:['lang']});
   refreshLanguage();
   readToolLink();
+})();
+</script>
+<script>
+(() => {
+  const el = id => document.getElementById(id);
+  const locale = () => document.documentElement.lang === 'en' ? 'en' : 'fr';
+  const t = (fr,en) => locale() === 'en' ? en : fr;
+  const listen = (ids,event,handler) => ids.forEach(id => el(id).addEventListener(event,handler));
+  const tripFields = ['route','people','return','alert'].map(id => el('trip-'+id));
+  const tripSummary = el('trip-summary');
+  const tripStatus = el('trip-status');
+  const tripCopy = el('trip-copy');
+  const tripShare = el('trip-share');
+  tripShare.hidden = typeof navigator.share !== 'function';
+
+  function updateTrip() {
+    const [route,people,back,alert] = tripFields.map(field => field.value.trim());
+    const returnTime = new Date(back);
+    const alarmTime = new Date(alert);
+    const complete = route && Number.isFinite(+returnTime) && Number.isFinite(+alarmTime);
+    const ordered = complete && +alarmTime >= +returnTime;
+    const format = new Intl.DateTimeFormat(locale(), {year:'numeric',month:'short',day:'numeric',hour:'2-digit',minute:'2-digit',timeZoneName:'short'});
+    tripSummary.value = ordered ? [
+      t('Plan de sortie','Trip plan'),
+      t('Itinéraire : ','Route: ')+route,
+      ...(people ? [t('Participants et contact : ','People and contact: ')+people] : []),
+      t('Retour prévu : ','Expected return: ')+format.format(returnTime),
+      t('Sans nouvelles à cette heure, donner l’alerte : ','If there’s no word by this time, raise the alarm: ')+format.format(alarmTime)
+    ].join('\n') : '';
+    tripCopy.disabled = tripShare.disabled = !ordered;
+    tripStatus.textContent = complete && !ordered
+      ? t('L’heure d’alerte doit être égale ou postérieure à l’heure de retour.','The alarm time must be at or after the expected return.')
+      : '';
+  }
+  tripFields.forEach(field => field.addEventListener('input',updateTrip));
+  el('trip-clear').addEventListener('click', () => {
+    tripFields.forEach(field => { field.value=''; });
+    updateTrip();
+    tripFields[0].focus();
+  });
+  tripCopy.addEventListener('click', async () => {
+    try { await navigator.clipboard.writeText(tripSummary.value); tripStatus.textContent=t('Plan copié.','Plan copied.'); }
+    catch { tripSummary.focus(); tripSummary.select(); tripStatus.textContent=t('Texte sélectionné. Utilise la commande Copier.','Text selected. Use your device’s Copy command.'); }
+  });
+  tripShare.addEventListener('click', async () => {
+    try { await navigator.share({text:tripSummary.value}); }
+    catch (error) { if(error.name!=='AbortError')tripStatus.textContent=t('Le partage n’a pas abouti. Tu peux copier le plan.','Sharing failed. You can copy the plan instead.'); }
+  });
+
+  const timerIds = ['boil','thunder'];
+  const timerState = new Map();
+  function timerKey(id) { return 'survival-toolkit-field-timer-'+id; }
+  for (const id of timerIds) {
+    try {
+      const saved=JSON.parse(localStorage.getItem(timerKey(id)));
+      if(saved && Number.isFinite(saved.deadline) && (id==='boil' ? [60,180].includes(saved.duration) : saved.duration===1800)) timerState.set(id,saved);
+    } catch {}
+  }
+  const altitude=el('boil-altitude');
+  if(timerState.has('boil')) altitude.value=String(timerState.get('boil').duration);
+  function duration(id) { return id==='boil' ? Number(altitude.value) : 1800; }
+  function saveTimer(id,state) {
+    if (state) timerState.set(id,state); else timerState.delete(id);
+    try {
+      if (state) localStorage.setItem(timerKey(id),JSON.stringify(state));
+      else localStorage.removeItem(timerKey(id));
+    } catch {}
+    renderTimer(id);
+  }
+  function renderTimer(id) {
+    const active=timerState.get(id);
+    const seconds=active ? Math.max(0,Math.ceil((active.deadline-Date.now())/1000)) : duration(id);
+    const clock=String(Math.floor(seconds/60)).padStart(2,'0')+':'+String(seconds%60).padStart(2,'0');
+    if(el(id+'-clock').textContent!==clock)el(id+'-clock').textContent=clock;
+    const note=!active ? '' : seconds>0
+      ? t('Décompte en cours.','Timer running.')
+      : id==='boil'
+        ? t('Temps écoulé. Si l’eau a bouilli sans interruption, laisse-la refroidir à couvert.','Time’s up. If the water stayed at a rolling boil, let it cool covered.')
+        : t('30 minutes écoulées. S’il y a eu un autre coup de tonnerre, relance le minuteur et reste à l’abri.','30 minutes elapsed. If you heard any more thunder, restart and stay sheltered.');
+    if(el(id+'-message').textContent!==note)el(id+'-message').textContent=note;
+  }
+  for(const id of timerIds) {
+    el(id+'-start').addEventListener('click',()=>saveTimer(id,{duration:duration(id),deadline:Date.now()+duration(id)*1000}));
+    el(id+'-reset').addEventListener('click',()=>saveTimer(id));
+  }
+  altitude.addEventListener('change',()=>saveTimer('boil'));
+  const renderTimers = () => timerIds.forEach(renderTimer);
+  let timerInterval;
+  function updateTimerTicker() {
+    clearInterval(timerInterval);
+    renderTimers();
+    if(!el('timer-tool').hidden && !el('tools').hidden && !document.hidden)timerInterval=setInterval(renderTimers,250);
+  }
+  new MutationObserver(updateTimerTicker).observe(el('timer-tool'),{attributes:true,attributeFilter:['hidden']});
+  new MutationObserver(updateTimerTicker).observe(el('tools'),{attributes:true,attributeFilter:['hidden']});
+  document.addEventListener('visibilitychange',updateTimerTicker);
+
+  const unit=el('runtime-unit');
+  function getNumber(id) {
+    const node=el(id);
+    return node.validity.valid ? node.valueAsNumber : NaN;
+  }
+  function output(id,value,label) {
+    el(id).textContent=Number.isFinite(value)
+      ? '≈ '+new Intl.NumberFormat(locale(),{maximumSignificantDigits:3}).format(value)+' '+label
+      : t('Renseigne des valeurs valides.','Enter valid values.');
+  }
+  function estimate() {
+    const perDay=getNumber('runtime-people')*getNumber('runtime-use')+getNumber('runtime-extra');
+    output('runtime-water-result',getNumber('runtime-litres')/perDay,t('jours','days'));
+    const inMah=unit.value==='mah';
+    el('runtime-voltage-field').hidden=!inMah;
+    const capacity=getNumber('runtime-capacity');
+    const wattHours=inMah ? capacity*getNumber('runtime-voltage')/1000 : capacity;
+    output('runtime-battery-result',wattHours*getNumber('runtime-efficiency')/100/getNumber('runtime-watts'),t('heures','hours'));
+  }
+  const defaults={wh:37,mah:10000};
+  unit.addEventListener('change',()=>{
+    const capacity=el('runtime-capacity');
+    const voltage=getNumber('runtime-voltage');
+    if(capacity.validity.valid && Number.isFinite(voltage)) capacity.value=String(Number((unit.value==='mah' ? capacity.valueAsNumber*1000/voltage : capacity.valueAsNumber*voltage/1000).toPrecision(8)));
+    else capacity.value=String(defaults[unit.value]);
+    estimate();
+  });
+  listen(['runtime-litres','runtime-people','runtime-use','runtime-extra','runtime-capacity','runtime-voltage','runtime-efficiency','runtime-watts'],'input',estimate);
+  function refresh() {
+    for(const option of altitude.options) option.textContent=option.dataset[locale()];
+    updateTrip();
+    renderTimers();
+    estimate();
+  }
+  new MutationObserver(refresh).observe(document.documentElement,{attributes:true,attributeFilter:['lang']});
+  refresh();
+  updateTimerTicker();
 })();
 </script>
 </body>
