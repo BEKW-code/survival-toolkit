@@ -105,6 +105,9 @@ summary{grid-template-columns:2.4rem minmax(0,1fr) 1rem}summary h3{overflow-wrap
 .compass-face::after{content:"";position:absolute;top:0;left:50%;transform:translateX(-50%);border-left:.52rem solid transparent;border-right:.52rem solid transparent;border-top:.85rem solid #a32832}
 .compass-value{position:absolute;inset:37% 0;text-align:center;display:grid;place-items:center;font-size:clamp(1.25rem,6vw,2rem);font-weight:850;font-variant-numeric:tabular-nums}
 #compass-goal{max-width:10rem}
+.compass-settings{margin:.65rem 0}
+.compass-settings>summary{cursor:pointer;max-width:max-content;padding:.45rem .7rem;border:1px solid var(--line);border-radius:6px;background:var(--cream);font-weight:700}
+.compass-settings details{margin:.55rem 0;padding:.45rem .65rem;border-left:2px solid var(--line)}
 </style>
 </head>
 <body>
@@ -526,6 +529,18 @@ summary{grid-template-columns:2.4rem minmax(0,1fr) 1rem}summary h3{overflow-wrap
 <p class="tool-note"><span lang="fr">Tiens le téléphone à plat et pointe le haut de l’écran devant toi.</span><span lang="en">Hold your phone flat with the top of the screen pointing ahead.</span></p>
 <div class="tool-actions"><button id="compass-start" type="button"><span lang="fr">Activer la boussole</span><span lang="en">Enable compass</span></button><button id="compass-stop" type="button" hidden><span lang="fr">Arrêter</span><span lang="en">Stop</span></button></div>
 <p id="compass-status" class="tool-note" role="status"></p>
+<details id="compass-settings" class="compass-settings">
+  <summary><span lang="fr">⚙ Aide pour les autorisations</span><span lang="en">⚙ Permission help</span></summary>
+  <details id="compass-settings-ios">
+    <summary>iPhone / iPad · Safari</summary>
+    <p><span lang="fr">Si tu as lancé le Toolkit depuis l’icône d’accueil ou depuis une autre app, ouvre cette page directement dans Safari. Dans le menu de la page à gauche de l’adresse, ouvre <strong>Réglages du site web</strong>. Si une autorisation de mouvement ou d’orientation y est proposée, choisis <strong>Demander</strong> ou <strong>Autoriser</strong>. Si elle n’apparaît pas, ferme et rouvre Safari, puis réessaie depuis cette page.</span><span lang="en">If you launched Toolkit from the home screen or another app, open this page directly in Safari. In the page menu to the left of the address, open <strong>Website Settings</strong>. If a motion or orientation permission is listed, choose <strong>Ask</strong> or <strong>Allow</strong>. If it isn’t listed, close and reopen Safari, then try again from this page.</span></p>
+  </details>
+  <details id="compass-settings-android">
+    <summary>Android · Chrome</summary>
+    <p><span lang="fr">Dans Chrome, touche l’icône à gauche de l’adresse, puis <strong>Autorisations</strong>. Si <strong>Capteurs de mouvement</strong> est affiché, autorise-le pour ce site. Sinon, vérifie dans <strong>⋮ → Paramètres → Paramètres des sites → Capteurs de mouvement</strong>.</span><span lang="en">In Chrome, tap the icon to the left of the address, then <strong>Permissions</strong>. If <strong>Motion sensors</strong> is listed, allow it for this site. Otherwise, check <strong>⋮ → Settings → Site settings → Motion sensors</strong>.</span></p>
+  </details>
+  <p class="tool-note"><span lang="fr">Reviens ici et appuie sur <strong>Activer la boussole</strong> pour réessayer.</span><span lang="en">Return here and tap <strong>Enable compass</strong> to try again.</span></p>
+</details>
 <div class="compass-face">
   <div id="compass-card" class="compass-card" aria-hidden="true" hidden><span class="compass-n">N</span><span class="compass-e">E</span><span class="compass-s">S</span><span class="compass-w"><span lang="fr">O</span><span lang="en">W</span></span></div>
   <div id="compass-marker" class="compass-target-mark" aria-hidden="true" hidden></div>
@@ -3066,7 +3081,7 @@ for (const button of document.querySelectorAll('[data-quick-group]')) {
   const events=['deviceorientation','deviceorientationabsolute'];
   const messages={
     waiting:['Recherche du cap…','Waiting for a heading…'],
-    denied:['Accès aux capteurs refusé. Vérifie les autorisations du navigateur.','Sensor access denied. Check your browser permissions.'],
+    denied:['Accès aux capteurs refusé. Ouvre l’aide pour trouver le réglage sur ton téléphone.','Sensor access denied. Open permission help to find the setting on your phone.'],
     unavailable:['Boussole indisponible sur cet appareil ou navigateur.','Compass unavailable on this device or browser.'],
     flat:['Tiens le téléphone à plat, écran vers le ciel.','Hold your phone flat, screen facing up.'],
     active:['Cap mesuré par les capteurs du téléphone.','Heading measured by your phone’s sensors.']
@@ -3075,6 +3090,11 @@ for (const button of document.querySelectorAll('[data-quick-group]')) {
   const wrap=angle=>((angle%360)+360)%360;
   const directions=()=>t(['N','NE','E','SE','S','SO','O','NO'],['N','NE','E','SE','S','SW','W','NW']);
   let session=0, listening=false, message='', heading=null, timer, reading;
+  if(/iPhone|iPad|iPod/i.test(navigator.userAgent) || (navigator.platform==='MacIntel' && navigator.maxTouchPoints>1)) {
+    el('settings-ios').open=true;
+  } else if(/Android/i.test(navigator.userAgent)) {
+    el('settings-android').open=true;
+  }
 
   function render() {
     const status=message?t(...messages[message]):'';
