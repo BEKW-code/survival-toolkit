@@ -133,6 +133,8 @@ summary{grid-template-columns:2.4rem minmax(0,1fr) 1rem}summary h3{overflow-wrap
 .journal-subjects span{background:var(--cream);border:1px solid var(--journal-border,#bdccb6);border-radius:999px;padding:.1rem .45rem;font-size:.8rem}
 .journal-event p{white-space:pre-wrap}
 .journal-event .tool-actions{justify-content:flex-end}
+#tp-events .tool-fields>label{min-width:0}
+@media(min-width:501px){.tp-nav{grid-template-columns:repeat(5,minmax(0,1fr))}}
 #journal-form .tool-fields>label{min-width:0}
 @media(max-width:480px){#journal-form .tool-fields{grid-template-columns:1fr}}
 </style>
@@ -1122,7 +1124,7 @@ summary{grid-template-columns:2.4rem minmax(0,1fr) 1rem}summary h3{overflow-wrap
 <h2 id="tp-title">Teams Protection</h2>
 <p><span lang="fr">Organise tes équipes, leurs fiches de secours et le matériel que chacun emporte.</span><span lang="en">Organize your teams, their emergency information and what each person carries.</span></p>
 <p id="tp-status" class="tool-note" role="status"></p>
-<nav class="tp-nav" aria-label="Teams Protection"><button type="button" data-tp-tab="teams" aria-controls="tp-team-panel" aria-pressed="true"><span aria-hidden="true">▦</span><span lang="fr">Équipes</span><span lang="en">Teams</span></button><button type="button" data-tp-tab="members" aria-controls="tp-profile" aria-pressed="false"><span aria-hidden="true">♙</span><span lang="fr">Équipiers</span><span lang="en">Members</span></button><button type="button" data-tp-tab="kits" aria-controls="tp-kit" aria-pressed="false"><span aria-hidden="true">▣</span><span lang="fr">Sacs</span><span lang="en">Kits</span></button><button type="button" data-tp-tab="inventory" aria-controls="tp-inventory-panel" aria-pressed="false"><span aria-hidden="true">▤</span><span lang="fr">Inventaire</span><span lang="en">Inventory</span></button></nav>
+<nav class="tp-nav" aria-label="Teams Protection"><button type="button" data-tp-tab="teams" aria-controls="tp-team-panel" aria-pressed="true"><span aria-hidden="true">▦</span><span lang="fr">Équipes</span><span lang="en">Teams</span></button><button type="button" data-tp-tab="members" aria-controls="tp-profile" aria-pressed="false"><span aria-hidden="true">♙</span><span lang="fr">Équipiers</span><span lang="en">Members</span></button><button type="button" data-tp-tab="kits" aria-controls="tp-kit" aria-pressed="false"><span aria-hidden="true">▣</span><span lang="fr">Sacs</span><span lang="en">Kits</span></button><button type="button" data-tp-tab="inventory" aria-controls="tp-inventory-panel" aria-pressed="false"><span aria-hidden="true">▤</span><span lang="fr">Inventaire</span><span lang="en">Inventory</span></button><button type="button" data-tp-tab="events" aria-controls="tp-events" aria-pressed="false"><span aria-hidden="true">◉</span><span lang="fr">Événements</span><span lang="en">Events</span></button></nav>
 <div class="tp-grid">
 <section class="tool-box tp-panel" id="tp-team-panel" data-tp-panel="teams" aria-labelledby="tp-teams-title">
 <div class="tp-panel-heading"><h3 id="tp-teams-title"><span lang="fr">Équipes</span><span lang="en">Teams</span></h3><button id="tp-open-team" type="button" class="tp-primary"><span lang="fr">Nouvelle équipe</span><span lang="en">New team</span></button></div>
@@ -1177,6 +1179,16 @@ summary{grid-template-columns:2.4rem minmax(0,1fr) 1rem}summary h3{overflow-wrap
 <label for="tp-inventory-team"><span lang="fr">Équipe à inventorier</span><span lang="en">Team to inventory</span><select id="tp-inventory-team"></select></label>
 <p id="tp-inventory-status" class="tool-note" role="status"></p>
 <ul id="tp-inventory" class="utility-list"></ul>
+</section>
+<section class="tool-box tp-panel" id="tp-events" data-tp-panel="events" aria-labelledby="tp-events-title" hidden>
+<h3 id="tp-events-title"><span lang="fr">Événements</span><span lang="en">Events</span></h3>
+<a href="#journal-tool"><span lang="fr">Ouvrir le Journal de situation</span><span lang="en">Open the situation log</span></a>
+<div class="tool-fields">
+<label for="tp-events-team"><span lang="fr">Équipe</span><span lang="en">Team</span><select id="tp-events-team"></select></label>
+<label for="tp-events-member"><span lang="fr">Équipier</span><span lang="en">Member</span><select id="tp-events-member"></select></label>
+</div>
+<p id="tp-events-status" class="tool-note" role="status"></p>
+<ol id="tp-events-list" class="journal-timeline"></ol>
 </section>
 </div>
 </section>
@@ -2519,10 +2531,15 @@ for (const {button, group, options} of quickFilters) {
 
   const journalStatus=el('journal-status'), journalList=el('journal-list'), journalKind=el('journal-kind');
   const journalTeam=el('journal-team'), journalMember=el('journal-member');
+  const eventTeam=el('tp-events-team'), eventMember=el('tp-events-member'), eventList=el('tp-events-list');
   const journalIcons={observation:'●',movement:'➜',instruction:'☷',incident:'!'};
   const journalPeople=()=>window.teamProtection?.choices() || {teams:[],members:[]};
-  const savedJournal=load('situation-log',[]);
-  let logs=Array.isArray(savedJournal)?savedJournal.filter(item=>typeof item?.note==='string'&&typeof item.id==='string'&&Number.isFinite(item.when)&&!isNaN(new Date(item.when))):[];
+  function readJournal() {
+    const saved=load('situation-log',[]);
+    return Array.isArray(saved)?saved.filter(item=>typeof item?.note==='string'&&typeof item.id==='string'
+      && Number.isFinite(item.when)&&!isNaN(new Date(item.when))):[];
+  }
+  let logs=readJournal();
   const journalExport=el('journal-export');
   function journalLabel(kind) {
     return Array.from(journalKind.options).find(option=>option.value===kind)?.dataset[locale()] || t('Entrée','Entry');
@@ -2539,32 +2556,68 @@ for (const {button, group, options} of quickFilters) {
     journalMember.value=available.some(person=>person.id===memberId)?memberId:'';
   }
   journalTeam.addEventListener('change',journalSubjects);
-  window.addEventListener('teamsprotectionchange',journalSubjects);
+  window.addEventListener('teamsprotectionchange',()=>{journalSubjects();renderTeamEvents();});
   function subjectLabels(item) {
     return [
       typeof item.teamName==='string' && item.teamName?t('Équipe · ','Team · ')+item.teamName:'',
       typeof item.memberName==='string' && item.memberName?t('Équipier · ','Member · ')+item.memberName:''
     ].filter(Boolean);
   }
-  function renderJournal() {
-    const sorted=[...logs].reverse().sort((a,b)=>b.when-a.when);
-    journalList.replaceChildren(...sorted.map(item=>{
-      const row=block('li','','journal-event');
-      row.dataset.kind=Object.hasOwn(journalIcons,item.kind)?item.kind:'observation';
-      const point=block('span',journalIcons[row.dataset.kind],'journal-point');
-      point.setAttribute('aria-hidden','true');
-      const head=block('div','','journal-event-head');
-      const when=block('time',dateTime(item.when));
-      when.dateTime=new Date(item.when).toISOString();
-      head.append(block('strong',journalLabel(item.kind)),when);
-      row.append(point,head);
-      const subjects=subjectLabels(item);
-      if(subjects.length) {
-        const badges=block('div','','journal-subjects');
-        badges.append(...subjects.map(label=>block('span',label)));
-        row.append(badges);
+  const latestEvents=()=>[...logs].reverse().sort((a,b)=>b.when-a.when);
+  function journalEvent(item) {
+    const row=block('li','','journal-event');
+    row.dataset.kind=Object.hasOwn(journalIcons,item.kind)?item.kind:'observation';
+    const point=block('span',journalIcons[row.dataset.kind],'journal-point');
+    point.setAttribute('aria-hidden','true');
+    const head=block('div','','journal-event-head');
+    const when=block('time',dateTime(item.when));
+    when.dateTime=new Date(item.when).toISOString();
+    head.append(block('strong',journalLabel(item.kind)),when);
+    row.append(point,head);
+    const subjects=subjectLabels(item);
+    if(subjects.length) {
+      const badges=block('div','','journal-subjects');
+      badges.append(...subjects.map(label=>block('span',label)));
+      row.append(badges);
+    }
+    row.append(block('p',item.note));
+    return row;
+  }
+  function renderTeamEvents() {
+    const linked=latestEvents().filter(item=>item.teamId||item.memberId);
+    const {teams,members}=journalPeople();
+    function filterOptions(select,people,idKey,nameKey,placeholder) {
+      const current=select.value;
+      const labels=new Map(people.map(({id,name})=>[id,name]));
+      for(const item of linked) {
+        if(item[idKey] && !labels.has(item[idKey]) && item[nameKey])labels.set(item[idKey],item[nameKey]);
       }
-      row.append(block('p',item.note));
+      const options=[...labels].sort((a,b)=>a[1].localeCompare(b[1],locale()));
+      select.replaceChildren(new Option(placeholder,''),...options.map(([id,name])=>new Option(name,id)));
+      select.value=labels.has(current)?current:'';
+    }
+    filterOptions(eventTeam,teams,'teamId','teamName',t('Toutes les équipes','All teams'));
+    filterOptions(eventMember,members,'memberId','memberName',t('Tous les équipiers','All members'));
+    showTeamEvents();
+  }
+  function showTeamEvents() {
+    const rows=latestEvents().filter(item=>(item.teamId||item.memberId)
+      && (!eventTeam.value||item.teamId===eventTeam.value)
+      && (!eventMember.value||item.memberId===eventMember.value));
+    eventList.replaceChildren(...rows.map(journalEvent));
+    const count=rows.length;
+    el('tp-events-status').textContent=count?t(count+(count===1?' événement':' événements'),count+(count===1?' event':' events'))
+      : t('Aucun événement associé pour cette sélection.','No linked events for this selection.');
+  }
+  for(const select of [eventTeam,eventMember])select.addEventListener('change',showTeamEvents);
+  window.addEventListener('storage',event=>{
+    if(event.key!==key('situation-log') && event.key!==null)return;
+    logs=readJournal();renderJournal();
+  });
+  function renderJournal() {
+    const sorted=latestEvents();
+    journalList.replaceChildren(...sorted.map(item=>{
+      const row=journalEvent(item);
       const controls=block('div','','tool-actions');
       controls.append(action(t('Supprimer','Delete'),()=>{
         logs=logs.filter(entry=>entry.id!==item.id);
@@ -2577,6 +2630,7 @@ for (const {button, group, options} of quickFilters) {
     journalExport.hidden=true;
     el('journal-empty').hidden=Boolean(logs.length);
     el('journal-copy').disabled=!logs.length;
+    renderTeamEvents();
   }
   el('journal-form').addEventListener('submit',event=>{
     event.preventDefault();
