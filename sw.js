@@ -1,5 +1,5 @@
 const CACHE_PREFIX = 'survival-toolkit-app-';
-const CACHE = CACHE_PREFIX + 'v19';
+const CACHE = CACHE_PREFIX + 'v20';
 const scope = new URL(self.registration.scope);
 const url = path => new URL(path, scope).href;
 const shell = url('index.html');
