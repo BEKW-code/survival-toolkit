@@ -72,9 +72,9 @@ summary{grid-template-columns:2.4rem minmax(0,1fr) 1rem}summary h3{overflow-wrap
 .tp-cards li.tp-identity-card,.tp-inventory-group{border-left:4px solid var(--team-color);background:color-mix(in srgb,var(--team-color) 13%,var(--cream))}.tp-team-icon{display:inline-grid;place-items:center;width:1.8rem;height:1.8rem;flex:none;color:white;background:var(--team-color);border:1px solid color-mix(in srgb,var(--team-color) 60%,#18231b);border-radius:5px;font-weight:800;text-shadow:0 1px 3px #000,0 0 2px #000}.tp-identity-card .tp-member-head{justify-content:flex-start}.tp-identity-card .tp-member-head h4,.tp-inline-members,.tp-bag-contents{margin:0}.tp-inline-members{display:flex;gap:.3rem;flex-wrap:wrap;list-style:none;padding:0}.tp-inline-members li{border:0!important;padding:0!important}.tp-inline-members button{border-radius:999px;border:1px solid var(--line);padding:.2rem .55rem;font:inherit;background:var(--cream);cursor:pointer}.tp-bag-contents{padding-left:1.1rem}.tp-bag-contents li{border:0;padding:.15rem 0}.tp-inventory-items{margin:.4rem 0 0}.tp-grid input[type=color]{min-height:2.45rem;max-width:12rem;padding:.15rem}#tp-kit-dialog{width:min(42rem,calc(100% - 1.3rem));max-height:88dvh;overflow:auto;border:1px solid var(--line);border-top:5px solid var(--team-color);border-radius:8px;background:var(--cream);color:var(--ink);padding:1rem}#tp-kit-dialog::backdrop{background:rgb(0 0 0 / .55)}#tp-kit-dialog h4{margin:0}#tp-kit-dialog form button{padding:.35rem .55rem;cursor:pointer}#tp-kit-dialog .tp-kit-list{max-height:48dvh}
 .tp-roster-groups{list-style:none;display:grid;gap:1rem;padding:0;margin:.7rem 0}.tp-roster-heading{display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;padding:.4rem .6rem;border-left:4px solid var(--team-color);border-radius:5px;background:color-mix(in srgb,var(--team-color) 13%,var(--cream))}.tp-card-browser .tp-roster-heading h4{margin:0}.tp-roster-group>.tp-cards{margin-top:.4rem}
 
-#teams-protection{--tp-card-height:15rem;--tp-card-min-width:260px}
+#teams-protection{--tp-card-min-width:260px}
 #tp-team-cards,.tp-roster-group>.tp-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,var(--tp-card-min-width)),1fr));gap:.55rem;align-items:start}
-#tp-team-cards>.tp-team-card,.tp-roster-group>.tp-cards>.tp-roster-row{box-sizing:border-box;block-size:var(--tp-card-height);min-block-size:0;min-inline-size:0;overflow:auto;scrollbar-gutter:stable;overscroll-behavior:contain;align-content:start}
+#tp-team-cards>.tp-team-card,.tp-roster-group>.tp-cards>.tp-roster-row{box-sizing:border-box;min-block-size:var(--tp-card-height,8rem);min-inline-size:0;align-content:start}
 
 </style>
 <link rel="manifest" href="./manifest.webmanifest">
@@ -2505,9 +2505,31 @@ for (const button of document.querySelectorAll('[data-quick-group]')) {
   const memberEditor=el('tp-member-form');
   const tabs=[...document.querySelectorAll('[data-tp-tab]')];
   const panels=[...document.querySelectorAll('[data-tp-panel]')];
+  const teamCards=el('tp-team-cards'), rosterCards=el('tp-roster');
+  function matchCardHeights(list,selector) {
+    list.style.removeProperty('--tp-card-height');
+    if(!list.clientWidth)return;
+    let height=0;
+    for(const card of list.querySelectorAll(selector)) {
+      height=Math.max(height,card.getBoundingClientRect().height);
+    }
+    if(height)list.style.setProperty('--tp-card-height',height+'px');
+  }
+  const cardWidths=new WeakMap();
+  const cardObserver=new ResizeObserver(entries=>{
+    for(const {target,contentRect} of entries) {
+      if(cardWidths.get(target)===contentRect.width)continue;
+      cardWidths.set(target,contentRect.width);
+      matchCardHeights(target,target===teamCards?'.tp-team-card':'.tp-roster-row');
+    }
+  });
+  cardObserver.observe(teamCards);
+  cardObserver.observe(rosterCards);
   function showPanel(id) {
     for(const panel of panels)panel.hidden=panel.dataset.tpPanel!==id;
     for(const button of tabs)button.setAttribute('aria-pressed',String(button.dataset.tpTab===id));
+    if(id==='teams')matchCardHeights(teamCards,'.tp-team-card');
+    if(id==='members')matchCardHeights(rosterCards,'.tp-roster-row');
   }
   for(const button of tabs)button.addEventListener('click',()=>showPanel(button.dataset.tpTab));
   el('tp-open-team').addEventListener('click',()=>{
@@ -2700,6 +2722,7 @@ for (const button of document.querySelectorAll('[data-quick-group]')) {
       return card;
     }));
     if(!rows.length)el('tp-team-cards').append(node('li',t('Aucune équipe dans cette vue.','No teams in this view.'),'tool-note'));
+    matchCardHeights(teamCards,'.tp-team-card');
   }
   function renderRoster() {
     const teamId=filter.value;
@@ -2757,6 +2780,7 @@ for (const button of document.querySelectorAll('[data-quick-group]')) {
       return group;
     }));
     el('tp-roster-empty').hidden=Boolean(rows.length);
+    matchCardHeights(rosterCards,'.tp-roster-row');
 
   }
   function loadMember(person) {
