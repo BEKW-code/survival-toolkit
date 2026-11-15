@@ -80,6 +80,21 @@ summary{grid-template-columns:2.4rem minmax(0,1fr) 1rem}summary h3{overflow-wrap
 <link rel="manifest" href="./manifest.webmanifest">
 <link rel="apple-touch-icon" href="./icons/apple-touch-icon.png">
 <meta name="theme-color" content="#202d24">
+<style>
+#teams-protection .tp-person-pill{display:inline-flex;align-items:center;gap:.35rem;max-width:100%;text-align:left;overflow-wrap:anywhere;border:1px solid color-mix(in srgb,var(--team-color),var(--line) 45%);border-radius:999px;padding:.2rem .55rem;background:color-mix(in srgb,var(--team-color) 17%,var(--cream));color:var(--ink);font:inherit;cursor:pointer}
+#teams-protection .tp-person-pill:hover{border-color:var(--team-color);text-decoration:underline}
+#teams-protection .tp-person-pill .tp-team-icon{flex:none;width:1.45rem;height:1.45rem;font-size:.85rem}
+#teams-protection .tp-owner-pills{display:flex;flex-wrap:wrap;gap:.35rem;margin-top:.45rem}
+#teams-protection .tp-quantity{display:inline-grid;place-items:center;flex:none;box-sizing:border-box;min-width:2em;min-height:2em;padding:0 .28em;border-radius:999px;background:var(--quantity-color);color:#101714;font-size:.8rem;font-weight:800;font-variant-numeric:tabular-nums}
+#teams-protection .tp-person-pill .tp-quantity{--quantity-color:color-mix(in srgb,var(--team-color),white 43%)}
+#teams-protection .tp-item{--quantity-color:color-mix(in srgb,var(--item-color),white 47%);background:color-mix(in srgb,var(--item-color) 17%,var(--cream));border:1px solid color-mix(in srgb,var(--item-color),var(--line) 58%);border-radius:.65rem;padding:.35rem .5rem}
+#teams-protection .tp-item-label{display:flex;align-items:center;gap:.4rem;min-width:0;overflow-wrap:anywhere}
+#teams-protection .tp-item-label .tp-quantity{margin-inline-start:auto}
+#teams-protection .tp-item-label [aria-hidden="true"]{flex:none}
+#teams-protection .tp-bag-contents{list-style:none;padding:0}
+#teams-protection .tp-bag-contents li + li{margin-top:.3rem}
+#teams-protection .tp-visually-hidden{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:pre}
+</style>
 </head>
 <body>
 <header class="top"><div class="wrap"><a href="#survival-guides" class="mark">Survival Toolkit</a><nav class="view-menu" aria-label="Sections"><a href="#survival-guides" data-view-link="survival-guides" aria-current="page"><span lang="fr">Guides de survie</span><span lang="en">Survival guides</span></a><a href="#tools" data-view-link="tools"><span lang="fr">Outils</span><span lang="en">Tools</span></a><a href="#emergency-numbers" data-view-link="emergency-numbers"><span lang="fr">Numéros de secours</span><span lang="en">Emergency numbers</span></a><a href="#teams-protection" data-view-link="teams-protection">Teams Protection</a></nav><div class="top-actions"><button id="zoe-mode" class="zoe-mode" type="button" aria-pressed="false" aria-describedby="zoe-mode-help"><span lang="fr">Voix de Zoé</span><span lang="en">Zoé’s voice</span><span class="zoe-switch" aria-hidden="true"></span></button><span id="zoe-mode-help" class="sr-only"><span lang="fr">Remplace les explications classiques par la version de Zoé.</span><span lang="en">Switch the guide instructions to Zoé’s version.</span></span><nav class="language-menu" aria-label="Langue / Language"><button type="button" id="install-app" class="install-app"><span lang="fr">Installer</span><span lang="en">Install</span></button><a href="?lang=fr" hreflang="fr" lang="fr" aria-current="true">FR</a><a href="?lang=en" hreflang="en" lang="en">EN</a></nav></div></div></header>
@@ -1053,6 +1068,7 @@ summary{grid-template-columns:2.4rem minmax(0,1fr) 1rem}summary h3{overflow-wrap
 </dialog>
 <details class="tp-kit-editor"><summary><span lang="fr">Ajouter un élément au catalogue</span><span lang="en">Add a catalogue item</span></summary><form id="tp-item-form">
 <label for="tp-item-name"><span lang="fr">Nouvel élément pour le catalogue</span><span lang="en">New catalogue item</span><input id="tp-item-name" type="text" maxlength="80" autocomplete="off" required></label>
+<label for="tp-item-category"><span lang="fr">Catégorie</span><span lang="en">Category</span><select id="tp-item-category"></select></label>
 <div class="tool-actions"><button type="submit" id="tp-item-add" ><span lang="fr">Ajouter au catalogue</span><span lang="en">Add to catalogue</span></button></div>
 </form></details>
 <details id="tp-custom-details"><summary><span lang="fr">Éléments personnalisés</span><span lang="en">Custom items</span></summary><ul id="tp-custom-list" class="utility-list"></ul></details>
@@ -2466,6 +2482,18 @@ for (const button of document.querySelectorAll('[data-quick-group]')) {
   const locale=()=>document.documentElement.lang==='en'?'en':'fr';
   const t=(fr,en)=>locale()==='en'?en:fr;
   const base=[["water","Eau potable","Drinking water"],["bottle","Gourde","Water bottle"],["filter","Filtre à eau","Water filter"],["tablets","Pastilles de traitement de l’eau","Water purification tablets"],["food","Rations","Food rations"],["aid","Trousse de premiers secours","First-aid kit"],["bandage","Pansements ou compresses","Dressings or gauze"],["blanket","Couverture de survie","Emergency blanket"],["lamp","Lampe frontale ou torche","Headlamp or flashlight"],["batteries","Piles de rechange","Spare batteries"],["power","Batterie externe","Power bank"],["radio","Radio","Radio"],["whistle","Sifflet","Whistle"],["map","Carte papier","Paper map"],["compass","Boussole","Compass"],["tarp","Bâche ou abri","Tarp or shelter"],["cord","Cordelette","Cordage"],["warm","Vêtement chaud","Warm layer"],["rain","Protection pluie","Rain gear"],["gloves","Gants de protection","Protective gloves"],["mask","Masque filtrant","Particulate mask"],["hygiene","Kit d’hygiène","Hygiene kit"],["multitool","Outil multifonction","Multitool"],["notebook","Carnet et crayon","Notebook and pencil"],["fire","Briquet ou allumettes étanches","Lighter or waterproof matches"],["documents","Pochette de documents","Document pouch"]];
+  const itemCategories={
+    water:['Eau','Water','💧','#439ddc',['water','bottle','filter','tablets']],
+    food:['Nourriture','Food','🍎','#75aa4a',['food']],
+    care:['Soins','First aid','✚','#dc637f',['aid','bandage']],
+    hygiene:['Hygiène','Hygiene','🧼','#38b2aa',['hygiene']],
+    tools:['Outils et feu','Tools and fire','🔧','#e99d4e',['cord','multitool','fire']],
+    shelter:['Abri et protection','Shelter and protection','⛺','#b68ded',['blanket','tarp','warm','rain','gloves','mask']],
+    power:['Éclairage et énergie','Lighting and power','🔋','#d6b73c',['lamp','batteries','power']],
+    navigation:['Orientation et signalement','Navigation and signalling','🧭','#7794e8',['radio','whistle','map','compass']],
+    other:['Divers et documents','Other and documents','📦','#9caab6',['notebook','documents']]
+  };
+  const baseCategories=new Map(Object.entries(itemCategories).flatMap(([category,[,,,,ids]])=>ids.map(id=>[id,category])));
   const key='survival-toolkit-teams-protection-v1';
   const changes='teamsprotectionchange';
   const empty=()=>({teams:[],members:[],catalogue:[]});
@@ -2555,7 +2583,7 @@ for (const button of document.querySelectorAll('[data-quick-group]')) {
   function showStatus(fr,en) {status.textContent=t(fr,en);}
   function order(items) {return [...items].sort((a,b)=>a.name.localeCompare(b.name,locale()));}
   function catalogue() {
-    return order([...base.map(([id,fr,en])=>({id:'base:'+id,name:t(fr,en)})),...state.catalogue]);
+    return order([...base.map(([id,fr,en])=>({id:'base:'+id,name:t(fr,en),category:baseCategories.get(id)})),...state.catalogue]);
   }
   function normal(value) {return value.trim().toLowerCase().normalize('NFD').replace(/\p{M}/gu,'');}
   function quantity(person,id) {
@@ -2580,6 +2608,46 @@ for (const button of document.querySelectorAll('[data-quick-group]')) {
   function options(select,entries,selected=select.value) {
     select.replaceChildren(...entries.map(([id,name])=>new Option(name,id)));
     if(entries.some(([id])=>id===selected))select.value=selected;
+  }
+  function categoryOf(item) {
+    return Object.hasOwn(itemCategories,item.category)?item.category:'other';
+  }
+  function categoryOptions(select,selected) {
+    options(select,Object.entries(itemCategories).map(([id,[fr,en]])=>[id,t(fr,en)]),selected);
+  }
+  function addQuantity(label,qty) {
+    label.append(node('span',' × ','tp-visually-hidden'),node('span',String(qty),'tp-quantity'));
+  }
+  function itemLabel(row,item,qty) {
+    const category=categoryOf(item);
+    const [fr,en,icon,color]=itemCategories[category];
+    row.classList.add('tp-item');
+    row.dataset.itemCategory=category;
+    row.style.setProperty('--item-color',color);
+    const label=node('span','','tp-item-label');
+    const mark=node('span',icon);
+    mark.setAttribute('aria-hidden','true');
+    mark.title=t(fr,en);
+    label.append(mark,node('span',t(fr,en)+': ','tp-visually-hidden'),node('strong',item.name));
+    if(qty!==undefined)addQuantity(label,qty);
+    return label;
+  }
+  function openProfile(person,fromRoster=false) {
+    if(!fromRoster) {
+      filter.value=team(person.team)?.id||'';el('tp-member-search').value='';renderRoster();
+    }
+    showPanel('members');
+    loadMember(person);memberEditor.hidden=false;el('tp-name').focus();
+  }
+  function personPill(person,qty,fromRoster=false) {
+    const parent=team(person.team);
+    const pill=button('',()=>openProfile(person,fromRoster));
+    pill.className='tp-person-pill';
+    pill.style.setProperty('--team-color',identity(parent).color);
+    pill.title=t('Ouvrir la fiche de ','Open profile for ')+person.name;
+    pill.append(teamIcon(parent),node('span',person.name));
+    if(qty!==undefined)addQuantity(pill,qty);
+    return pill;
   }
   function teamsOptions(blankLabel=t('Sans équipe','Unassigned')) {
     return [['',blankLabel],...order(state.teams).map(row=>[row.id,row.name])];
@@ -2622,10 +2690,7 @@ for (const button of document.querySelectorAll('[data-quick-group]')) {
       const roster=node('ul','','tp-inline-members');
       for(const person of people) {
         const li=node('li');
-        li.append(button(person.name,()=>{
-          filter.value=row.id;el('tp-member-search').value='';renderRoster();showPanel('members');
-          loadMember(person);memberEditor.hidden=false;el('tp-name').focus();
-        }));
+        li.append(personPill(person));
         roster.append(li);
       }
       card.append(head);
@@ -2649,7 +2714,8 @@ for (const button of document.querySelectorAll('[data-quick-group]')) {
       const title=node('div','','tp-member-head');
       const parent=team(person.team);
       applyIdentity(row,parent);
-      title.append(teamIcon(parent),node('h5',person.name));
+      const name=node('h5');
+      name.append(personPill(person,undefined,true));title.append(name);
       const actions=node('div','','tool-actions');
       actions.append(button(t('Ouvrir la fiche','Open profile'),()=>{
         loadMember(person);memberEditor.hidden=false;el('tp-name').focus();
@@ -2726,12 +2792,15 @@ for (const button of document.querySelectorAll('[data-quick-group]')) {
       const card=node('li','','tp-entity-card tp-bag-card');
       applyIdentity(card,parent);
       const heading=node('div','','tp-member-head');
-      heading.append(teamIcon(parent),node('h4',person.name));
+      const name=node('h4');
+      name.append(personPill(person));heading.append(name);
       card.append(heading,node('p',parent?.name||t('Sans équipe','Unassigned'),'tool-note'));
       const contents=node('ul','','tp-bag-contents');
       for(const item of items) {
         const qty=quantity(person,item.id);
-        if(qty)contents.append(node('li',item.name+' × '+qty));
+        if(!qty)continue;
+        const line=node('li');
+        line.append(itemLabel(line,item,qty));contents.append(line);
       }
       if(contents.children.length)card.append(contents);
       else card.append(node('p',t('Sac vide.','Empty kit.'),'tool-note'));
@@ -2765,7 +2834,7 @@ for (const button of document.querySelectorAll('[data-quick-group]')) {
     list.replaceChildren(...entries.map(item=>{
       const row=node('li'), label=node('label'), checkbox=node('input'), qty=node('input');
       checkbox.type='checkbox';checkbox.checked=quantity(person,item.id)>0;
-      label.append(checkbox,node('span',item.name));
+      label.append(checkbox,itemLabel(row,item));
       qty.type='number';qty.min='1';qty.max='9999';qty.step='1';qty.value=String(quantity(person,item.id)||1);qty.disabled=!checkbox.checked;
       qty.setAttribute('aria-label',t('Quantité : ','Quantity: ')+item.name);
       checkbox.addEventListener('change',()=>{
@@ -2786,7 +2855,17 @@ for (const button of document.querySelectorAll('[data-quick-group]')) {
     const list=el('tp-custom-list');
     list.replaceChildren(...order(state.catalogue).map(item=>{
       const row=node('li','','tp-member-head');
-      row.append(node('strong',item.name),button(t('Supprimer du catalogue','Delete from catalogue'),()=>{
+      const select=node('select');
+      let label=itemLabel(row,item);
+      select.setAttribute('aria-label',t('Catégorie de ','Category for ')+item.name);
+      categoryOptions(select,categoryOf(item));
+      select.addEventListener('change',()=>{
+        item.category=select.value;
+        const updatedLabel=itemLabel(row,item);
+        label.replaceWith(updatedLabel);label=updatedLabel;
+        save();renderKit();renderBagCards();renderInventory();
+      });
+      row.append(label,select,button(t('Supprimer du catalogue','Delete from catalogue'),()=>{
         const used=state.members.filter(person=>quantity(person,item.id)).length;
         const question=used?t('Supprimer « '+item.name+' » du catalogue et de '+used+' sac(s) ?','Delete “'+item.name+'” from the catalogue and '+used+' kit(s)?'):t('Supprimer « '+item.name+' » du catalogue ?','Delete “'+item.name+'” from the catalogue?');
         if(!window.confirm(question))return;
@@ -2821,8 +2900,10 @@ for (const button of document.querySelectorAll('[data-quick-group]')) {
       const entries=node('ul','','utility-list tp-inventory-items');
       for(const {item,owners} of totals) {
         const line=node('li');
-        line.append(node('strong',item.name+' × '+owners.reduce((sum,[,qty])=>sum+qty,0)));
-        line.append(node('p',owners.map(([person,qty])=>person.name+' × '+qty).join('\n'),'tp-owner-list'));
+        line.append(itemLabel(line,item,owners.reduce((sum,[,qty])=>sum+qty,0)));
+        const people=node('div','','tp-owner-pills');
+        people.append(...owners.map(([person,qty])=>personPill(person,qty)));
+        line.append(people);
         entries.append(line);
       }
       card.append(entries);
@@ -2837,6 +2918,8 @@ for (const button of document.querySelectorAll('[data-quick-group]')) {
     renderOwners();
   }
   function renderAll() {
+    const category=el('tp-item-category');
+    categoryOptions(category,category.value||'other');
     for(const choice of iconField.options)choice.textContent=choice.dataset[locale()];
     renderMenus();renderTeamCards();renderRoster();renderKit();renderBagCards();renderCustom();renderInventory();
     el('tp-team-save').textContent=editingTeam?t('Enregistrer le nom','Save team name'):t('Créer l’équipe','Create team');
@@ -2906,7 +2989,7 @@ for (const button of document.querySelectorAll('[data-quick-group]')) {
     if([...base.flatMap(([,fr,en])=>[fr,en]),...state.catalogue.map(item=>item.name)].some(label=>normal(label)===normal(name))) {
       showStatus('Cet élément existe déjà dans le catalogue.','This item is already in the catalogue.');return;
     }
-    const item={id:'custom:'+newId(),name};
+    const item={id:'custom:'+newId(),name,category:el('tp-item-category').value};
     state.catalogue.push(item);input.value='';
     search.value='';save();renderKit();renderBagCards();renderCustom();renderInventory();
   });
