@@ -60,6 +60,7 @@ summary{grid-template-columns:2.4rem minmax(0,1fr) 1rem}summary h3{overflow-wrap
 .morse-audio{margin-top:.85rem}.morse-audio select{width:auto}.morse-audio button:not(:disabled){border-color:var(--accent)}.morse-audio button:disabled{cursor:default;opacity:.62}
 .country-matches{list-style:none;display:flex;flex-wrap:wrap;gap:.45rem;margin:.5rem 0;padding:0}.country-matches button{border:1px solid var(--line);background:var(--paper);border-radius:5px;color:var(--ink);font:inherit;padding:.38rem .65rem}.country-matches button:hover{border-color:var(--accent);background:#ebefdf}.country-panel h3{scroll-margin-top:9.5rem}
 .field-timers{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.65rem}.field-timer{border:1px solid var(--line);border-radius:6px;padding:.7rem .8rem;margin-top:.65rem}.field-timer h4{margin:0;font-size:1.05rem}.timer-clock{display:block;font:700 clamp(1.5rem,5vw,2.7rem)/1.15 ui-monospace,monospace;margin:.6rem 0}.trip-fields label:first-child{grid-column:1/-1}#trip-summary,#trip-route{resize:vertical}@media(max-width:650px){.field-timers,.trip-fields{grid-template-columns:1fr}}
+.clock-builder{padding:.8rem;background:var(--paper);border:1px solid var(--line);border-radius:7px}.clock-builder .tool-fields{margin-top:0}.clock-duration{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.55rem}.clock-duration label{font-size:.88rem}.clock-list{list-style:none;margin:1rem 0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:.65rem}.clock-entry{padding:.75rem;border:1px solid var(--line);border-radius:7px;background:var(--cream)}.clock-entry[data-running=true]{border-left:4px solid var(--accent)}.clock-entry[data-finished=true]{border-left:4px solid var(--rust)}.clock-entry .clock-name{background:#f1efdf;font-weight:730}.clock-entry .tool-note{margin:.4rem 0 0}.clock-entry .timer-clock{font-size:clamp(1.45rem,4.2vw,2rem)}@media(max-width:420px){.clock-builder .tool-fields{grid-template-columns:1fr}}
 </style>
 <link rel="manifest" href="./manifest.webmanifest">
 <link rel="apple-touch-icon" href="./icons/apple-touch-icon.png">
@@ -446,7 +447,7 @@ summary{grid-template-columns:2.4rem minmax(0,1fr) 1rem}summary h3{overflow-wrap
 </div>
 <section id="tools" data-view="tools" class="wrap toolkit-tools js-only" aria-labelledby="tools-title">
 <h2 id="tools-title"><span lang="fr">Outils pratiques</span><span lang="en">Practical tools</span></h2>
-<p class="zoe-voice zoe-intro"><strong>Zoé</strong> <span lang="fr">On sort le matos : compte ton eau, coche ton sac et prépare les mots à dire aux secours.</span><span lang="en">Gear out: count your water, check your pack and get the words ready for dispatch.</span></p><div class="tool-choices" role="group" aria-label="Choix des outils / Tool selection"><button type="button" data-tool="water-tool" aria-controls="water-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">◉</span><span class="tool-button-label"><span lang="fr">Réserve d’eau</span><span lang="en">Water reserve</span></span><span class="tool-arrow" aria-hidden="true">→</span></button><button type="button" data-tool="checklist-tool" aria-controls="checklist-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">✓</span><span class="tool-button-label"><span lang="fr">Listes de préparation</span><span lang="en">Preparedness checklists</span></span><span class="tool-arrow" aria-hidden="true">→</span></button><button type="button" data-tool="call-tool" aria-controls="call-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">✚</span><span class="tool-button-label"><span lang="fr">Fiche d’appel aux secours</span><span lang="en">Emergency call prompt</span></span><span class="tool-arrow" aria-hidden="true">→</span></button><button type="button" data-tool="morse-tool" aria-controls="morse-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">·−</span><span class="tool-button-label"><span lang="fr">Traducteur morse</span><span lang="en">Morse translator</span></span><span class="tool-arrow" aria-hidden="true">→</span></button><button type="button" data-tool="trip-tool" aria-controls="trip-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">↗</span><span class="tool-button-label"><span lang="fr">Plan de sortie</span><span lang="en">Trip plan</span></span><span class="tool-arrow" aria-hidden="true">→</span></button><button type="button" data-tool="timer-tool" aria-controls="timer-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">◷</span><span class="tool-button-label"><span lang="fr">Minuteurs de terrain</span><span lang="en">Field timers</span></span><span class="tool-arrow" aria-hidden="true">→</span></button><button type="button" data-tool="runtime-tool" aria-controls="runtime-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">≈</span><span class="tool-button-label"><span lang="fr">Calculateur d’autonomie</span><span lang="en">Supply and battery runtime</span></span><span class="tool-arrow" aria-hidden="true">→</span></button></div>
+<p class="zoe-voice zoe-intro"><strong>Zoé</strong> <span lang="fr">On sort le matos : compte ton eau, coche ton sac et prépare les mots à dire aux secours.</span><span lang="en">Gear out: count your water, check your pack and get the words ready for dispatch.</span></p><div class="tool-choices" role="group" aria-label="Choix des outils / Tool selection"><button type="button" data-tool="water-tool" aria-controls="water-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">◉</span><span class="tool-button-label"><span lang="fr">Réserve d’eau</span><span lang="en">Water reserve</span></span><span class="tool-arrow" aria-hidden="true">→</span></button><button type="button" data-tool="checklist-tool" aria-controls="checklist-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">✓</span><span class="tool-button-label"><span lang="fr">Listes de préparation</span><span lang="en">Preparedness checklists</span></span><span class="tool-arrow" aria-hidden="true">→</span></button><button type="button" data-tool="call-tool" aria-controls="call-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">✚</span><span class="tool-button-label"><span lang="fr">Fiche d’appel aux secours</span><span lang="en">Emergency call prompt</span></span><span class="tool-arrow" aria-hidden="true">→</span></button><button type="button" data-tool="morse-tool" aria-controls="morse-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">·−</span><span class="tool-button-label"><span lang="fr">Traducteur morse</span><span lang="en">Morse translator</span></span><span class="tool-arrow" aria-hidden="true">→</span></button><button type="button" data-tool="trip-tool" aria-controls="trip-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">↗</span><span class="tool-button-label"><span lang="fr">Plan de sortie</span><span lang="en">Trip plan</span></span><span class="tool-arrow" aria-hidden="true">→</span></button><button type="button" data-tool="timer-tool" aria-controls="timer-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">◷</span><span class="tool-button-label"><span lang="fr">Minuteurs de terrain</span><span lang="en">Field timers</span></span><span class="tool-arrow" aria-hidden="true">→</span></button><button type="button" data-tool="runtime-tool" aria-controls="runtime-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">≈</span><span class="tool-button-label"><span lang="fr">Calculateur d’autonomie</span><span lang="en">Supply and battery runtime</span></span><span class="tool-arrow" aria-hidden="true">→</span></button><button type="button" data-tool="clocks-tool" aria-controls="clocks-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">⏱</span><span class="tool-button-label"><span lang="fr">Chronos et comptes à rebours</span><span lang="en">Stopwatches and countdowns</span></span><span class="tool-arrow" aria-hidden="true">→</span></button></div>
 <div class="tool-grid">
 <article class="tool-box" id="water-tool" aria-labelledby="water-title" hidden>
 <h3 id="water-title"><span lang="fr">Calculateur de réserve d’eau</span><span lang="en">Water reserve calculator</span></h3>
@@ -543,6 +544,29 @@ summary{grid-template-columns:2.4rem minmax(0,1fr) 1rem}summary h3{overflow-wrap
 <output class="water-total" id="runtime-battery-result"></output>
 <p class="tool-note"><span lang="fr">Les 80 % sont une hypothèse modifiable. En mAh, prends la tension nominale des cellules indiquée sur la batterie. Si tu connais déjà l’énergie mesurée à la sortie en Wh, entre cette valeur et règle l’énergie utilisable à 100 %.</span><span lang="en">80% is an editable assumption. For mAh, use the nominal cell voltage shown on the battery. If you already know measured output energy in Wh, enter it and set usable energy to 100%.</span></p>
 </section>
+</article>
+<article id="clocks-tool" class="tool-box" aria-labelledby="clocks-title" hidden>
+<h3 id="clocks-title"><span lang="fr">Chronos et comptes à rebours</span><span lang="en">Stopwatches and countdowns</span></h3>
+<p><span lang="fr">Ajoute des chronos nommés et fais-les tourner en parallèle. Un minuteur compte une durée. Un compte à rebours indique le temps jusqu’à une date et une heure.</span><span lang="en">Add named clocks and run them in parallel. A timer counts down a duration. A deadline countdown shows time until a date and time.</span></p>
+<form id="clocks-form" class="clock-builder">
+<div class="tool-fields">
+<label for="clocks-preset"><span lang="fr">Présélection par usage</span><span lang="en">Preset by activity</span><select id="clocks-preset"></select></label>
+<label for="clocks-type"><span lang="fr">Type de chrono</span><span lang="en">Clock type</span><select id="clocks-type"></select></label>
+<label for="clocks-name"><span lang="fr">Nom</span><span lang="en">Name</span><input id="clocks-name" maxlength="80" autocomplete="off"></label>
+<label id="clocks-target-field" hidden><span lang="fr">Date et heure de fin</span><span lang="en">End date and time</span><input type="datetime-local" id="clocks-target"></label>
+</div>
+<fieldset id="clocks-duration-field" hidden>
+<legend><span lang="fr">Durée</span><span lang="en">Duration</span></legend>
+<div class="clock-duration"><label><span lang="fr">Heures</span><span lang="en">Hours</span><input type="number" id="clocks-hours" min="0" max="999" step="1" value="0" inputmode="numeric"></label><label><span lang="fr">Minutes</span><span lang="en">Minutes</span><input type="number" id="clocks-minutes" min="0" max="59" step="1" value="5" inputmode="numeric"></label><label><span lang="fr">Secondes</span><span lang="en">Seconds</span><input type="number" id="clocks-seconds" min="0" max="59" step="1" value="0" inputmode="numeric"></label></div>
+</fieldset>
+<p id="clocks-hint" class="tool-note"></p>
+<div class="tool-actions"><button type="submit"><span lang="fr">Ajouter et démarrer</span><span lang="en">Add and start</span></button></div>
+<p id="clocks-form-status" role="status" class="tool-note"></p>
+</form>
+<p id="clocks-empty" class="tool-note"><span lang="fr">Aucun chrono ajouté.</span><span lang="en">No clocks yet.</span></p>
+<ul class="clock-list" id="clocks-list"></ul>
+<p id="clocks-announcement" class="sr-only" role="status"></p>
+<p class="tool-note"><span lang="fr">Les chronos sont enregistrés sur cet appareil si le navigateur le permet. Ils se recalculent quand tu reviens dans l’app. Aucun rappel système n’est envoyé sur l’écran verrouillé.</span><span lang="en">Clocks are saved on this device when browser storage is available. They update when you return to the app. There is no lock-screen system alert.</span> <a href="#timer-tool"><span lang="fr">Consignes pour l’eau et le tonnerre</span><span lang="en">Water and thunder guidance</span></a></p>
 </article>
 </div>
 </section>
@@ -1645,6 +1669,202 @@ for (const button of document.querySelectorAll('[data-quick-group]')) {
   new MutationObserver(refresh).observe(document.documentElement,{attributes:true,attributeFilter:['lang']});
   refresh();
   updateTimerTicker();
+})();
+</script>
+<script>
+(() => {
+  const el = id => document.getElementById(id);
+  const text = (fr,en) => document.documentElement.lang === 'en' ? en : fr;
+  const types = [["stopwatch","Chronomètre","Stopwatch"],["timer","Minuteur par durée","Duration timer"],["target","Compte à rebours jusqu’à une date","Countdown to a date"]];
+  const presets = [["hike","Temps de marche","Hiking time","stopwatch",0,"Randonnée","Hiking"],["exercise","Temps d’exercice","Exercise time","stopwatch",0,"Entraînement","Training"],["rest","Pause sur le trajet","Trail break","timer",600,"Randonnée","Hiking"],["cooking","Cuisson","Cooking","timer",300,"Cuisine","Cooking"],["boil","Eau à gros bouillons · 1 min","Rolling boil · 1 min","timer",60,"Eau","Water"],["boil-high","Eau à gros bouillons · 3 min","Rolling boil · 3 min","timer",180,"Eau","Water"],["thunder","Depuis le dernier tonnerre · 30 min","Since last thunder · 30 min","timer",1800,"Météo","Weather"],["departure","Heure de départ","Departure time","target",0,"Organisation","Planning"],["overdue","Heure d’alerte du proche","Overdue check-in deadline","target",0,"Organisation","Planning"]];
+  const form=el('clocks-form'), preset=el('clocks-preset'), type=el('clocks-type'), name=el('clocks-name');
+  const inputs=['hours','minutes','seconds'].map(unit=>el('clocks-'+unit));
+  const target=el('clocks-target'), list=el('clocks-list'), message=el('clocks-form-status');
+  const key='survival-toolkit-clocks-v1';
+  const clocks=new Map();
+  const views=new Map();
+  try {
+    const saved=JSON.parse(localStorage.getItem(key) || '[]');
+    if(Array.isArray(saved)) for(const clock of saved) {
+      if(clock && typeof clock.id==='string' && typeof clock.name==='string' &&
+        types.some(([id])=>id===clock.type) && [clock.duration,clock.value,clock.started,clock.deadline].every(Number.isFinite)) {
+        clocks.set(clock.id,clock);
+      }
+    }
+  } catch {}
+
+  function save() {
+    try { localStorage.setItem(key,JSON.stringify([...clocks.values()])); }
+    catch { message.textContent=text('Le navigateur ne peut plus enregistrer les chronos. Ils restent actifs dans cette page.','The browser could not save the clocks. They remain active on this page.'); }
+  }
+  function updateBuilder() {
+    el('clocks-duration-field').hidden=type.value!=='timer';
+    el('clocks-target-field').hidden=type.value!=='target';
+    target.required=type.value==='target';
+    target.disabled=type.value!=='target';
+    for(const input of inputs)input.disabled=type.value!=='timer';
+    el('clocks-hint').textContent=
+      preset.value==='boil' ? text('Lance à gros bouillons. Cette minute correspond aux lieux jusqu’à environ 1 980 m d’altitude.','Start at a rolling boil. Use this one-minute preset at elevations up to 6,500 ft.') :
+      preset.value==='boil-high' ? text('Lance à gros bouillons. Ce réglage est prévu au-dessus d’environ 1 980 m d’altitude.','Start at a rolling boil. This preset is for elevations above 6,500 ft.') :
+      preset.value==='thunder' ? text('Lance depuis un abri au dernier coup de tonnerre et relance si tu en entends un autre.','Start from shelter at the last thunder and restart if you hear any more.') :
+      type.value==='target' ? text('La date et l’heure utilisent le fuseau de ton appareil.','The date and time use your device’s time zone.') : '';
+  }
+  preset.addEventListener('change',()=>{
+    const choice=presets.find(item=>item[0]===preset.value);
+    if(choice) {
+      const [,fr,en,kind,seconds]=choice;
+      type.value=kind;
+      name.value=text(fr,en);
+      if(kind==='timer') [inputs[0].value,inputs[1].value,inputs[2].value]=[Math.floor(seconds/3600),Math.floor(seconds/60)%60,seconds%60];
+    }
+    updateBuilder();
+  });
+  type.addEventListener('change',()=>{preset.value='';updateBuilder();});
+
+  function remaining(clock,now) {
+    if(clock.type==='target')return clock.running ? Math.max(0,clock.deadline-now) : 0;
+    const elapsed=clock.value+(clock.running ? Math.max(0,now-clock.started) : 0);
+    return clock.type==='stopwatch' ? elapsed : Math.max(0,clock.duration-elapsed);
+  }
+  function clockText(milliseconds, kind) {
+    const seconds=(kind==='stopwatch' ? Math.floor : Math.ceil)(milliseconds/1000);
+    return [Math.floor(seconds/3600),Math.floor(seconds/60)%60,seconds%60].map(value=>String(value).padStart(2,'0')).join(':');
+  }
+  function paint(clock, now, allowAnnounce) {
+    const view=views.get(clock.id);
+    const time=remaining(clock,now);
+    const finished=clock.type!=='stopwatch' && time===0 && (clock.running || (clock.type==='timer' && clock.value===clock.duration));
+    if(finished && !view.finished && clock.running && allowAnnounce) {
+      el('clocks-announcement').textContent=text('Terminé : ','Finished: ')+clock.name;
+    }
+    view.finished=finished;
+    view.card.dataset.running=String(clock.running && !finished);
+    view.card.dataset.finished=String(finished);
+    const formatted=clockText(time,clock.type);
+    if(view.output.textContent!==formatted)view.output.textContent=formatted;
+    const [,fr,en]=types.find(([id])=>id===clock.type);
+    const label=text(fr,en)+(clock.type==='target' ? ' · '+new Intl.DateTimeFormat(text('fr','en'),{dateStyle:'medium',timeStyle:'short'}).format(clock.deadline) : '');
+    if(view.meta.textContent!==label)view.meta.textContent=label;
+    const action=clock.type==='target'
+      ? finished ? text('Échu','Elapsed') : clock.running ? text('Arrêter','Stop') : text('Arrêté','Stopped')
+      : clock.running && !finished ? text('Pause','Pause') : finished ? text('Relancer','Restart') : text('Démarrer','Start');
+    if(view.action.textContent!==action)view.action.textContent=action;
+    view.action.disabled=clock.type==='target' && (!clock.running || finished);
+    view.reset.hidden=clock.type==='target';
+    view.reset.textContent=text('Remettre à zéro','Reset');
+    view.remove.textContent=text('Supprimer','Delete');
+    view.name.setAttribute('aria-label',text('Nom du chrono','Clock name'));
+    const status=finished ? text('Terminé','Finished') : clock.running ? text('En cours','Running') : text('À l’arrêt','Stopped');
+    if(view.status.textContent!==status)view.status.textContent=status;
+  }
+  function run(clock) {
+    const now=Date.now();
+    if(clock.type==='target')clock.running=false;
+    else if(clock.running && (clock.type==='stopwatch' || remaining(clock,now)>0)) {
+      clock.value+=Math.max(0,now-clock.started);
+      clock.running=false;
+    } else {
+      if(clock.type==='timer' && remaining(clock,now)===0)clock.value=0;
+      clock.running=true;
+      clock.started=now;
+    }
+    save();
+    paint(clock,now,false);
+  }
+  function addView(clock) {
+    const card=document.createElement('li');
+    card.className='clock-entry';
+    card.innerHTML='<input class="clock-name" maxlength="80" autocomplete="off"><p class="tool-note clock-meta"></p><output class="timer-clock" aria-live="off"></output><p class="tool-note clock-status"></p><div class="tool-actions"><button type="button" data-action="toggle"></button><button type="button" data-action="reset"></button><button type="button" data-action="remove"></button></div>';
+    const view={card,name:card.querySelector('input'),meta:card.querySelector('.clock-meta'),status:card.querySelector('.clock-status'),
+      output:card.querySelector('output'),action:card.querySelector('[data-action=toggle]'),
+      reset:card.querySelector('[data-action=reset]'),remove:card.querySelector('[data-action=remove]')};
+    view.name.value=clock.name;
+    view.name.addEventListener('input',()=>{clock.name=view.name.value;save();});
+    view.name.addEventListener('change',()=>{
+      clock.name=view.name.value.trim() || text('Chrono','Clock');
+      view.name.value=clock.name;
+      save();
+    });
+    view.action.addEventListener('click',()=>run(clock));
+    view.reset.addEventListener('click',()=>{
+      clock.running=false;
+      clock.value=0;
+      save();
+      paint(clock,Date.now(),false);
+    });
+    view.remove.addEventListener('click',()=>{
+      clocks.delete(clock.id);
+      views.delete(clock.id);
+      card.remove();
+      save();
+      el('clocks-empty').hidden=clocks.size>0;
+      name.focus();
+    });
+    views.set(clock.id,view);
+    list.append(card);
+    paint(clock,Date.now(),false);
+  }
+  form.addEventListener('submit',event=>{
+    event.preventDefault();
+    message.textContent='';
+    const kind=type.value;
+    const duration=kind==='timer' ? inputs.reduce((total,input,index)=>total+(input.valueAsNumber||0)*[3600,60,1][index],0)*1000 : 0;
+    const deadline=kind==='target' ? +new Date(target.value) : 0;
+    const now=Date.now();
+    if(kind==='timer' && duration<=0) {message.textContent=text('Indique une durée supérieure à zéro.','Enter a duration greater than zero.');return;}
+    if(kind==='target' && !(deadline>now)) {message.textContent=text('Choisis une date et une heure futures.','Choose a future date and time.');return;}
+    const id=crypto.randomUUID ? crypto.randomUUID() : Array.from(crypto.getRandomValues(new Uint32Array(4))).join('-');
+    const label=types.find(([id])=>id===kind);
+    const clock={id,name:name.value.trim()||text(label[1],label[2]),type:kind,duration,deadline,started:now,value:0,running:true};
+    clocks.set(id,clock);
+    addView(clock);
+    save();
+    el('clocks-empty').hidden=true;
+    if(document.activeElement?.tagName==='INPUT')document.activeElement.blur();
+  });
+
+  function localize() {
+    const chosenType=type.value||'stopwatch';
+    const chosenPreset=preset.value;
+    type.replaceChildren(...types.map(([id,fr,en])=>new Option(text(fr,en),id)));
+    type.value=chosenType;
+    preset.replaceChildren(new Option(text('Sans présélection','No preset'),''));
+    const groups=new Map();
+    for(const [id,fr,en,,,groupFr,groupEn] of presets) {
+      const label=text(groupFr,groupEn);
+      if(!groups.has(label)) {
+        const group=document.createElement('optgroup');
+        group.label=label;
+        groups.set(label,group);
+        preset.append(group);
+      }
+      groups.get(label).append(new Option(text(fr,en),id));
+    }
+    preset.value=chosenPreset;
+    updateBuilder();
+    const now=Date.now();
+    clocks.forEach(clock=>paint(clock,now,false));
+  }
+  let ticker;
+  function update() {
+    const now=Date.now();
+    clocks.forEach(clock=>paint(clock,now,true));
+  }
+  function syncTicker() {
+    clearInterval(ticker);
+    if(!el('tools').hidden && !el('clocks-tool').hidden && !document.hidden) {
+      update();
+      ticker=setInterval(update,250);
+    }
+  }
+  clocks.forEach(addView);
+  el('clocks-empty').hidden=clocks.size>0;
+  const panelObserver=new MutationObserver(syncTicker);
+  for(const id of ['clocks-tool','tools'])panelObserver.observe(el(id),{attributes:true,attributeFilter:['hidden']});
+  document.addEventListener('visibilitychange',syncTicker);
+  new MutationObserver(localize).observe(document.documentElement,{attributes:true,attributeFilter:['lang']});
+  localize();
+  syncTicker();
 })();
 </script>
 </body>
