@@ -106,7 +106,7 @@ summary{grid-template-columns:2.4rem minmax(0,1fr) 1rem}summary h3{overflow-wrap
 .compass-value{position:absolute;inset:37% 0;text-align:center;display:grid;place-items:center;font-size:clamp(1.25rem,6vw,2rem);font-weight:850;font-variant-numeric:tabular-nums}
 #compass-goal{max-width:10rem}
 .compass-settings{margin:.65rem 0}
-.compass-settings>summary{cursor:pointer;max-width:max-content;padding:.45rem .7rem;border:1px solid var(--line);border-radius:6px;background:var(--cream);font-weight:700}
+#compass-help{width:2rem;height:2rem;padding:0;border-radius:50%;font-weight:800;align-self:center}
 .compass-settings details{margin:.55rem 0;padding:.45rem .65rem;border-left:2px solid var(--line)}
 </style>
 </head>
@@ -527,10 +527,9 @@ summary{grid-template-columns:2.4rem minmax(0,1fr) 1rem}summary h3{overflow-wrap
 <article id="compass-tool" class="tool-box" aria-labelledby="compass-title" hidden>
 <h3 id="compass-title"><span lang="fr">Boussole</span><span lang="en">Compass</span></h3>
 <p class="tool-note"><span lang="fr">Tiens le téléphone à plat et pointe le haut de l’écran devant toi.</span><span lang="en">Hold your phone flat with the top of the screen pointing ahead.</span></p>
-<div class="tool-actions"><button id="compass-start" type="button"><span lang="fr">Activer la boussole</span><span lang="en">Enable compass</span></button><button id="compass-stop" type="button" hidden><span lang="fr">Arrêter</span><span lang="en">Stop</span></button></div>
+<div class="tool-actions"><button id="compass-start" type="button"><span lang="fr">Activer la boussole</span><span lang="en">Enable compass</span></button><button id="compass-help" type="button" aria-controls="compass-settings" aria-expanded="false" aria-label="Aide pour les autorisations">?</button><button id="compass-stop" type="button" hidden><span lang="fr">Arrêter</span><span lang="en">Stop</span></button></div>
 <p id="compass-status" class="tool-note" role="status"></p>
-<details id="compass-settings" class="compass-settings">
-  <summary><span lang="fr">⚙ Aide pour les autorisations</span><span lang="en">⚙ Permission help</span></summary>
+<div id="compass-settings" class="compass-settings" hidden>
   <details id="compass-settings-ios">
     <summary>iPhone / iPad · Safari</summary>
     <p><span lang="fr">Si tu as lancé le Toolkit depuis l’icône d’accueil ou depuis une autre app, ouvre cette page directement dans Safari. Dans le menu de la page à gauche de l’adresse, ouvre <strong>Réglages du site web</strong>. Si une autorisation de mouvement ou d’orientation y est proposée, choisis <strong>Demander</strong> ou <strong>Autoriser</strong>. Si elle n’apparaît pas, ferme et rouvre Safari, puis réessaie depuis cette page.</span><span lang="en">If you launched Toolkit from the home screen or another app, open this page directly in Safari. In the page menu to the left of the address, open <strong>Website Settings</strong>. If a motion or orientation permission is listed, choose <strong>Ask</strong> or <strong>Allow</strong>. If it isn’t listed, close and reopen Safari, then try again from this page.</span></p>
@@ -540,7 +539,7 @@ summary{grid-template-columns:2.4rem minmax(0,1fr) 1rem}summary h3{overflow-wrap
     <p><span lang="fr">Dans Chrome, touche l’icône à gauche de l’adresse, puis <strong>Autorisations</strong>. Si <strong>Capteurs de mouvement</strong> est affiché, autorise-le pour ce site. Sinon, vérifie dans <strong>⋮ → Paramètres → Paramètres des sites → Capteurs de mouvement</strong>.</span><span lang="en">In Chrome, tap the icon to the left of the address, then <strong>Permissions</strong>. If <strong>Motion sensors</strong> is listed, allow it for this site. Otherwise, check <strong>⋮ → Settings → Site settings → Motion sensors</strong>.</span></p>
   </details>
   <p class="tool-note"><span lang="fr">Reviens ici et appuie sur <strong>Activer la boussole</strong> pour réessayer.</span><span lang="en">Return here and tap <strong>Enable compass</strong> to try again.</span></p>
-</details>
+</div>
 <div class="compass-face">
   <div id="compass-card" class="compass-card" aria-hidden="true" hidden><span class="compass-n">N</span><span class="compass-e">E</span><span class="compass-s">S</span><span class="compass-w"><span lang="fr">O</span><span lang="en">W</span></span></div>
   <div id="compass-marker" class="compass-target-mark" aria-hidden="true" hidden></div>
@@ -3178,15 +3177,25 @@ for (const button of document.querySelectorAll('[data-quick-group]')) {
   });
   stop.addEventListener('click',()=>{reset();start.focus();});
   goal.addEventListener('input',render);
+  const help=el('help'), settings=el('settings');
+  help.addEventListener('click',()=>{
+    settings.hidden=!settings.hidden;
+    help.setAttribute('aria-expanded',String(!settings.hidden));
+  });
   new MutationObserver(()=>{
     if(listening && (panel.hidden||tools.hidden))reset();
   }).observe(panel,{attributes:true,attributeFilter:['hidden']});
   new MutationObserver(()=>{
     if(listening && tools.hidden)reset();
   }).observe(tools,{attributes:true,attributeFilter:['hidden']});
-  new MutationObserver(render).observe(root,{attributes:true,attributeFilter:['lang']});
+  function renderLanguage() {
+    help.setAttribute('aria-label',t('Aide pour les autorisations','Permission help'));
+    render();
+  }
+  new MutationObserver(renderLanguage).observe(root,{attributes:true,attributeFilter:['lang']});
   document.addEventListener('visibilitychange',()=>{if(document.hidden && listening)reset();});
   window.addEventListener('pagehide',()=>{if(listening)reset();});
+  renderLanguage();
 })();
 </script>
 </body>
