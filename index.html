@@ -62,6 +62,7 @@ summary{grid-template-columns:2.4rem minmax(0,1fr) 1rem}summary h3{overflow-wrap
 .field-timers{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.65rem}.field-timer{border:1px solid var(--line);border-radius:6px;padding:.7rem .8rem;margin-top:.65rem}.field-timer h4{margin:0;font-size:1.05rem}.timer-clock{display:block;font:700 clamp(1.5rem,5vw,2.7rem)/1.15 ui-monospace,monospace;margin:.6rem 0}.trip-fields label:first-child{grid-column:1/-1}#trip-summary,#trip-route{resize:vertical}@media(max-width:650px){.field-timers,.trip-fields{grid-template-columns:1fr}}
 .clock-builder{padding:.8rem;background:var(--paper);border:1px solid var(--line);border-radius:7px}.clock-builder .tool-fields{margin-top:0}.clock-duration{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.55rem}.clock-duration label{font-size:.88rem}.clock-list{list-style:none;margin:1rem 0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:.65rem}.clock-entry{padding:.75rem;border:1px solid var(--line);border-radius:7px;background:var(--cream)}.clock-entry[data-running=true]{border-left:4px solid var(--accent)}.clock-entry[data-finished=true]{border-left:4px solid var(--rust)}.clock-entry .clock-name{background:#f1efdf;font-weight:730}.clock-entry .tool-note{margin:.4rem 0 0}.clock-entry .timer-clock{font-size:clamp(1.45rem,4.2vw,2rem)}@media(max-width:420px){.clock-builder .tool-fields{grid-template-columns:1fr}}
 .clock-alarm-banner{margin:.6rem auto;padding:.55rem .75rem;background:#f7e7dd;border:1px solid #dbac9b;border-radius:6px;color:#662716;display:flex;flex-wrap:wrap;gap:.45rem 1rem;align-items:center}.clock-alarm-banner a{color:inherit}.clock-alarm-option{display:inline-flex;align-items:center;gap:.25rem;font-size:.9rem}.tool-actions .alarm-stop{background:#812e1d;color:white;border-color:#812e1d;font-weight:750}.tool-actions .alarm-stop:hover{background:#9d412b}
+#clocks-start-sound{background:var(--deep);color:var(--cream);border-color:var(--deep);font-weight:750}#clocks-start-sound:hover{background:var(--accent)}
 </style>
 <link rel="manifest" href="./manifest.webmanifest">
 <link rel="apple-touch-icon" href="./icons/apple-touch-icon.png">
@@ -562,7 +563,7 @@ summary{grid-template-columns:2.4rem minmax(0,1fr) 1rem}summary h3{overflow-wrap
 <div class="clock-duration"><label><span lang="fr">Heures</span><span lang="en">Hours</span><input type="number" id="clocks-hours" min="0" max="999" step="1" value="0" inputmode="numeric"></label><label><span lang="fr">Minutes</span><span lang="en">Minutes</span><input type="number" id="clocks-minutes" min="0" max="59" step="1" value="5" inputmode="numeric"></label><label><span lang="fr">Secondes</span><span lang="en">Seconds</span><input type="number" id="clocks-seconds" min="0" max="59" step="1" value="0" inputmode="numeric"></label></div>
 </fieldset>
 <p id="clocks-hint" class="tool-note"></p>
-<div class="tool-actions"><button type="submit"><span lang="fr">Ajouter et démarrer</span><span lang="en">Add and start</span></button></div>
+<div class="tool-actions"><button type="submit"><span lang="fr">Ajouter et démarrer</span><span lang="en">Add and start</span></button><button type="submit" id="clocks-start-sound" hidden><span lang="fr">Ajouter et démarrer avec son</span><span lang="en">Add and start with sound</span></button></div>
 <p id="clocks-form-status" role="status" class="tool-note"></p>
 </form>
 <p id="clocks-empty" class="tool-note"><span lang="fr">Aucun chrono ajouté.</span><span lang="en">No clocks yet.</span></p>
@@ -1681,6 +1682,7 @@ for (const button of document.querySelectorAll('[data-quick-group]')) {
   const presets = [["hike","Temps de marche","Hiking time","stopwatch",0,"Randonnée","Hiking"],["exercise","Temps d’exercice","Exercise time","stopwatch",0,"Entraînement","Training"],["rest","Pause sur le trajet","Trail break","timer",600,"Randonnée","Hiking"],["cooking","Cuisson","Cooking","timer",300,"Cuisine","Cooking"],["boil","Eau à gros bouillons · 1 min","Rolling boil · 1 min","timer",60,"Eau","Water"],["boil-high","Eau à gros bouillons · 3 min","Rolling boil · 3 min","timer",180,"Eau","Water"],["thunder","Depuis le dernier tonnerre · 30 min","Since last thunder · 30 min","timer",1800,"Météo","Weather"],["departure","Heure de départ","Departure time","target",0,"Organisation","Planning"],["overdue","Heure d’alerte du proche","Overdue check-in deadline","target",0,"Organisation","Planning"]];
   const form=el('clocks-form'), preset=el('clocks-preset'), type=el('clocks-type'), name=el('clocks-name');
   const inputs=['hours','minutes','seconds'].map(unit=>el('clocks-'+unit));
+  const startWithSound=el('clocks-start-sound');
   const target=el('clocks-target'), list=el('clocks-list'), message=el('clocks-form-status');
   const key='survival-toolkit-clocks-v1';
   const Audio=window.AudioContext || window.webkitAudioContext;
@@ -1766,6 +1768,12 @@ for (const button of document.querySelectorAll('[data-quick-group]')) {
     catch { message.textContent=text('Le navigateur ne peut plus enregistrer les chronos. Ils restent actifs dans cette page.','The browser could not save the clocks. They remain active on this page.'); }
   }
   function updateBuilder() {
+    const presetType=presets.find(item=>item[0]===preset.value)?.[3];
+    const selectedType=presetType || type.value || 'stopwatch';
+    const availableTypes=presetType ? types.filter(([id])=>id===presetType) : types;
+    type.replaceChildren(...availableTypes.map(([id,fr,en])=>new Option(text(fr,en),id)));
+    type.value=selectedType;
+    startWithSound.hidden=selectedType==='stopwatch' || !Audio;
     el('clocks-duration-field').hidden=type.value!=='timer';
     el('clocks-target-field').hidden=type.value!=='target';
     target.required=type.value==='target';
@@ -1781,13 +1789,13 @@ for (const button of document.querySelectorAll('[data-quick-group]')) {
     const choice=presets.find(item=>item[0]===preset.value);
     if(choice) {
       const [,fr,en,kind,seconds]=choice;
-      type.value=kind;
       name.value=text(fr,en);
       if(kind==='timer') [inputs[0].value,inputs[1].value,inputs[2].value]=[Math.floor(seconds/3600),Math.floor(seconds/60)%60,seconds%60];
+      if(kind==='target') target.value='';
     }
     updateBuilder();
   });
-  type.addEventListener('change',()=>{preset.value='';updateBuilder();});
+  type.addEventListener('change',updateBuilder);
 
   function remaining(clock,now) {
     if(clock.type==='target')return clock.running ? Math.max(0,clock.deadline-now) : 0;
@@ -1917,19 +1925,19 @@ for (const button of document.querySelectorAll('[data-quick-group]')) {
     if(kind==='target' && !(deadline>now)) {message.textContent=text('Choisis une date et une heure futures.','Choose a future date and time.');return;}
     const id=crypto.randomUUID ? crypto.randomUUID() : Array.from(crypto.getRandomValues(new Uint32Array(4))).join('-');
     const label=types.find(([id])=>id===kind);
-    const clock={id,name:name.value.trim()||text(label[1],label[2]),type:kind,duration,deadline,started:now,value:0,running:true};
+    const alarm=Boolean(Audio && kind!=='stopwatch' && event.submitter===startWithSound);
+    const clock={id,name:name.value.trim()||text(label[1],label[2]),type:kind,duration,deadline,started:now,value:0,running:true,alarm};
     clocks.set(id,clock);
     addView(clock);
     save();
+    if(alarm)unlockSound();
+    syncTicker();
     el('clocks-empty').hidden=true;
     if(document.activeElement?.tagName==='INPUT')document.activeElement.blur();
   });
 
   function localize() {
-    const chosenType=type.value||'stopwatch';
     const chosenPreset=preset.value;
-    type.replaceChildren(...types.map(([id,fr,en])=>new Option(text(fr,en),id)));
-    type.value=chosenType;
     preset.replaceChildren(new Option(text('Sans présélection','No preset'),''));
     const groups=new Map();
     for(const [id,fr,en,,,groupFr,groupEn] of presets) {
