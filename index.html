@@ -142,6 +142,10 @@ summary{grid-template-columns:2.4rem minmax(0,1fr) 1rem}summary h3{overflow-wrap
 .tool-workspace .tool-icon{width:1.85rem;height:1.85rem}
 .tool-workspace .tool-grid{min-width:0}
 .tool-menu-empty{padding:1rem;border:1px solid var(--line);border-radius:8px;background:var(--cream);color:var(--muted)}
+.guide-share{margin-top:.75rem;padding-top:.6rem;border-top:1px solid var(--line)}
+.guide-share .tool-actions{margin-top:0}
+.guide-share input{width:100%;margin-top:.45rem;padding:.45rem;border:1px solid var(--line);border-radius:5px;background:var(--paper);color:var(--ink)}
+@media print{.guide-share{display:none!important}}
 @media(max-width:760px){.tool-workspace:has(>.tool-choices:not([hidden])){grid-template-columns:minmax(0,1fr)}.tool-workspace>.tool-choices{max-width:29rem}}
 @media print{.tool-menu-toggle,.tool-menu-empty,.tool-workspace>.tool-choices{display:none!important}.tool-workspace{display:block}}
 .journal-day,.journal-day-events{display:grid;gap:.75rem;min-width:0}
@@ -1314,7 +1318,47 @@ function setLanguage(lang) {
 }
 function openLinkedGuide() {
   const linked = cards.find(card => '#' + card.id === location.hash);
-  if (linked) getDetails(linked).open = true;
+  if (!linked) return;
+  if (linked.hidden) {
+    form.reset();
+    render();
+    requestAnimationFrame(() => linked.scrollIntoView({block:'start'}));
+  }
+  getDetails(linked).open = true;
+}
+for (const card of cards) {
+  const share = document.createElement('div');
+  share.className = 'guide-share';
+  share.innerHTML = '<div class="tool-actions"><button type="button"><span lang="fr">Partager</span><span lang="en">Share</span></button></div>'
+    + '<p class="tool-note" role="status"></p><input type="text" readonly hidden>';
+  const button = share.querySelector('button');
+  const status = share.querySelector('[role=status]');
+  const field = share.querySelector('input');
+  button.addEventListener('click', async () => {
+    const link = new URL('https://sheiszoe-art.github.io/survival-toolkit/');
+    link.searchParams.set('lang', language);
+    link.hash = card.id;
+    const url = link.href;
+    const title = card.querySelector('h3 [lang="' + language + '"]').textContent.trim();
+    status.textContent = '';
+    field.hidden = true;
+    if (typeof navigator.share === 'function') {
+      try { await navigator.share({title, url}); return; }
+      catch (error) { if (error.name === 'AbortError') return; }
+    }
+    try {
+      await navigator.clipboard.writeText(url);
+      status.textContent = language === 'fr' ? 'Lien de la fiche copié.' : 'Guide link copied.';
+    } catch {
+      field.value = url;
+      field.setAttribute('aria-label', language === 'fr' ? 'Lien de la fiche' : 'Guide link');
+      field.hidden = false;
+      field.focus();
+      field.select();
+      status.textContent = language === 'fr' ? 'Copie le lien sélectionné pour partager la fiche.' : 'Copy the selected link to share this guide.';
+    }
+  });
+  getDetails(card).querySelector('.body').append(share);
 }
 for (const link of document.querySelectorAll('[hreflang]')) {
   link.addEventListener('click', event => {
