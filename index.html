@@ -69,6 +69,7 @@ summary{grid-template-columns:2.4rem minmax(0,1fr) 1rem}summary h3{overflow-wrap
 .tp-card-browser{border-top:1px solid var(--line);margin-top:1rem;padding-top:.85rem}.tp-card-browser h4,.tp-entity-card h5{margin:0}.tp-card-browser h4{font-size:1.05rem;margin-bottom:.45rem}.tp-entity-card h5{font-size:1rem;overflow-wrap:anywhere}.tp-cards li.tp-entity-card{padding:.7rem .8rem;border-left:4px solid var(--accent);background:#f3f2e8}.tp-cards li.tp-team-card{background:#edf1e1}.tp-card-badge{display:inline-block;padding:.12rem .4rem;background:var(--cream);border:1px solid var(--line);border-radius:4px;color:var(--muted);font-size:.8rem}.tp-card-browser label input[type=search]{margin-bottom:.35rem}#tp-member-search,#tp-inventory-team{scroll-margin-top:9rem}
 
 .tp-grid{grid-template-columns:1fr}.tp-nav{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:.45rem;margin:1rem 0}.tp-nav button{display:flex;justify-content:center;align-items:center;gap:.45rem;min-height:2.75rem;padding:.4rem .45rem;border:1px solid var(--line);background:var(--cream);border-radius:6px;color:var(--ink);font:inherit;font-weight:720;cursor:pointer}.tp-nav button[aria-pressed=true],.tp-primary{background:var(--deep);color:var(--cream);border-color:var(--deep)}.tp-primary{font:inherit;font-weight:730;cursor:pointer;border:1px solid var(--deep);border-radius:5px;padding:.45rem .75rem}.tp-primary:hover,.tp-nav button[aria-pressed=true]:hover{background:var(--accent)}.tp-nav button:not([aria-pressed=true]):hover{background:#ebefdf}.tp-panel-heading{display:flex;align-items:center;justify-content:space-between;gap:.5rem;flex-wrap:wrap}.tp-panel-heading h3{margin:0}.tp-editor,.tp-kit-editor{margin:.8rem 0;padding:.75rem;border:1px solid var(--line);border-radius:7px;background:var(--paper)}.tp-editor h4{margin:0 0 .4rem}.tp-card-browser{border-top:0;margin-top:.55rem;padding-top:0}.tp-cards{grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));align-items:start}.tp-cards li.tp-entity-card{min-height:8rem;display:grid;align-content:start;gap:.2rem}.tp-entity-card .tool-actions{margin-top:.4rem}.tp-entity-card .tool-actions button,.tp-entity-card select{min-height:2.4rem}.tp-entity-card .tp-card-badge{justify-self:start}.tp-card-browser>label{max-width:32rem}.tp-kit-editor>summary{padding:.2rem 0!important}#tp-name,#tp-team-name,#tp-kit-owner{scroll-margin-top:9rem}@media(max-width:500px){.tp-nav{grid-template-columns:repeat(2,minmax(0,1fr))}.tp-card-browser .tool-fields{grid-template-columns:1fr}}
+.tp-cards li.tp-identity-card,.tp-inventory-group{border-left:4px solid var(--team-color);background:color-mix(in srgb,var(--team-color) 13%,var(--cream))}.tp-team-icon{display:inline-grid;place-items:center;width:1.8rem;height:1.8rem;flex:none;color:white;background:var(--team-color);border:1px solid color-mix(in srgb,var(--team-color) 60%,#18231b);border-radius:5px;font-weight:800;text-shadow:0 1px 3px #000,0 0 2px #000}.tp-identity-card .tp-member-head{justify-content:flex-start}.tp-identity-card .tp-member-head h4,.tp-inline-members,.tp-bag-contents{margin:0}.tp-inline-members{display:flex;gap:.3rem;flex-wrap:wrap;list-style:none;padding:0}.tp-inline-members li{border:0!important;padding:0!important}.tp-inline-members button{border-radius:999px;border:1px solid var(--line);padding:.2rem .55rem;font:inherit;background:var(--cream);cursor:pointer}.tp-bag-contents{padding-left:1.1rem}.tp-bag-contents li{border:0;padding:.15rem 0}.tp-inventory-items{margin:.4rem 0 0}.tp-grid input[type=color]{min-height:2.45rem;max-width:12rem;padding:.15rem}#tp-kit-dialog{width:min(42rem,calc(100% - 1.3rem));max-height:88dvh;overflow:auto;border:1px solid var(--line);border-top:5px solid var(--team-color);border-radius:8px;background:var(--cream);color:var(--ink);padding:1rem}#tp-kit-dialog::backdrop{background:rgb(0 0 0 / .55)}#tp-kit-dialog h4{margin:0}#tp-kit-dialog form button{padding:.35rem .55rem;cursor:pointer}#tp-kit-dialog .tp-kit-list{max-height:48dvh}
 </style>
 <link rel="manifest" href="./manifest.webmanifest">
 <link rel="apple-touch-icon" href="./icons/apple-touch-icon.png">
@@ -1007,7 +1008,7 @@ summary{grid-template-columns:2.4rem minmax(0,1fr) 1rem}summary h3{overflow-wrap
 <div class="tp-panel-heading"><h3 id="tp-teams-title"><span lang="fr">Équipes</span><span lang="en">Teams</span></h3><button id="tp-open-team" type="button" class="tp-primary"><span lang="fr">Nouvelle équipe</span><span lang="en">New team</span></button></div>
 <form id="tp-team-form" class="tp-editor" hidden>
 <label for="tp-team-name"><span lang="fr">Nom de l’équipe</span><span lang="en">Team name</span><input id="tp-team-name" type="text" maxlength="80" autocomplete="off" required></label>
-<div class="tool-actions"><button type="submit" id="tp-team-save" ><span lang="fr">Créer l’équipe</span><span lang="en">Create team</span></button><button type="button" id="tp-team-cancel" hidden><span lang="fr">Annuler</span><span lang="en">Cancel</span></button></div>
+<div class="tool-fields"><label for="tp-team-icon"><span lang="fr">Icône</span><span lang="en">Icon</span><select id="tp-team-icon"><option value="compass" data-fr="✥ Boussole" data-en="✥ Compass">✥ Boussole</option><option value="camp" data-fr="⌂ Abri" data-en="⌂ Shelter">⌂ Abri</option><option value="mountain" data-fr="▲ Montagne" data-en="▲ Mountain">▲ Montagne</option><option value="star" data-fr="★ Étoile" data-en="★ Star">★ Étoile</option><option value="bolt" data-fr="ϟ Éclair" data-en="ϟ Lightning">ϟ Éclair</option><option value="cross" data-fr="✚ Croix" data-en="✚ Cross">✚ Croix</option><option value="diamond" data-fr="◆ Losange" data-en="◆ Diamond">◆ Losange</option><option value="flag" data-fr="⚑ Drapeau" data-en="⚑ Flag">⚑ Drapeau</option></select></label><label for="tp-team-color"><span lang="fr">Couleur</span><span lang="en">Colour</span><input type="color" id="tp-team-color" value="#436650"></label></div><div class="tool-actions"><button type="submit" id="tp-team-save" ><span lang="fr">Créer l’équipe</span><span lang="en">Create team</span></button><button type="button" id="tp-team-cancel" hidden><span lang="fr">Annuler</span><span lang="en">Cancel</span></button></div>
 </form>
 <div class="tp-card-browser"><label for="tp-team-search"><span lang="fr">Rechercher une équipe</span><span lang="en">Search teams</span><input type="search" id="tp-team-search" maxlength="100" autocomplete="off"></label><p id="tp-team-count" class="tool-note" role="status"></p><ul id="tp-team-cards" class="utility-list tp-cards"></ul></div>
 </section>
@@ -1034,7 +1035,8 @@ summary{grid-template-columns:2.4rem minmax(0,1fr) 1rem}summary h3{overflow-wrap
 </div>
 </section>
 <section class="tool-box tp-panel" id="tp-kit" data-tp-panel="kits" aria-labelledby="tp-kit-title" hidden>
-<h3 id="tp-kit-title"><span lang="fr">Sac individuel</span><span lang="en">Individual kit</span></h3>
+<h3 id="tp-kit-title"><span lang="fr">Tous les sacs</span><span lang="en">All kits</span></h3><ul id="tp-bag-cards" class="utility-list tp-cards"></ul>
+<dialog id="tp-kit-dialog" aria-labelledby="tp-kit-dialog-title"><div class="tp-panel-heading"><h4 id="tp-kit-dialog-title"></h4><form method="dialog"><button type="submit"><span lang="fr">Fermer</span><span lang="en">Close</span></button></form></div>
 <label for="tp-kit-owner"><span lang="fr">Équipier</span><span lang="en">Member</span><select id="tp-kit-owner"></select></label>
 <p id="tp-kit-empty" class="tool-note"><span lang="fr">Choisis ou crée un équipier pour ouvrir son sac.</span><span lang="en">Choose or create a member to open their kit.</span></p>
 <div id="tp-kit-controls" hidden>
@@ -1042,6 +1044,7 @@ summary{grid-template-columns:2.4rem minmax(0,1fr) 1rem}summary h3{overflow-wrap
 <p id="tp-kit-count" class="tool-note" role="status"></p>
 <ul id="tp-catalogue" class="tp-kit-list"></ul>
 </div>
+</dialog>
 <details class="tp-kit-editor"><summary><span lang="fr">Ajouter un élément au catalogue</span><span lang="en">Add a catalogue item</span></summary><form id="tp-item-form">
 <label for="tp-item-name"><span lang="fr">Nouvel élément pour le catalogue</span><span lang="en">New catalogue item</span><input id="tp-item-name" type="text" maxlength="80" autocomplete="off" required></label>
 <div class="tool-actions"><button type="submit" id="tp-item-add" ><span lang="fr">Ajouter au catalogue</span><span lang="en">Add to catalogue</span></button></div>
@@ -1049,7 +1052,7 @@ summary{grid-template-columns:2.4rem minmax(0,1fr) 1rem}summary h3{overflow-wrap
 <details id="tp-custom-details"><summary><span lang="fr">Éléments personnalisés</span><span lang="en">Custom items</span></summary><ul id="tp-custom-list" class="utility-list"></ul></details>
 </section>
 <section class="tool-box tp-panel" id="tp-inventory-panel" data-tp-panel="inventory" aria-labelledby="tp-inventory-title" hidden>
-<h3 id="tp-inventory-title"><span lang="fr">Inventaire de l’équipe</span><span lang="en">Team inventory</span></h3>
+<h3 id="tp-inventory-title"><span lang="fr">Inventaire par équipe</span><span lang="en">Inventory by team</span></h3>
 <label for="tp-inventory-team"><span lang="fr">Équipe à inventorier</span><span lang="en">Team to inventory</span><select id="tp-inventory-team"></select></label>
 <p id="tp-inventory-status" class="tool-note" role="status"></p>
 <ul id="tp-inventory" class="utility-list"></ul>
@@ -2474,7 +2477,7 @@ for (const button of document.querySelectorAll('[data-quick-group]')) {
   }
   for(const button of tabs)button.addEventListener('click',()=>showPanel(button.dataset.tpTab));
   el('tp-open-team').addEventListener('click',()=>{
-    editingTeam='';teamName.value='';
+    editingTeam='';teamName.value='';setTeamAppearance();
     teamEditor.hidden=false;renderAll();teamName.focus();
   });
   el('tp-open-member').addEventListener('click',()=>{
@@ -2497,6 +2500,44 @@ for (const button of document.querySelectorAll('[data-quick-group]')) {
   try {state=read(localStorage.getItem(key));}
   catch {status.textContent=t('Le stockage local est indisponible.','Local storage is unavailable.');}
   const team=id=>state.teams.find(row=>row.id===id);
+  const iconOptions=new Map([["compass","✥"],["camp","⌂"],["mountain","▲"],["star","★"],["bolt","ϟ"],["cross","✚"],["diamond","◆"],["flag","⚑"]]);
+  const colors=['#436650','#376694','#754879','#a25230','#25736d','#8a641d','#884755','#5a6180'];
+  const iconKeys=Array.from(iconOptions.keys());
+  const iconField=el('tp-team-icon'), colorField=el('tp-team-color'), kitDialog=el('tp-kit-dialog');
+  function identity(row) {
+    if(!row)return {icon:'○',color:'#69756f'};
+    const index=Math.max(0,state.teams.findIndex(item=>item.id===row.id));
+    return {icon:iconOptions.get(row.icon)||iconOptions.get(iconKeys[index%iconKeys.length]),
+      color:/^#[0-9a-f]{6}$/i.test(row.color||'')?row.color:colors[index%colors.length]};
+  }
+  function fillTeamDefaults() {
+    let updated=false;
+    state.teams.forEach((row,index)=>{
+      if(!iconOptions.has(row.icon)){row.icon=iconKeys[index%iconKeys.length];updated=true;}
+      if(!/^#[0-9a-f]{6}$/i.test(row.color||'')){row.color=colors[index%colors.length];updated=true;}
+    });
+    return updated;
+  }
+  if(fillTeamDefaults()) {
+    try {localStorage.setItem(key,JSON.stringify(state));}
+    catch {status.textContent=t('Impossible de sauvegarder les couleurs des équipes.','Could not save team colours.');}
+  }
+  function applyIdentity(element,row) {
+    element.classList.add('tp-identity-card');
+    const {color}=identity(row);
+    element.style.setProperty('--team-color',color);
+  }
+  function teamIcon(row) {
+    const {icon,color}=identity(row);
+    const mark=node('span',icon,'tp-team-icon');
+    mark.setAttribute('aria-hidden','true');mark.style.setProperty('--team-color',color);
+    return mark;
+  }
+  function setTeamAppearance(row) {
+    const index=row?Math.max(0,state.teams.findIndex(item=>item.id===row.id)):state.teams.length;
+    iconField.value=row && iconOptions.has(row.icon)?row.icon:iconKeys[index%iconKeys.length];
+    colorField.value=row?identity(row).color:colors[index%colors.length];
+  }
   const member=id=>state.members.find(row=>row.id===id);
   const newId=()=>crypto.randomUUID ? crypto.randomUUID() : Array.from(crypto.getRandomValues(new Uint32Array(4))).join('-');
   function save() {
@@ -2543,6 +2584,7 @@ for (const button of document.querySelectorAll('[data-quick-group]')) {
     save();
     renderTeamCards();
     renderRoster();
+    renderBagCards();
     renderInventory();
   }
   function renderTeamCards() {
@@ -2551,15 +2593,16 @@ for (const button of document.querySelectorAll('[data-quick-group]')) {
     el('tp-team-count').textContent=t(rows.length+' / '+state.teams.length+' équipes',rows.length+' / '+state.teams.length+' teams');
     el('tp-team-cards').replaceChildren(...rows.map(row=>{
       const card=node('li','','tp-entity-card tp-team-card');
-      const people=state.members.filter(person=>person.team===row.id);
+      const people=order(state.members.filter(person=>person.team===row.id));
+      applyIdentity(card,row);
       const heading=node('h5',row.name);
       const badge=node('span',t(people.length+' équipier(s)',people.length+' member(s)'),'tp-card-badge');
       const head=node('div','','tp-member-head');
-      head.append(heading,badge);
+      head.append(teamIcon(row),heading,badge);
       const actions=node('div','','tool-actions');
       actions.append(
         button(t('Voir les équipiers','View members'),()=>{
-          filter.value=row.id;el('tp-member-search').value='';inventoryTeam.value=row.id;
+          filter.value=row.id;el('tp-member-search').value='';
           if(!editingMember)teamSelect.value=row.id;
           renderRoster();renderInventory();
           showPanel('members');el('tp-member-search').focus();
@@ -2567,10 +2610,22 @@ for (const button of document.querySelectorAll('[data-quick-group]')) {
         button(t('Voir l’inventaire','View inventory'),()=>{
           inventoryTeam.value=row.id;renderInventory();showPanel('inventory');inventoryTeam.focus();
         }),
-        button(t('Renommer','Rename'),()=>editTeam(row)),
+        button(t('Modifier','Edit'),()=>editTeam(row)),
         button(t('Supprimer','Delete'),()=>deleteTeam(row))
       );
-      card.append(head,actions);
+      const roster=node('ul','','tp-inline-members');
+      for(const person of people) {
+        const li=node('li');
+        li.append(button(person.name,()=>{
+          filter.value=row.id;el('tp-member-search').value='';renderRoster();showPanel('members');
+          loadMember(person);memberEditor.hidden=false;el('tp-name').focus();
+        }));
+        roster.append(li);
+      }
+      card.append(head);
+      if(people.length)card.append(roster);
+      else card.append(node('p',t('Aucun équipier.','No members.'),'tool-note'));
+      card.append(actions);
       return card;
     }));
     if(!rows.length)el('tp-team-cards').append(node('li',t('Aucune équipe dans cette vue.','No teams in this view.'),'tool-note'));
@@ -2586,12 +2641,14 @@ for (const button of document.querySelectorAll('[data-quick-group]')) {
     el('tp-roster').replaceChildren(...rows.map(person=>{
       const row=node('li','','tp-roster-row tp-entity-card');
       const title=node('div','','tp-member-head');
-      title.append(node('h5',person.name));
+      const parent=team(person.team);
+      applyIdentity(row,parent);
+      title.append(teamIcon(parent),node('h5',person.name));
       const actions=node('div','','tool-actions');
       actions.append(button(t('Ouvrir la fiche','Open profile'),()=>{
         loadMember(person);memberEditor.hidden=false;el('tp-name').focus();
       }),button(t('Voir le sac','View kit'),()=>{
-        selectedOwner=person.id;search.value='';renderOwners();renderKit();showPanel('kits');owner.focus();
+        showPanel('kits');openKit(person);
       }));
       row.append(title);
       const info=[team(person.team)?.name || t('Sans équipe','Unassigned'),person.role].filter(Boolean).join(' · ');
@@ -2628,6 +2685,37 @@ for (const button of document.querySelectorAll('[data-quick-group]')) {
     options(owner,[['',t('Choisir un équipier','Choose a member')],...order(state.members).map(person=>[person.id,person.name])],selectedOwner);
     selectedOwner=owner.value;
   }
+  function openKit(person) {
+    selectedOwner=person.id;search.value='';renderOwners();renderKit();
+    if(!kitDialog.open)kitDialog.showModal();
+    search.focus();
+  }
+  function renderBagCards() {
+    const list=el('tp-bag-cards');
+    const items=catalogue();
+    const people=order(state.members);
+    list.replaceChildren(...people.map(person=>{
+      const parent=team(person.team);
+      const card=node('li','','tp-entity-card tp-bag-card');
+      applyIdentity(card,parent);
+      const heading=node('div','','tp-member-head');
+      heading.append(teamIcon(parent),node('h4',person.name));
+      card.append(heading,node('p',parent?.name||t('Sans équipe','Unassigned'),'tool-note'));
+      const contents=node('ul','','tp-bag-contents');
+      for(const item of items) {
+        const qty=quantity(person,item.id);
+        if(qty)contents.append(node('li',item.name+' × '+qty));
+      }
+      if(contents.children.length)card.append(contents);
+      else card.append(node('p',t('Sac vide.','Empty kit.'),'tool-note'));
+      const actions=node('div','','tool-actions');
+      actions.append(button(t('Modifier','Edit'),()=>openKit(person)));
+      card.append(actions);
+      return card;
+    }));
+    if(!people.length)list.append(node('li',t('Crée un équipier pour ajouter son sac.','Create a member to add their kit.'),'tool-note'));
+  }
+
   function renderKitCount(person) {
     const count=catalogue().filter(item=>quantity(person,item.id)).length;
     el('tp-kit-count').textContent=t(count+' références cochées',count+' item types checked');
@@ -2635,10 +2723,12 @@ for (const button of document.querySelectorAll('[data-quick-group]')) {
   function saveKit(person,id,value) {
     const bag=kits(person);
     if(value>0)bag[id]=value; else delete bag[id];
-    save();renderRoster();renderInventory();renderKitCount(person);
+    save();renderRoster();renderBagCards();renderInventory();renderKitCount(person);
   }
   function renderKit() {
     const person=member(selectedOwner);
+    el('tp-kit-dialog-title').textContent=person?t('Modifier le sac de ','Edit kit for ')+person.name:t('Modifier un sac','Edit a kit');
+    applyIdentity(kitDialog,team(person?.team));
     el('tp-kit-empty').hidden=Boolean(person);
     el('tp-kit-controls').hidden=!person;
     const list=el('tp-catalogue');
@@ -2675,7 +2765,7 @@ for (const button of document.querySelectorAll('[data-quick-group]')) {
         if(!window.confirm(question))return;
         state.catalogue=state.catalogue.filter(row=>row.id!==item.id);
         for(const person of state.members)delete kits(person)[item.id];
-        save();renderRoster();renderKit();renderCustom();renderInventory();
+        save();renderRoster();renderKit();renderBagCards();renderCustom();renderInventory();
         el('tp-item-name').focus();
       }));
       return row;
@@ -2683,31 +2773,45 @@ for (const button of document.querySelectorAll('[data-quick-group]')) {
     if(!state.catalogue.length)list.append(node('li',t('Aucun élément personnalisé.','No custom items.'),'tool-note'));
   }
   function renderInventory() {
-    const selected=team(inventoryTeam.value);
+    const selected=inventoryTeam.value;
     const list=el('tp-inventory'), summary=el('tp-inventory-status');
-    if(!selected) {
-      list.replaceChildren();summary.textContent=t('Choisis une équipe pour afficher son inventaire.','Choose a team to see its inventory.');return;
-    }
-    const people=order(state.members.filter(person=>person.team===selected.id));
-    const totals=catalogue().map(item=>({item,owners:people.map(person=>[person,quantity(person,item.id)]).filter(([,qty])=>qty)})).filter(row=>row.owners.length);
-    summary.textContent=totals.length
-      ? t(people.length+' équipier(s) · '+totals.length+' références',people.length+' member(s) · '+totals.length+' item types')
-      : t('Aucun matériel coché dans les sacs de cette équipe.','No gear has been checked in this team’s kits.');
-    list.replaceChildren(...totals.map(({item,owners})=>{
-      const row=node('li');
-      row.append(node('strong',item.name+' × '+owners.reduce((sum,[,qty])=>sum+qty,0)));
-      row.append(node('p',owners.map(([person,qty])=>person.name+' × '+qty).join('\n'),'tp-owner-list'));
-      return row;
+    const groups=order(state.teams).map(row=>[row,state.members.filter(person=>person.team===row.id)]);
+    const unassigned=state.members.filter(person=>!team(person.team));
+    if(unassigned.length)groups.push([null,unassigned]);
+    const visible=groups.filter(([row])=>selected==='all' || (row?.id||'unassigned')===selected);
+    summary.textContent=visible.length
+      ? t(visible.length+' groupe(s) affiché(s)',visible.length+' group(s) shown')
+      : t('Aucune équipe à inventorier.','No teams to inventory.');
+    const items=catalogue();
+    list.replaceChildren(...visible.map(([row,people])=>{
+      const card=node('li','','tp-entity-card tp-inventory-group');
+      applyIdentity(card,row);
+      const heading=node('div','','tp-member-head');
+      heading.append(teamIcon(row),node('h4',row?.name||t('Sans équipe','Unassigned')));
+      card.append(heading);
+      const totals=items.map(item=>({item,owners:order(people).map(person=>[person,quantity(person,item.id)]).filter(([,qty])=>qty)})).filter(item=>item.owners.length);
+      if(!totals.length)card.append(node('p',t('Aucun matériel coché.','No gear checked.'),'tool-note'));
+      const entries=node('ul','','utility-list tp-inventory-items');
+      for(const {item,owners} of totals) {
+        const line=node('li');
+        line.append(node('strong',item.name+' × '+owners.reduce((sum,[,qty])=>sum+qty,0)));
+        line.append(node('p',owners.map(([person,qty])=>person.name+' × '+qty).join('\n'),'tp-owner-list'));
+        entries.append(line);
+      }
+      card.append(entries);
+      return card;
     }));
-  }
-  function renderMenus() {
+  }  function renderMenus() {
     options(filter,[['all',t('Toutes les équipes et équipiers','All teams and members')],...teamsOptions()],filter.options.length?filter.value:'all');
     options(teamSelect,teamsOptions());
-    options(inventoryTeam,teamsOptions(t('Choisir une équipe','Choose a team')));
+    const inventoryOptions=[['all',t('Toutes les équipes','All teams')],...order(state.teams).map(row=>[row.id,row.name])];
+    if(state.members.some(person=>!team(person.team)))inventoryOptions.push(['unassigned',t('Sans équipe','Unassigned')]);
+    options(inventoryTeam,inventoryOptions,inventoryTeam.value||'all');
     renderOwners();
   }
   function renderAll() {
-    renderMenus();renderTeamCards();renderRoster();renderKit();renderCustom();renderInventory();
+    for(const choice of iconField.options)choice.textContent=choice.dataset[locale()];
+    renderMenus();renderTeamCards();renderRoster();renderKit();renderBagCards();renderCustom();renderInventory();
     el('tp-team-save').textContent=editingTeam?t('Enregistrer le nom','Save team name'):t('Créer l’équipe','Create team');
     el('tp-team-cancel').hidden=teamEditor.hidden;
     el('tp-member-save').textContent=editingMember?t('Enregistrer la fiche','Save profile'):t('Créer l’équipier','Create member');
@@ -2720,14 +2824,16 @@ for (const button of document.querySelectorAll('[data-quick-group]')) {
       showStatus('Une équipe porte déjà ce nom.','A team already uses that name.');return;
     }
     const id=editingTeam||newId();
-    if(editingTeam && team(id))team(id).name=name;else state.teams.push({id,name});
+    const appearance={name,icon:iconField.value,color:colorField.value};
+    if(editingTeam && team(id))Object.assign(team(id),appearance);
+    else state.teams.push({id,...appearance});
     editingTeam='';teamName.value='';teamEditor.hidden=true;
-    save();renderMenus();inventoryTeam.value=id;
+    save();renderMenus();
     if(!editingMember)teamSelect.value=id;
     renderAll();
   });
   function editTeam(selected) {
-    editingTeam=selected.id;teamName.value=selected.name;teamEditor.hidden=false;renderAll();teamName.focus();
+    editingTeam=selected.id;teamName.value=selected.name;setTeamAppearance(selected);teamEditor.hidden=false;renderAll();teamName.focus();
   }
   el('tp-team-cancel').addEventListener('click',()=>{editingTeam='';teamName.value='';teamEditor.hidden=true;renderAll();el('tp-open-team').focus();});
   function deleteTeam(selected) {
@@ -2741,7 +2847,6 @@ for (const button of document.querySelectorAll('[data-quick-group]')) {
   el('tp-team-search').addEventListener('input',renderTeamCards);
   el('tp-member-search').addEventListener('input',renderRoster);
   filter.addEventListener('change',()=>{
-    if(team(filter.value))inventoryTeam.value=filter.value;
     if(!editingMember)teamSelect.value=team(filter.value)?filter.value:'';
     renderRoster();renderInventory();
   });
@@ -2755,7 +2860,6 @@ for (const button of document.querySelectorAll('[data-quick-group]')) {
     if(!person){person={id:newId(),kit:{}};state.members.push(person);}
     Object.assign(person,fields,{team:teamSelect.value});
     if(filter.value!=='all' && filter.value!==person.team)filter.value=person.team;
-    if(person.team)inventoryTeam.value=person.team;
     save();loadMember(person);memberEditor.hidden=true;renderAll();
   });
   el('tp-member-new').addEventListener('click',()=>{loadMember();el('tp-name').focus();});
@@ -2777,7 +2881,7 @@ for (const button of document.querySelectorAll('[data-quick-group]')) {
     }
     const item={id:'custom:'+newId(),name};
     state.catalogue.push(item);input.value='';
-    search.value='';save();renderKit();renderCustom();renderInventory();
+    search.value='';save();renderKit();renderBagCards();renderCustom();renderInventory();
   });
 
   window.teamProtection={
@@ -2785,7 +2889,7 @@ for (const button of document.querySelectorAll('[data-quick-group]')) {
   };
   window.addEventListener('storage',event=>{
     if(event.key!==key)return;
-    state=read(event.newValue);
+    state=read(event.newValue);fillTeamDefaults();
     if(editingMember&&!member(editingMember))loadMember();
     if(editingTeam&&!team(editingTeam)){editingTeam='';teamName.value='';}
     renderAll();window.dispatchEvent(new Event(changes));
