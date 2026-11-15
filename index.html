@@ -109,6 +109,18 @@ summary{grid-template-columns:2.4rem minmax(0,1fr) 1rem}summary h3{overflow-wrap
 #compass-help{width:2rem;height:2rem;padding:0;border-radius:50%;font-weight:800;align-self:center}
 .compass-settings details{margin:.55rem 0;padding:.45rem .65rem;border-left:2px solid var(--line)}
 </style>
+<style>
+#level-help{width:2rem;height:2rem;padding:0;border-radius:50%;font-weight:800;align-self:center}
+.level-vial{width:min(100%,15rem);aspect-ratio:1;margin:1rem auto;position:relative;overflow:hidden;border:.3rem solid #344b40;border-radius:50%;background:#e1ead9}
+.level-vial::before{content:"";position:absolute;inset:38%;border:2px solid #4c6754;border-radius:50%}
+.level-vial::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,transparent 49.6%,#728b7655 50%,transparent 50.4%),linear-gradient(0deg,transparent 49.6%,#728b7655 50%,transparent 50.4%)}
+.level-vial[data-mode="horizontal"]{aspect-ratio:4;border-radius:999px}
+.level-vial[data-mode="horizontal"]::before{inset:10% 43%;border-block:0;border-radius:0}
+.level-bubble{position:absolute;z-index:1;left:var(--bubble-x,50%);top:var(--bubble-y,50%);width:2rem;aspect-ratio:1;box-sizing:border-box;transform:translate(-50%,-50%);border-radius:50%;border:2px solid #0c5642;background:#f8f5cc;box-shadow:0 2px 5px #193b3440}
+.level-vial[data-aligned="true"] .level-bubble{background:#a7e6a2}
+#level-display{text-align:center;font-size:1.25rem;font-weight:800;font-variant-numeric:tabular-nums}
+#level-mode{max-width:20rem}
+</style>
 </head>
 <body>
 <header class="top"><div class="wrap"><a href="#survival-guides" class="mark">Survival Toolkit</a><nav class="view-menu" aria-label="Sections"><a href="#survival-guides" data-view-link="survival-guides" aria-current="page"><span lang="fr">Guides de survie</span><span lang="en">Survival guides</span></a><a href="#tools" data-view-link="tools"><span lang="fr">Outils</span><span lang="en">Tools</span></a><a href="#emergency-numbers" data-view-link="emergency-numbers"><span lang="fr">Numéros de secours</span><span lang="en">Emergency numbers</span></a><a href="#teams-protection" data-view-link="teams-protection">Teams Protection</a></nav><div class="top-actions"><button id="zoe-mode" class="zoe-mode" type="button" aria-pressed="false" aria-describedby="zoe-mode-help"><span lang="fr">Voix de Zoé</span><span lang="en">Zoé’s voice</span><span class="zoe-switch" aria-hidden="true"></span></button><span id="zoe-mode-help" class="sr-only"><span lang="fr">Remplace les explications classiques par la version de Zoé.</span><span lang="en">Switch the guide instructions to Zoé’s version.</span></span><nav class="language-menu" aria-label="Langue / Language"><button type="button" id="install-app" class="install-app"><span lang="fr">Installer</span><span lang="en">Install</span></button><a href="?lang=fr" hreflang="fr" lang="fr" aria-current="true">FR</a><a href="?lang=en" hreflang="en" lang="en">EN</a></nav></div></div></header>
@@ -492,7 +504,7 @@ summary{grid-template-columns:2.4rem minmax(0,1fr) 1rem}summary h3{overflow-wrap
 </div>
 <section id="tools" data-view="tools" class="wrap toolkit-tools js-only" aria-labelledby="tools-title">
 <h2 id="tools-title"><span lang="fr">Outils pratiques</span><span lang="en">Practical tools</span></h2>
-<p class="zoe-voice zoe-intro"><strong>Zoé</strong> <span lang="fr">On sort le matos : compte ton eau, coche ton sac et prépare les mots à dire aux secours.</span><span lang="en">Gear out: count your water, check your pack and get the words ready for dispatch.</span></p><div class="tool-choices" role="group" aria-label="Choix des outils / Tool selection"><button type="button" data-tool="compass-tool" aria-controls="compass-tool" aria-expanded="false"><span aria-hidden="true">🧭</span> <span lang="fr">Boussole</span><span lang="en">Compass</span></button><button type="button" data-tool="water-tool" aria-controls="water-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">◉</span><span class="tool-button-label"><span lang="fr">Réserve d’eau</span><span lang="en">Water reserve</span></span><span class="tool-arrow" aria-hidden="true">→</span></button><button type="button" data-tool="checklist-tool" aria-controls="checklist-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">✓</span><span class="tool-button-label"><span lang="fr">Listes de préparation</span><span lang="en">Preparedness checklists</span></span><span class="tool-arrow" aria-hidden="true">→</span></button><button type="button" data-tool="call-tool" aria-controls="call-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">✚</span><span class="tool-button-label"><span lang="fr">Fiche d’appel aux secours</span><span lang="en">Emergency call prompt</span></span><span class="tool-arrow" aria-hidden="true">→</span></button><button type="button" data-tool="morse-tool" aria-controls="morse-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">·−</span><span class="tool-button-label"><span lang="fr">Traducteur morse</span><span lang="en">Morse translator</span></span><span class="tool-arrow" aria-hidden="true">→</span></button><button type="button" data-tool="trip-tool" aria-controls="trip-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">↗</span><span class="tool-button-label"><span lang="fr">Plan de sortie</span><span lang="en">Trip plan</span></span><span class="tool-arrow" aria-hidden="true">→</span></button><button type="button" data-tool="timer-tool" aria-controls="timer-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">◷</span><span class="tool-button-label"><span lang="fr">Minuteurs de terrain</span><span lang="en">Field timers</span></span><span class="tool-arrow" aria-hidden="true">→</span></button><button type="button" data-tool="runtime-tool" aria-controls="runtime-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">≈</span><span class="tool-button-label"><span lang="fr">Calculateur d’autonomie</span><span lang="en">Supply and battery runtime</span></span><span class="tool-arrow" aria-hidden="true">→</span></button><button type="button" data-tool="clocks-tool" aria-controls="clocks-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">⏱</span><span class="tool-button-label"><span lang="fr">Chronos et comptes à rebours</span><span lang="en">Stopwatches and countdowns</span></span><span class="tool-arrow" aria-hidden="true">→</span></button><button type="button" data-tool="gps-tool" aria-controls="gps-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">⌖</span><span class="tool-button-label"><span lang="fr">Mes coordonnées</span><span lang="en">My coordinates</span></span><span class="tool-arrow" aria-hidden="true">→</span></button><button type="button" data-tool="evac-tool" aria-controls="evac-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">⇥</span><span class="tool-button-label"><span lang="fr">Plan d’évacuation du foyer</span><span lang="en">Household evacuation plan</span></span><span class="tool-arrow" aria-hidden="true">→</span></button><button type="button" data-tool="inventory-tool" aria-controls="inventory-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">▤</span><span class="tool-button-label"><span lang="fr">Inventaire du sac</span><span lang="en">Kit inventory</span></span><span class="tool-arrow" aria-hidden="true">→</span></button><button type="button" data-tool="journal-tool" aria-controls="journal-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">✎</span><span class="tool-button-label"><span lang="fr">Journal de situation</span><span lang="en">Situation log</span></span><span class="tool-arrow" aria-hidden="true">→</span></button></div>
+<p class="zoe-voice zoe-intro"><strong>Zoé</strong> <span lang="fr">On sort le matos : compte ton eau, coche ton sac et prépare les mots à dire aux secours.</span><span lang="en">Gear out: count your water, check your pack and get the words ready for dispatch.</span></p><div class="tool-choices" role="group" aria-label="Choix des outils / Tool selection"><button type="button" data-tool="compass-tool" aria-controls="compass-tool" aria-expanded="false"><span aria-hidden="true">🧭</span> <span lang="fr">Boussole</span><span lang="en">Compass</span></button><button type="button" data-tool="level-tool" aria-controls="level-tool" aria-expanded="false"><span aria-hidden="true">◉</span> <span lang="fr">Niveau à bulle</span><span lang="en">Spirit level</span></button><button type="button" data-tool="water-tool" aria-controls="water-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">◉</span><span class="tool-button-label"><span lang="fr">Réserve d’eau</span><span lang="en">Water reserve</span></span><span class="tool-arrow" aria-hidden="true">→</span></button><button type="button" data-tool="checklist-tool" aria-controls="checklist-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">✓</span><span class="tool-button-label"><span lang="fr">Listes de préparation</span><span lang="en">Preparedness checklists</span></span><span class="tool-arrow" aria-hidden="true">→</span></button><button type="button" data-tool="call-tool" aria-controls="call-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">✚</span><span class="tool-button-label"><span lang="fr">Fiche d’appel aux secours</span><span lang="en">Emergency call prompt</span></span><span class="tool-arrow" aria-hidden="true">→</span></button><button type="button" data-tool="morse-tool" aria-controls="morse-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">·−</span><span class="tool-button-label"><span lang="fr">Traducteur morse</span><span lang="en">Morse translator</span></span><span class="tool-arrow" aria-hidden="true">→</span></button><button type="button" data-tool="trip-tool" aria-controls="trip-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">↗</span><span class="tool-button-label"><span lang="fr">Plan de sortie</span><span lang="en">Trip plan</span></span><span class="tool-arrow" aria-hidden="true">→</span></button><button type="button" data-tool="timer-tool" aria-controls="timer-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">◷</span><span class="tool-button-label"><span lang="fr">Minuteurs de terrain</span><span lang="en">Field timers</span></span><span class="tool-arrow" aria-hidden="true">→</span></button><button type="button" data-tool="runtime-tool" aria-controls="runtime-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">≈</span><span class="tool-button-label"><span lang="fr">Calculateur d’autonomie</span><span lang="en">Supply and battery runtime</span></span><span class="tool-arrow" aria-hidden="true">→</span></button><button type="button" data-tool="clocks-tool" aria-controls="clocks-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">⏱</span><span class="tool-button-label"><span lang="fr">Chronos et comptes à rebours</span><span lang="en">Stopwatches and countdowns</span></span><span class="tool-arrow" aria-hidden="true">→</span></button><button type="button" data-tool="gps-tool" aria-controls="gps-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">⌖</span><span class="tool-button-label"><span lang="fr">Mes coordonnées</span><span lang="en">My coordinates</span></span><span class="tool-arrow" aria-hidden="true">→</span></button><button type="button" data-tool="evac-tool" aria-controls="evac-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">⇥</span><span class="tool-button-label"><span lang="fr">Plan d’évacuation du foyer</span><span lang="en">Household evacuation plan</span></span><span class="tool-arrow" aria-hidden="true">→</span></button><button type="button" data-tool="inventory-tool" aria-controls="inventory-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">▤</span><span class="tool-button-label"><span lang="fr">Inventaire du sac</span><span lang="en">Kit inventory</span></span><span class="tool-arrow" aria-hidden="true">→</span></button><button type="button" data-tool="journal-tool" aria-controls="journal-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">✎</span><span class="tool-button-label"><span lang="fr">Journal de situation</span><span lang="en">Situation log</span></span><span class="tool-arrow" aria-hidden="true">→</span></button></div>
 <div class="tool-grid">
 <article class="tool-box" id="water-tool" aria-labelledby="water-title" hidden>
 <h3 id="water-title"><span lang="fr">Calculateur de réserve d’eau</span><span lang="en">Water reserve calculator</span></h3>
@@ -547,6 +559,25 @@ summary{grid-template-columns:2.4rem minmax(0,1fr) 1rem}summary h3{overflow-wrap
 </div>
 <label for="compass-goal"><span lang="fr">Cap à suivre (0 à 359°)</span><span lang="en">Target bearing (0 to 359°)</span><input id="compass-goal" type="number" inputmode="numeric" min="0" max="359" step="1" placeholder="135"></label>
 <p id="compass-guidance" class="tool-note"></p>
+</article>
+<article id="level-tool" class="tool-box" aria-labelledby="level-title" hidden>
+<h3 id="level-title"><span lang="fr">Niveau à bulle</span><span lang="en">Spirit level</span></h3>
+<div class="tool-actions">
+  <button type="button" id="level-start"><span lang="fr">Activer le niveau</span><span lang="en">Enable level</span></button>
+  <button type="button" id="level-help" aria-label="Aide pour les autorisations" aria-controls="level-settings" aria-expanded="false">?</button>
+  <button type="button" id="level-stop" hidden><span lang="fr">Arrêter</span><span lang="en">Stop</span></button>
+</div>
+<div id="level-settings" class="compass-settings" hidden></div>
+<p id="level-status" class="tool-note" role="status"></p>
+<label for="level-mode"><span lang="fr">Mode de mesure</span><span lang="en">Measurement mode</span><select id="level-mode"></select></label>
+<p id="level-instruction" class="tool-note"></p>
+<div id="level-vial" class="level-vial" aria-hidden="true"><div id="level-bubble" class="level-bubble" hidden></div></div>
+<p id="level-display">—</p>
+<div class="tool-actions">
+  <button type="button" id="level-zero" disabled><span lang="fr">Mettre à zéro</span><span lang="en">Set zero</span></button>
+  <button type="button" id="level-clear" hidden><span lang="fr">Rétablir le zéro du téléphone</span><span lang="en">Restore device zero</span></button>
+</div>
+<p id="level-reference" class="tool-note" role="status"></p>
 </article>
 <article id="morse-tool" class="tool-box morse-tool" aria-labelledby="morse-title" hidden>
 <h3 id="morse-title"><span lang="fr">Traducteur morse</span><span lang="en">Morse translator</span></h3>
@@ -3195,6 +3226,139 @@ for (const button of document.querySelectorAll('[data-quick-group]')) {
   new MutationObserver(renderLanguage).observe(root,{attributes:true,attributeFilter:['lang']});
   document.addEventListener('visibilitychange',()=>{if(document.hidden && listening)reset();});
   window.addEventListener('pagehide',()=>{if(listening)reset();});
+  renderLanguage();
+})();
+</script>
+<script>
+(() => {
+  const el=id=>document.getElementById('level-'+id);
+  const root=document.documentElement, tools=document.getElementById('tools');
+  const panel=el('tool'), start=el('start'), stop=el('stop'), mode=el('mode'), help=el('help'), settings=el('settings');
+  const vial=el('vial'), bubble=el('bubble'), display=el('display'), zero=el('zero'), clear=el('clear');
+  const modes={
+    flat:['À plat · deux axes','Flat · two axes','Pose le dos du téléphone sur la surface à mesurer.','Place the back of the phone on the surface.'],
+    horizontal:['Sur la tranche · horizontale','On edge · horizontal','Pose un côté long du téléphone sur le bord à vérifier.','Rest a long side of the phone on the edge you want to check.'],
+    vertical:['Sur la tranche · verticale','On edge · vertical','Aligne un côté long du téléphone contre le bord vertical.','Hold a long side of the phone against the vertical edge.']
+  };
+  const messages={
+    waiting:['Recherche des capteurs…','Waiting for sensors…'],
+    denied:['Accès aux capteurs refusé. Touche le ? pour afficher l’aide.','Sensor access denied. Tap ? for help.'],
+    unavailable:['Aucune mesure reçue. Touche le ? pour vérifier les autorisations.','No reading received. Tap ? to check permissions.']
+  };
+  const t=(fr,en)=>root.lang==='en'?en:fr;
+  const radians=degrees=>degrees*Math.PI/180;
+  const degrees=radians=>radians*180/Math.PI;
+  const slope=value=>degrees(Math.asin(Math.max(-1,Math.min(1,value))));
+  let token=0, active=false, timer, sample, reference, format, status='';
+
+  for(const detail of document.querySelectorAll('#compass-settings > details')) {
+    const copy=detail.cloneNode(true);
+    copy.removeAttribute('id');
+    settings.append(copy);
+  }
+  help.addEventListener('click',()=>{
+    settings.hidden=!settings.hidden;
+    help.setAttribute('aria-expanded',String(!settings.hidden));
+  });
+
+  function measurement() {
+    if(!sample)return null;
+    const beta=radians(sample.beta), gamma=radians(sample.gamma);
+    // Gravity projected onto the phone's physical right, bottom and back axes.
+    const right=Math.cos(beta)*Math.sin(gamma), down=Math.sin(beta), back=Math.cos(beta)*Math.cos(gamma);
+    // The horizontal mode measures the long physical edge regardless of screen rotation.
+    if(mode.value==='horizontal')return [slope(down),0];
+    if(mode.value==='vertical') {
+      const projected=Math.hypot(right,back);
+      const scale=projected?slope(projected)/projected:0;
+      return [right*scale,back*scale];
+    }
+    const angle=radians(screen.orientation?.angle ?? window.orientation ?? 0);
+    return [slope(right*Math.cos(angle)+down*Math.sin(angle)),slope(down*Math.cos(angle)-right*Math.sin(angle))];
+  }
+  function render() {
+    const value=measurement();
+    const message=status?t(...messages[status]):'';
+    if(el('status').textContent!==message)el('status').textContent=message;
+    bubble.hidden=!value;
+    zero.disabled=!value;
+    clear.hidden=!reference;
+    const referenceText=reference?t('Zéro personnalisé actif.','Custom zero active.'):'';
+    if(el('reference').textContent!==referenceText)el('reference').textContent=referenceText;
+    vial.dataset.mode=mode.value;
+    if(!value){display.textContent='—';delete vial.dataset.aligned;return;}
+    const x=value[0]-(reference?.[0]??0), y=value[1]-(reference?.[1]??0);
+    const offset=Math.hypot(x,y), scale=33/Math.max(15,offset);
+    // A liquid bubble moves uphill as the device tilts downhill.
+    vial.style.setProperty('--bubble-x',(50-x*scale)+'%');
+    vial.style.setProperty('--bubble-y',(50-y*scale)+'%');
+    vial.dataset.aligned=String(offset<=0.5);
+    const angle=value=>format.format(Math.abs(value)<0.05?0:value)+'°';
+    const label=mode.value==='flat'?t('Gauche/droite ','Side to side ')+angle(x)+' · '+t('Avant/arrière ','Front to back ')+angle(y)
+      : t('Écart ','Deviation ')+angle(offset);
+    if(display.textContent!==label)display.textContent=label;
+  }
+  function renderLanguage() {
+    format=new Intl.NumberFormat(root.lang,{maximumFractionDigits:1,minimumFractionDigits:1});
+    const selected=mode.value||'flat';
+    mode.replaceChildren(...Object.entries(modes).map(([id,[fr,en]])=>new Option(t(fr,en),id)));
+    mode.value=selected;
+    help.setAttribute('aria-label',t('Aide pour les autorisations','Permission help'));
+    const [,,fr,en]=modes[selected];
+    el('instruction').textContent=t(fr,en);
+    render();
+  }
+  function readOrientation(event) {
+    if(!Number.isFinite(event.beta)||!Number.isFinite(event.gamma))return;
+    clearTimeout(timer);
+    sample={beta:event.beta,gamma:event.gamma};
+    status='';
+    render();
+  }
+  function reset(reason='') {
+    token++;
+    active=false;
+    clearTimeout(timer);
+    window.removeEventListener('deviceorientation',readOrientation);
+    window.removeEventListener('deviceorientationabsolute',readOrientation);
+    start.disabled=false;
+    stop.hidden=true;
+    sample=null;
+    status=reason;
+    render();
+  }
+  start.addEventListener('click',async()=>{
+    const Orientation=window.DeviceOrientationEvent;
+    if(!window.isSecureContext||!Orientation){reset('unavailable');return;}
+    const attempt=++token;
+    active=true;
+    start.disabled=true;
+    stop.hidden=false;
+    status='waiting';
+    render();
+    if(typeof Orientation.requestPermission==='function') {
+      let permission;
+      try {permission=await Orientation.requestPermission();}
+      catch {permission='denied';}
+      if(attempt!==token)return;
+      if(permission!=='granted'){reset('denied');return;}
+    }
+    timer=setTimeout(()=>reset('unavailable'),6000);
+    window.addEventListener('deviceorientation',readOrientation);
+    window.addEventListener('deviceorientationabsolute',readOrientation);
+  });
+  stop.addEventListener('click',()=>{reset();start.focus();});
+  mode.addEventListener('change',()=>{reference=null;renderLanguage();});
+  zero.addEventListener('click',()=>{reference=measurement();render();});
+  clear.addEventListener('click',()=>{reference=null;render();if(!zero.disabled)zero.focus();else start.focus();});
+  function onScreenTurn(){if(mode.value==='flat')reference=null;if(active)render();}
+  screen.orientation?.addEventListener('change',onScreenTurn);
+  window.addEventListener('orientationchange',onScreenTurn);
+  const observer=new MutationObserver(()=>{if(active&&(panel.hidden||tools.hidden))reset();});
+  for(const target of [panel,tools])observer.observe(target,{attributes:true,attributeFilter:['hidden']});
+  new MutationObserver(renderLanguage).observe(root,{attributes:true,attributeFilter:['lang']});
+  document.addEventListener('visibilitychange',()=>{if(document.hidden&&active)reset();});
+  window.addEventListener('pagehide',()=>{if(active)reset();});
   renderLanguage();
 })();
 </script>
