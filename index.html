@@ -120,6 +120,21 @@ summary{grid-template-columns:2.4rem minmax(0,1fr) 1rem}summary h3{overflow-wrap
 .level-vial[data-aligned="true"] .level-bubble{background:#a7e6a2}
 #level-display{text-align:center;font-size:1.25rem;font-weight:800;font-variant-numeric:tabular-nums}
 #level-mode{max-width:20rem}
+.journal-timeline{--journal-rail:1.8rem;position:relative;list-style:none;margin:1rem 0;padding:0 0 0 calc(var(--journal-rail) + .65rem);display:grid;gap:.75rem}
+.journal-timeline:not(:empty)::before{content:"";position:absolute;inset:.6rem auto .6rem calc(var(--journal-rail) / 2 - 1px);width:2px;background:#a4b3a5}
+.journal-event{position:relative;min-width:0;padding:.7rem .85rem;border:1px solid var(--journal-border,#bdccb6);border-radius:8px;background:var(--journal-bg,#eef4e8);overflow-wrap:anywhere}
+.journal-event[data-kind="movement"]{--journal-bg:#e5effa;--journal-border:#a9c3dc;--journal-accent:#285d88}
+.journal-event[data-kind="instruction"]{--journal-bg:#fbefcf;--journal-border:#d7bd7d;--journal-accent:#775512}
+.journal-event[data-kind="incident"]{--journal-bg:#f9e6e2;--journal-border:#d8a7a1;--journal-accent:#933830}
+.journal-point{position:absolute;top:.75rem;left:calc(-1 * (var(--journal-rail) + .65rem) - 1px);width:var(--journal-rail);height:var(--journal-rail);display:grid;place-items:center;border:2px solid var(--journal-accent,#386244);border-radius:50%;background:var(--journal-bg,#eef4e8);color:var(--journal-accent,#386244);font-weight:850;line-height:1}
+.journal-event-head,.journal-subjects{display:flex;align-items:baseline;flex-wrap:wrap;gap:.25rem .6rem}
+.journal-event-head strong{color:var(--journal-accent,#386244)}
+.journal-event-head time{font-size:.85rem;color:var(--muted)}
+.journal-subjects span{background:var(--cream);border:1px solid var(--journal-border,#bdccb6);border-radius:999px;padding:.1rem .45rem;font-size:.8rem}
+.journal-event p{white-space:pre-wrap}
+.journal-event .tool-actions{justify-content:flex-end}
+#journal-form .tool-fields>label{min-width:0}
+@media(max-width:480px){#journal-form .tool-fields{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -722,6 +737,8 @@ summary{grid-template-columns:2.4rem minmax(0,1fr) 1rem}summary h3{overflow-wrap
 <div class="tool-fields">
 <label for="journal-kind"><span lang="fr">Type d’entrée</span><span lang="en">Entry type</span><select id="journal-kind"><option value="observation" data-fr="Observation" data-en="Observation">Observation</option><option value="movement" data-fr="Déplacement" data-en="Movement">Déplacement</option><option value="instruction" data-fr="Consigne reçue" data-en="Instruction received">Consigne reçue</option><option value="incident" data-fr="Incident" data-en="Incident">Incident</option></select></label>
 <label for="journal-when"><span lang="fr">Date et heure de l’événement (facultatif)</span><span lang="en">Event date and time (optional)</span><input id="journal-when" type="datetime-local"></label>
+<label for="journal-team"><span lang="fr">Équipe</span><span lang="en">Team</span><select id="journal-team"></select></label>
+<label for="journal-member"><span lang="fr">Équipier</span><span lang="en">Member</span><select id="journal-member"></select></label>
 <label for="journal-note"><span lang="fr">Ce qui s’est passé</span><span lang="en">What happened</span><textarea id="journal-note" rows="3" maxlength="1500" required></textarea></label>
 </div>
 <div class="tool-actions"><button type="submit"><span lang="fr">Ajouter au journal</span><span lang="en">Add to log</span></button><button type="button" id="journal-copy" disabled><span lang="fr">Copier le journal</span><span lang="en">Copy log</span></button></div>
@@ -729,7 +746,7 @@ summary{grid-template-columns:2.4rem minmax(0,1fr) 1rem}summary h3{overflow-wrap
 <textarea id="journal-export" class="tool-preview" rows="7" readonly aria-label="Journal / Log" hidden></textarea>
 <p id="journal-status" class="tool-note" role="status"></p>
 <p id="journal-empty" class="tool-note"><span lang="fr">Aucune entrée enregistrée.</span><span lang="en">No entries saved.</span></p>
-<ol id="journal-list" class="utility-list"></ol>
+<ol id="journal-list" class="journal-timeline"></ol>
 <p class="tool-note"><span lang="fr">Sans horaire renseigné, l’entrée prend la date et l’heure du moment. Le journal est sauvegardé dans ce navigateur.</span><span lang="en">If no time is entered, the entry uses the current date and time. The log is saved in this browser.</span></p>
 </article>
 </div>
@@ -2501,17 +2518,53 @@ for (const {button, group, options} of quickFilters) {
   el('inv-cancel').addEventListener('click',resetInventoryForm);
 
   const journalStatus=el('journal-status'), journalList=el('journal-list'), journalKind=el('journal-kind');
+  const journalTeam=el('journal-team'), journalMember=el('journal-member');
+  const journalIcons={observation:'●',movement:'➜',instruction:'☷',incident:'!'};
+  const journalPeople=()=>window.teamProtection?.choices() || {teams:[],members:[]};
   const savedJournal=load('situation-log',[]);
   let logs=Array.isArray(savedJournal)?savedJournal.filter(item=>typeof item?.note==='string'&&typeof item.id==='string'&&Number.isFinite(item.when)&&!isNaN(new Date(item.when))):[];
   const journalExport=el('journal-export');
   function journalLabel(kind) {
     return Array.from(journalKind.options).find(option=>option.value===kind)?.dataset[locale()] || t('Entrée','Entry');
   }
+  function journalSubjects() {
+    const {teams,members}=journalPeople();
+    const teamId=journalTeam.value, memberId=journalMember.value;
+    journalTeam.replaceChildren(new Option(t('Aucune équipe','No team'),''),...teams.map(team=>new Option(team.name,team.id)));
+    journalTeam.value=teams.some(team=>team.id===teamId)?teamId:'';
+    const available=members.filter(person=>!journalTeam.value || person.team===journalTeam.value);
+    const names=new Map(teams.map(team=>[team.id,team.name]));
+    journalMember.replaceChildren(new Option(t('Aucun équipier','No member'),''),
+      ...available.map(person=>new Option(!journalTeam.value && names.has(person.team)?person.name+' · '+names.get(person.team):person.name,person.id)));
+    journalMember.value=available.some(person=>person.id===memberId)?memberId:'';
+  }
+  journalTeam.addEventListener('change',journalSubjects);
+  window.addEventListener('teamsprotectionchange',journalSubjects);
+  function subjectLabels(item) {
+    return [
+      typeof item.teamName==='string' && item.teamName?t('Équipe · ','Team · ')+item.teamName:'',
+      typeof item.memberName==='string' && item.memberName?t('Équipier · ','Member · ')+item.memberName:''
+    ].filter(Boolean);
+  }
   function renderJournal() {
-    const sorted=[...logs].sort((a,b)=>b.when-a.when);
+    const sorted=[...logs].reverse().sort((a,b)=>b.when-a.when);
     journalList.replaceChildren(...sorted.map(item=>{
-      const row=document.createElement('li');
-      row.append(block('strong',dateTime(item.when)+' · '+journalLabel(item.kind)),block('p',item.note));
+      const row=block('li','','journal-event');
+      row.dataset.kind=Object.hasOwn(journalIcons,item.kind)?item.kind:'observation';
+      const point=block('span',journalIcons[row.dataset.kind],'journal-point');
+      point.setAttribute('aria-hidden','true');
+      const head=block('div','','journal-event-head');
+      const when=block('time',dateTime(item.when));
+      when.dateTime=new Date(item.when).toISOString();
+      head.append(block('strong',journalLabel(item.kind)),when);
+      row.append(point,head);
+      const subjects=subjectLabels(item);
+      if(subjects.length) {
+        const badges=block('div','','journal-subjects');
+        badges.append(...subjects.map(label=>block('span',label)));
+        row.append(badges);
+      }
+      row.append(block('p',item.note));
       const controls=block('div','','tool-actions');
       controls.append(action(t('Supprimer','Delete'),()=>{
         logs=logs.filter(entry=>entry.id!==item.id);
@@ -2519,7 +2572,8 @@ for (const {button, group, options} of quickFilters) {
       }));
       row.append(controls);return row;
     }));
-    journalExport.value=[t('Journal de situation','Situation log'),...sorted.slice().reverse().map(item=>formatTime(item.when)+' · '+journalLabel(item.kind)+'\n'+item.note)].join('\n\n');
+    journalExport.value=[t('Journal de situation','Situation log'),...sorted.slice().reverse().map(item=>
+      [formatTime(item.when)+' · '+journalLabel(item.kind),...subjectLabels(item),item.note].join('\n'))].join('\n\n');
     journalExport.hidden=true;
     el('journal-empty').hidden=Boolean(logs.length);
     el('journal-copy').disabled=!logs.length;
@@ -2530,7 +2584,11 @@ for (const {button, group, options} of quickFilters) {
     const explicit=el('journal-when').value;
     const when=explicit?+new Date(explicit):Date.now();
     if(!note || !Number.isFinite(when)) {journalStatus.textContent=t('Renseigne une note et une date valide.','Enter a note and a valid date.');return;}
-    logs=[...logs,{id:uid(),note,when,kind:journalKind.value}];
+    const {teams,members}=journalPeople();
+    const person=members.find(member=>member.id===journalMember.value);
+    const team=teams.find(team=>team.id===(journalTeam.value || person?.team));
+    logs=[...logs,{id:uid(),note,when,kind:journalKind.value,
+      teamId:team?.id||'',teamName:team?.name||'',memberId:person?.id||'',memberName:person?.name||''}];
     journalStatus.textContent='';persist('situation-log',logs,journalStatus);
     el('journal-note').value=el('journal-when').value='';
     renderJournal();el('journal-note').focus();
@@ -2540,7 +2598,7 @@ for (const {button, group, options} of quickFilters) {
   function refresh() {
     for(const select of [format,journalKind])for(const option of select.options)option.textContent=option.dataset[locale()];
     gpsHelp.setAttribute('aria-label',t('Aide pour la localisation','Location permission help'));
-    updateGPS();renderPlan();updateInventoryButton();renderInventory();renderJournal();
+    updateGPS();renderPlan();updateInventoryButton();renderInventory();journalSubjects();renderJournal();
   }
   new MutationObserver(refresh).observe(document.documentElement,{attributes:true,attributeFilter:['lang']});
   refresh();
