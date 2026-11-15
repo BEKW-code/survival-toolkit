@@ -106,7 +106,7 @@ summary{grid-template-columns:2.4rem minmax(0,1fr) 1rem}summary h3{overflow-wrap
 .compass-value{position:absolute;inset:37% 0;text-align:center;display:grid;place-items:center;font-size:clamp(1.25rem,6vw,2rem);font-weight:850;font-variant-numeric:tabular-nums}
 #compass-goal{max-width:10rem}
 .compass-settings{margin:.65rem 0}
-#compass-help{width:2rem;height:2rem;padding:0;border-radius:50%;font-weight:800;align-self:center}
+#compass-help,#gps-help{width:2rem;height:2rem;padding:0;border-radius:50%;font-weight:800;align-self:center}
 .compass-settings details{margin:.55rem 0;padding:.45rem .65rem;border-left:2px solid var(--line)}
 </style>
 <style>
@@ -672,8 +672,22 @@ summary{grid-template-columns:2.4rem minmax(0,1fr) 1rem}summary h3{overflow-wrap
 <article id="gps-tool" class="tool-box" aria-labelledby="gps-title" hidden>
 <h3 id="gps-title"><span lang="fr">Mes coordonnées</span><span lang="en">My coordinates</span></h3>
 <p><span lang="fr">Relève ta position ou saisis des coordonnées ou un repère. Vérifie la précision avant de transmettre une position GPS.</span><span lang="en">Get a location fix or enter coordinates or a landmark. Check the reported accuracy before passing a GPS fix on.</span></p>
-<div class="tool-actions"><button type="button" id="gps-locate" ><span lang="fr">Relever ma position</span><span lang="en">Get my location</span></button></div>
+<div class="tool-actions">
+  <button type="button" id="gps-locate"><span lang="fr">Autoriser et relever ma position</span><span lang="en">Allow and get my location</span></button>
+  <button type="button" id="gps-help" aria-label="Aide pour la localisation" aria-controls="gps-permission-help" aria-expanded="false">?</button>
+</div>
 <p id="gps-status" class="tool-note" role="status"></p>
+<div id="gps-permission-help" class="compass-settings" hidden>
+  <details id="gps-help-ios">
+    <summary>iPhone / iPad · Safari</summary>
+    <p><span lang="fr">Ouvre cette page dans Safari. Dans le menu à gauche de l’adresse, touche <strong>Réglages du site web → Localisation</strong>, puis <strong>Demander</strong> ou <strong>Autoriser</strong>. Vérifie aussi que le <strong>Service de localisation</strong> est activé dans <strong>Réglages → Confidentialité et sécurité</strong>.</span><span lang="en">Open this page in Safari. In the menu to the left of the address, tap <strong>Website Settings → Location</strong>, then <strong>Ask</strong> or <strong>Allow</strong>. Also check that <strong>Location Services</strong> is on under <strong>Settings → Privacy &amp; Security</strong>.</span></p>
+  </details>
+  <details id="gps-help-android">
+    <summary>Android · Chrome</summary>
+    <p><span lang="fr">Ouvre cette page dans Chrome. Touche l’icône à gauche de l’adresse, puis <strong>Autorisations → Localisation</strong>, et autorise l’accès. Vérifie aussi que la localisation du téléphone est activée et que Chrome y a accès dans les réglages Android.</span><span lang="en">Open this page in Chrome. Tap the icon to the left of the address, then <strong>Permissions → Location</strong>, and allow access. Also check that location is enabled on the device and that Chrome has access in Android settings.</span></p>
+  </details>
+  <p class="tool-note"><span lang="fr">Reviens ici et appuie à nouveau sur <strong>Autoriser et relever ma position</strong>. Tu peux aussi saisir tes coordonnées ou un repère à la main.</span><span lang="en">Return here and tap <strong>Allow and get my location</strong> again. You can also enter coordinates or a landmark manually.</span></p>
+</div>
 <div class="tool-fields">
 <label for="gps-format"><span lang="fr">Format de saisie</span><span lang="en">Input format</span><select id="gps-format"><option value="dd" data-fr="Degrés décimaux" data-en="Decimal degrees">Degrés décimaux</option><option value="dms" data-fr="Degrés, minutes, secondes" data-en="Degrees, minutes, seconds">Degrés, minutes, secondes</option></select></label>
 <label for="gps-landmark"><span lang="fr">Repère, adresse ou point kilométrique</span><span lang="en">Landmark, address or mile marker</span><input id="gps-landmark" type="text" maxlength="120" autocomplete="off"></label>
@@ -2308,6 +2322,16 @@ for (const {button, group, options} of quickFilters) {
 
   const format=el('gps-format'), lat=el('gps-lat'), lon=el('gps-lon'), landmark=el('gps-landmark');
   const locationResult=el('gps-result'), gpsStatus=el('gps-status'), locate=el('gps-locate');
+  const gpsHelp=el('gps-help'), gpsHelpPanel=el('gps-permission-help');
+  if(/iPhone|iPad|iPod/i.test(navigator.userAgent) || (navigator.platform==='MacIntel' && navigator.maxTouchPoints>1)) {
+    el('gps-help-ios').open=true;
+  } else if(/Android/i.test(navigator.userAgent)) {
+    el('gps-help-android').open=true;
+  }
+  gpsHelp.addEventListener('click',()=>{
+    gpsHelpPanel.hidden=!gpsHelpPanel.hidden;
+    gpsHelp.setAttribute('aria-expanded',String(!gpsHelpPanel.hidden));
+  });
   let gpsFix;
   let fixMessage='';
   let requestId=0;
@@ -2352,7 +2376,7 @@ for (const {button, group, options} of quickFilters) {
     el('gps-format-help').textContent=format.value==='dd' ? t('Exemple : latitude 48,8566 et longitude 2,3522. Sud et ouest sont négatifs.','Example: latitude 48.8566 and longitude 2.3522. South and west are negative.') : t('Exemple : 48 51 24 N et 2 21 08 E. Utilise N/S pour la latitude, E/O (ou W) pour la longitude.','Example: 48 51 24 N and 2 21 08 E. Use N/S for latitude, E/W for longitude.');
     const notices={
       waiting:t('Recherche de la position…','Getting location…'),
-      blocked:t('Position refusée. Tu peux renseigner un repère ou saisir les coordonnées.','Location denied. Enter a landmark or coordinates manually.'),
+      blocked:t('Accès à la localisation refusé. Touche le ? pour trouver le réglage, puis réessaie.','Location access denied. Tap ? to find the setting, then try again.'),
       unavailable:t('Position indisponible. Tu peux renseigner un repère ou saisir les coordonnées.','Location unavailable. Enter a landmark or coordinates manually.'),
       timeout:t('Le relevé a pris trop de temps. Réessaie ou indique un repère.','Location timed out. Try again or enter a landmark.')
     };
@@ -2515,6 +2539,7 @@ for (const {button, group, options} of quickFilters) {
 
   function refresh() {
     for(const select of [format,journalKind])for(const option of select.options)option.textContent=option.dataset[locale()];
+    gpsHelp.setAttribute('aria-label',t('Aide pour la localisation','Location permission help'));
     updateGPS();renderPlan();updateInventoryButton();renderInventory();renderJournal();
   }
   new MutationObserver(refresh).observe(document.documentElement,{attributes:true,attributeFilter:['lang']});
