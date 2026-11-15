@@ -64,6 +64,7 @@ summary{grid-template-columns:2.4rem minmax(0,1fr) 1rem}summary h3{overflow-wrap
 .clock-alarm-banner{margin:.6rem auto;padding:.55rem .75rem;background:#f7e7dd;border:1px solid #dbac9b;border-radius:6px;color:#662716;display:flex;flex-wrap:wrap;gap:.45rem 1rem;align-items:center}.clock-alarm-banner a{color:inherit}.clock-alarm-option{display:inline-flex;align-items:center;gap:.25rem;font-size:.9rem}.tool-actions .alarm-stop{background:#812e1d;color:white;border-color:#812e1d;font-weight:750}.tool-actions .alarm-stop:hover{background:#9d412b}
 #clocks-start-sound{background:var(--deep);color:var(--cream);border-color:var(--deep);font-weight:750}#clocks-start-sound:hover{background:var(--accent)}
 .clock-entry{background:var(--clock-bg,var(--cream))}.clock-entry .clock-name{background:var(--cream)}.clock-identity{display:flex;gap:.45rem;align-items:center;margin-bottom:.45rem;color:var(--clock-fg,var(--ink));font-size:.85rem;font-weight:750}.clock-preset-icon{display:grid;place-items:center;width:1.8rem;height:1.8rem;flex:none;border:1px solid currentColor;border-radius:5px;background:var(--cream);font-size:1rem}.clock-preset-badge{overflow-wrap:anywhere}
+.tool-box>label:not(.tool-picker){display:block;margin-top:.55rem}.tool-box>label>textarea,#evac-preview{margin-top:.4rem}.evac-fields label:has(textarea),.tool-fields label:has(#journal-note){grid-column:1/-1}.tool-preview{padding:.7rem;background:var(--paper);border:1px solid var(--line);border-radius:5px;white-space:pre-wrap;overflow-wrap:anywhere}.utility-list{list-style:none;display:grid;gap:.55rem;margin:.6rem 0;padding:0}.utility-list li{border:1px solid var(--line);border-radius:6px;padding:.6rem .75rem;overflow-wrap:anywhere}.utility-list li[data-due=soon]{background:#faf0d7}.utility-list li[data-due=late]{background:#f7e7dd}.utility-list p{white-space:pre-wrap}.tool-box textarea{resize:vertical}@media print{body.print-evac header,body.print-evac footer,body.print-evac main>[data-view]:not(#tools),body.print-evac .clock-alarm-banner{display:none!important}body.print-evac #tools,body.print-evac #evac-tool{display:block!important}body.print-evac #tools>h2,body.print-evac #tools>.zoe-intro,body.print-evac .tool-choices,body.print-evac #evac-tool>*:not(h3):not(#evac-preview),body.print-evac .tool-grid>.tool-box:not(#evac-tool){display:none!important}body.print-evac #evac-tool{border:0}}
 </style>
 <link rel="manifest" href="./manifest.webmanifest">
 <link rel="apple-touch-icon" href="./icons/apple-touch-icon.png">
@@ -451,7 +452,7 @@ summary{grid-template-columns:2.4rem minmax(0,1fr) 1rem}summary h3{overflow-wrap
 </div>
 <section id="tools" data-view="tools" class="wrap toolkit-tools js-only" aria-labelledby="tools-title">
 <h2 id="tools-title"><span lang="fr">Outils pratiques</span><span lang="en">Practical tools</span></h2>
-<p class="zoe-voice zoe-intro"><strong>Zoé</strong> <span lang="fr">On sort le matos : compte ton eau, coche ton sac et prépare les mots à dire aux secours.</span><span lang="en">Gear out: count your water, check your pack and get the words ready for dispatch.</span></p><div class="tool-choices" role="group" aria-label="Choix des outils / Tool selection"><button type="button" data-tool="water-tool" aria-controls="water-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">◉</span><span class="tool-button-label"><span lang="fr">Réserve d’eau</span><span lang="en">Water reserve</span></span><span class="tool-arrow" aria-hidden="true">→</span></button><button type="button" data-tool="checklist-tool" aria-controls="checklist-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">✓</span><span class="tool-button-label"><span lang="fr">Listes de préparation</span><span lang="en">Preparedness checklists</span></span><span class="tool-arrow" aria-hidden="true">→</span></button><button type="button" data-tool="call-tool" aria-controls="call-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">✚</span><span class="tool-button-label"><span lang="fr">Fiche d’appel aux secours</span><span lang="en">Emergency call prompt</span></span><span class="tool-arrow" aria-hidden="true">→</span></button><button type="button" data-tool="morse-tool" aria-controls="morse-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">·−</span><span class="tool-button-label"><span lang="fr">Traducteur morse</span><span lang="en">Morse translator</span></span><span class="tool-arrow" aria-hidden="true">→</span></button><button type="button" data-tool="trip-tool" aria-controls="trip-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">↗</span><span class="tool-button-label"><span lang="fr">Plan de sortie</span><span lang="en">Trip plan</span></span><span class="tool-arrow" aria-hidden="true">→</span></button><button type="button" data-tool="timer-tool" aria-controls="timer-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">◷</span><span class="tool-button-label"><span lang="fr">Minuteurs de terrain</span><span lang="en">Field timers</span></span><span class="tool-arrow" aria-hidden="true">→</span></button><button type="button" data-tool="runtime-tool" aria-controls="runtime-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">≈</span><span class="tool-button-label"><span lang="fr">Calculateur d’autonomie</span><span lang="en">Supply and battery runtime</span></span><span class="tool-arrow" aria-hidden="true">→</span></button><button type="button" data-tool="clocks-tool" aria-controls="clocks-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">⏱</span><span class="tool-button-label"><span lang="fr">Chronos et comptes à rebours</span><span lang="en">Stopwatches and countdowns</span></span><span class="tool-arrow" aria-hidden="true">→</span></button></div>
+<p class="zoe-voice zoe-intro"><strong>Zoé</strong> <span lang="fr">On sort le matos : compte ton eau, coche ton sac et prépare les mots à dire aux secours.</span><span lang="en">Gear out: count your water, check your pack and get the words ready for dispatch.</span></p><div class="tool-choices" role="group" aria-label="Choix des outils / Tool selection"><button type="button" data-tool="water-tool" aria-controls="water-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">◉</span><span class="tool-button-label"><span lang="fr">Réserve d’eau</span><span lang="en">Water reserve</span></span><span class="tool-arrow" aria-hidden="true">→</span></button><button type="button" data-tool="checklist-tool" aria-controls="checklist-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">✓</span><span class="tool-button-label"><span lang="fr">Listes de préparation</span><span lang="en">Preparedness checklists</span></span><span class="tool-arrow" aria-hidden="true">→</span></button><button type="button" data-tool="call-tool" aria-controls="call-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">✚</span><span class="tool-button-label"><span lang="fr">Fiche d’appel aux secours</span><span lang="en">Emergency call prompt</span></span><span class="tool-arrow" aria-hidden="true">→</span></button><button type="button" data-tool="morse-tool" aria-controls="morse-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">·−</span><span class="tool-button-label"><span lang="fr">Traducteur morse</span><span lang="en">Morse translator</span></span><span class="tool-arrow" aria-hidden="true">→</span></button><button type="button" data-tool="trip-tool" aria-controls="trip-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">↗</span><span class="tool-button-label"><span lang="fr">Plan de sortie</span><span lang="en">Trip plan</span></span><span class="tool-arrow" aria-hidden="true">→</span></button><button type="button" data-tool="timer-tool" aria-controls="timer-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">◷</span><span class="tool-button-label"><span lang="fr">Minuteurs de terrain</span><span lang="en">Field timers</span></span><span class="tool-arrow" aria-hidden="true">→</span></button><button type="button" data-tool="runtime-tool" aria-controls="runtime-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">≈</span><span class="tool-button-label"><span lang="fr">Calculateur d’autonomie</span><span lang="en">Supply and battery runtime</span></span><span class="tool-arrow" aria-hidden="true">→</span></button><button type="button" data-tool="clocks-tool" aria-controls="clocks-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">⏱</span><span class="tool-button-label"><span lang="fr">Chronos et comptes à rebours</span><span lang="en">Stopwatches and countdowns</span></span><span class="tool-arrow" aria-hidden="true">→</span></button><button type="button" data-tool="gps-tool" aria-controls="gps-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">⌖</span><span class="tool-button-label"><span lang="fr">Mes coordonnées</span><span lang="en">My coordinates</span></span><span class="tool-arrow" aria-hidden="true">→</span></button><button type="button" data-tool="evac-tool" aria-controls="evac-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">⇥</span><span class="tool-button-label"><span lang="fr">Plan d’évacuation du foyer</span><span lang="en">Household evacuation plan</span></span><span class="tool-arrow" aria-hidden="true">→</span></button><button type="button" data-tool="inventory-tool" aria-controls="inventory-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">▤</span><span class="tool-button-label"><span lang="fr">Inventaire du sac</span><span lang="en">Kit inventory</span></span><span class="tool-arrow" aria-hidden="true">→</span></button><button type="button" data-tool="journal-tool" aria-controls="journal-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">✎</span><span class="tool-button-label"><span lang="fr">Journal de situation</span><span lang="en">Situation log</span></span><span class="tool-arrow" aria-hidden="true">→</span></button></div>
 <div class="tool-grid">
 <article class="tool-box" id="water-tool" aria-labelledby="water-title" hidden>
 <h3 id="water-title"><span lang="fr">Calculateur de réserve d’eau</span><span lang="en">Water reserve calculator</span></h3>
@@ -571,6 +572,55 @@ summary{grid-template-columns:2.4rem minmax(0,1fr) 1rem}summary h3{overflow-wrap
 <ul class="clock-list" id="clocks-list"></ul>
 <p id="clocks-announcement" class="sr-only" role="status"></p>
 <p class="tool-note"><span lang="fr">Les chronos sont enregistrés dans ce navigateur. À la réouverture, les chronos en cours tiennent compte du temps écoulé et les chronos en pause gardent leur valeur. Le navigateur peut suspendre le son en arrière-plan ou sur l’écran verrouillé. Après une réouverture, il peut demander de réautoriser le son.</span><span lang="en">Clocks are saved in this browser. When you reopen the page, running clocks account for the time away, and paused clocks keep their value. The browser may suspend sound in the background or on the lock screen, and may ask you to enable it again after reopening.</span> <a href="#timer-tool"><span lang="fr">Consignes pour l’eau et le tonnerre</span><span lang="en">Water and thunder guidance</span></a></p>
+</article>
+<article id="gps-tool" class="tool-box" aria-labelledby="gps-title" hidden>
+<h3 id="gps-title"><span lang="fr">Mes coordonnées</span><span lang="en">My coordinates</span></h3>
+<p><span lang="fr">Relève ta position ou saisis des coordonnées ou un repère. Vérifie la précision avant de transmettre une position GPS.</span><span lang="en">Get a location fix or enter coordinates or a landmark. Check the reported accuracy before passing a GPS fix on.</span></p>
+<div class="tool-actions"><button type="button" id="gps-locate" ><span lang="fr">Relever ma position</span><span lang="en">Get my location</span></button></div>
+<p id="gps-status" class="tool-note" role="status"></p>
+<div class="tool-fields">
+<label for="gps-format"><span lang="fr">Format de saisie</span><span lang="en">Input format</span><select id="gps-format"><option value="dd" data-fr="Degrés décimaux" data-en="Decimal degrees">Degrés décimaux</option><option value="dms" data-fr="Degrés, minutes, secondes" data-en="Degrees, minutes, seconds">Degrés, minutes, secondes</option></select></label>
+<label for="gps-landmark"><span lang="fr">Repère, adresse ou point kilométrique</span><span lang="en">Landmark, address or mile marker</span><input id="gps-landmark" type="text" maxlength="120" autocomplete="off"></label>
+<label for="gps-lat"><span lang="fr">Latitude</span><span lang="en">Latitude</span><input id="gps-lat" type="text" maxlength="40" autocomplete="off" aria-describedby="gps-format-help"></label>
+<label for="gps-lon"><span lang="fr">Longitude</span><span lang="en">Longitude</span><input id="gps-lon" type="text" maxlength="40" autocomplete="off" aria-describedby="gps-format-help"></label>
+</div>
+<p id="gps-format-help" class="tool-note"></p>
+<label for="gps-result"><span lang="fr">Position à communiquer</span><span lang="en">Location to share</span><textarea id="gps-result" rows="5" readonly></textarea></label>
+<div class="tool-actions"><button type="button" id="gps-copy" disabled><span lang="fr">Copier la position</span><span lang="en">Copy location</span></button><button type="button" id="gps-to-call" disabled><span lang="fr">Remplir le lieu dans la fiche d’appel</span><span lang="en">Fill the location in the call prompt</span></button><button type="button" id="gps-clear" ><span lang="fr">Effacer</span><span lang="en">Clear</span></button></div>
+<p id="gps-copy-status" class="tool-note" role="status"></p>
+<p class="tool-note"><span lang="fr">La position n’est demandée qu’à ton initiative. Elle peut être indisponible hors ligne ou selon le navigateur. Ces champs restent dans la page et ne sont pas sauvegardés.</span><span lang="en">Location is requested only when you ask. It may be unavailable offline or in some browsers. These fields stay on the page and are not saved.</span></p>
+</article><article id="evac-tool" class="tool-box" aria-labelledby="evac-title" hidden>
+<h3 id="evac-title"><span lang="fr">Plan d’évacuation du foyer</span><span lang="en">Household evacuation plan</span></h3>
+<div class="tool-fields evac-fields"><label for="evac-near"><span lang="fr">Rendez-vous près du domicile</span><span lang="en">Meeting point near home</span><input id="evac-near" type="text" maxlength="180" autocomplete="off"></label><label for="evac-far"><span lang="fr">Rendez-vous hors du quartier</span><span lang="en">Meeting point outside the neighbourhood</span><input id="evac-far" type="text" maxlength="180" autocomplete="off"></label><label for="evac-contact"><span lang="fr">Contact hors zone et téléphone</span><span lang="en">Out-of-area contact and phone</span><input id="evac-contact" type="text" maxlength="180" autocomplete="off"></label><label for="evac-routes"><span lang="fr">Itinéraires et transports possibles</span><span lang="en">Routes and transport options</span><textarea id="evac-routes" rows="3" maxlength="500" autocomplete="off"></textarea></label><label for="evac-needs"><span lang="fr">Besoins des personnes et des animaux</span><span lang="en">People’s and pets’ needs</span><textarea id="evac-needs" rows="3" maxlength="500" autocomplete="off"></textarea></label></div>
+<div class="tool-actions"><button type="button" id="evac-copy" disabled><span lang="fr">Copier le plan</span><span lang="en">Copy plan</span></button><button type="button" id="evac-print" disabled><span lang="fr">Imprimer le plan</span><span lang="en">Print plan</span></button></div>
+<p id="evac-status" class="tool-note" role="status"></p>
+<div id="evac-preview" class="tool-preview" hidden></div>
+<p class="tool-note"><span lang="fr">Le plan est sauvegardé dans ce navigateur. En situation réelle, suis les itinéraires et consignes des autorités.</span><span lang="en">The plan is saved in this browser. In an emergency, follow official routes and instructions.</span> <a href="https://www.georisques.gouv.fr/me-preparer-me-proteger">Géorisques</a></p>
+</article><article id="inventory-tool" class="tool-box" aria-labelledby="inventory-title" hidden>
+<h3 id="inventory-title"><span lang="fr">Inventaire du sac</span><span lang="en">Kit inventory</span></h3>
+<form id="inventory-form">
+<div class="tool-fields"><label for="inv-name"><span lang="fr">Objet</span><span lang="en">Item</span><input id="inv-name" maxlength="100" required></label><label for="inv-quantity"><span lang="fr">Quantité ou format</span><span lang="en">Quantity or size</span><input id="inv-quantity" maxlength="40" placeholder="2"></label><label for="inv-place"><span lang="fr">Rangement</span><span lang="en">Storage location</span><input id="inv-place" maxlength="120"></label><label for="inv-date"><span lang="fr">Date de contrôle ou de péremption</span><span lang="en">Check or expiry date</span><input id="inv-date" type="date"></label></div>
+<div class="tool-actions"><button type="submit" id="inv-save"><span lang="fr">Ajouter l’objet</span><span lang="en">Add item</span></button><button type="button" id="inv-cancel" hidden><span lang="fr">Annuler la modification</span><span lang="en">Cancel edit</span></button></div>
+</form>
+<p id="inv-status" class="tool-note" role="status"></p>
+<p id="inv-empty" class="tool-note"><span lang="fr">Aucun objet enregistré.</span><span lang="en">No items saved.</span></p>
+<ul id="inv-list" class="utility-list"></ul>
+<p class="tool-note"><span lang="fr">Les dates passées et celles des 30 prochains jours sont mises en évidence. La liste est sauvegardée dans ce navigateur.</span><span lang="en">Past dates and those in the next 30 days are highlighted. The list is saved in this browser.</span></p>
+</article><article id="journal-tool" class="tool-box" aria-labelledby="journal-title" hidden>
+<h3 id="journal-title"><span lang="fr">Journal de situation</span><span lang="en">Situation log</span></h3>
+<form id="journal-form">
+<div class="tool-fields">
+<label for="journal-kind"><span lang="fr">Type d’entrée</span><span lang="en">Entry type</span><select id="journal-kind"><option value="observation" data-fr="Observation" data-en="Observation">Observation</option><option value="movement" data-fr="Déplacement" data-en="Movement">Déplacement</option><option value="instruction" data-fr="Consigne reçue" data-en="Instruction received">Consigne reçue</option><option value="incident" data-fr="Incident" data-en="Incident">Incident</option></select></label>
+<label for="journal-when"><span lang="fr">Date et heure de l’événement (facultatif)</span><span lang="en">Event date and time (optional)</span><input id="journal-when" type="datetime-local"></label>
+<label for="journal-note"><span lang="fr">Ce qui s’est passé</span><span lang="en">What happened</span><textarea id="journal-note" rows="3" maxlength="1500" required></textarea></label>
+</div>
+<div class="tool-actions"><button type="submit"><span lang="fr">Ajouter au journal</span><span lang="en">Add to log</span></button><button type="button" id="journal-copy" disabled><span lang="fr">Copier le journal</span><span lang="en">Copy log</span></button></div>
+</form>
+<textarea id="journal-export" class="tool-preview" rows="7" readonly aria-label="Journal / Log" hidden></textarea>
+<p id="journal-status" class="tool-note" role="status"></p>
+<p id="journal-empty" class="tool-note"><span lang="fr">Aucune entrée enregistrée.</span><span lang="en">No entries saved.</span></p>
+<ol id="journal-list" class="utility-list"></ol>
+<p class="tool-note"><span lang="fr">Sans horaire renseigné, l’entrée prend la date et l’heure du moment. Le journal est sauvegardé dans ce navigateur.</span><span lang="en">If no time is entered, the entry uses the current date and time. The log is saved in this browser.</span></p>
 </article>
 </div>
 </section>
@@ -2053,5 +2103,258 @@ for (const button of document.querySelectorAll('[data-quick-group]')) {
   syncTicker();
 })();
 </script>
+<script>
+(() => {
+  const el=id=>document.getElementById(id);
+  const locale=()=>document.documentElement.lang==='en'?'en':'fr';
+  const t=(fr,en)=>locale()==='en'?en:fr;
+  const set=(node,value)=>{node.value=value;};
+  const key=name=>'survival-toolkit-'+name+'-v1';
+  const uid=()=>crypto.randomUUID ? crypto.randomUUID() : Array.from(crypto.getRandomValues(new Uint32Array(4))).join('-');
+  function load(name,fallback) {
+    try {return JSON.parse(localStorage.getItem(key(name))) ?? fallback;}
+    catch {return fallback;}
+  }
+  function persist(name,value,status) {
+    try {localStorage.setItem(key(name),JSON.stringify(value));return true;}
+    catch {status.textContent=t('Le stockage du navigateur est indisponible. Les modifications restent dans cette page.','Browser storage is unavailable. Changes remain on this page.');return false;}
+  }
+  async function copy(value,status,fallback) {
+    try {await navigator.clipboard.writeText(value);status.textContent=t('Copié.','Copied.');}
+    catch {
+      fallback();
+      status.textContent=t('Sélectionne le texte avec la commande Copier de ton appareil.','Use the Copy command on your device to copy the text.');
+    }
+  }
+  const dateTime=value=>new Intl.DateTimeFormat(locale(),{dateStyle:'medium',timeStyle:'short'}).format(value);
+  function action(label,handler) {
+    const button=document.createElement('button');
+    button.type='button';button.textContent=label;
+    button.addEventListener('click',handler);
+    return button;
+  }
+  function block(tag,value,css) {
+    const element=document.createElement(tag);
+    element.textContent=value;
+    if(css)element.className=css;
+    return element;
+  }
+
+  const format=el('gps-format'), lat=el('gps-lat'), lon=el('gps-lon'), landmark=el('gps-landmark');
+  const locationResult=el('gps-result'), gpsStatus=el('gps-status'), locate=el('gps-locate');
+  let gpsFix;
+  let fixMessage='';
+  let requestId=0;
+  let previousFormat=format.value;
+  function readCoordinate(raw,limit,mode) {
+    const value=raw.trim().replaceAll(',','.');
+    if(mode==='dd') return /^[+-]?(?:\d+(?:\.\d+)?|\.\d+)$/u.test(value) && Math.abs(Number(value))<=limit ? Number(value) : null;
+    const normalized=value.toUpperCase().replace(/[°′’’'″”"]/gu,' ').trim();
+    const parts=normalized.match(/^(\d{1,3})\s+(\d{1,2})\s+(\d{1,2}(?:\.\d+)?)\s*([NSEWO])$/u);
+    if(!parts)return null;
+    const [,degrees,minutes,seconds,hemisphere]=parts;
+    if(+minutes>=60 || +seconds>=60 || !(limit===90?'NS':'EWO').includes(hemisphere))return null;
+    const absolute=+degrees + +minutes/60 + +seconds/3600;
+    return absolute<=limit ? (/[SWO]/.test(hemisphere)?-absolute:absolute) : null;
+  }
+  function degreesMinutesSeconds(coordinate,positive,negative) {
+    const centiseconds=Math.round(Math.abs(coordinate)*360000);
+    const degrees=Math.floor(centiseconds/360000);
+    const minutes=Math.floor(centiseconds/6000)%60;
+    const seconds=(centiseconds%6000/100).toFixed(2);
+    return degrees+'° '+minutes+'′ '+seconds+'″ '+(coordinate<0?negative:positive);
+  }
+  function formatTime(timestamp) {
+    return new Intl.DateTimeFormat(locale(),{year:'numeric',month:'short',day:'numeric',hour:'2-digit',minute:'2-digit',timeZoneName:'short'}).format(timestamp);
+  }
+  function setCoordinateFields(a,b) {
+    lat.value=format.value==='dd'?a.toFixed(6):degreesMinutesSeconds(a,'N','S');
+    lon.value=format.value==='dd'?b.toFixed(6):degreesMinutesSeconds(b,'E','W');
+  }
+  function updateGPS() {
+    const a=readCoordinate(lat.value,90,format.value), b=readCoordinate(lon.value,180,format.value);
+    const valid=a!==null && b!==null;
+    const lines=[];
+    if(valid) {
+      lines.push(t('Latitude, longitude : ','Latitude, longitude: ')+a.toFixed(6)+', '+b.toFixed(6));
+      lines.push('DMS : '+degreesMinutesSeconds(a,'N','S')+' / '+degreesMinutesSeconds(b,'E','W'));
+      if(gpsFix)lines.push(t('Précision indiquée par l’appareil : ','Device-reported accuracy: ')+'±'+Math.ceil(gpsFix.accuracy)+' m · '+formatTime(gpsFix.timestamp));
+    }
+    if(landmark.value.trim())lines.push(t('Repère : ','Landmark: ')+landmark.value.trim());
+    locationResult.value=lines.join('\n');
+    el('gps-copy').disabled=el('gps-to-call').disabled=!lines.length;
+    el('gps-format-help').textContent=format.value==='dd' ? t('Exemple : latitude 48,8566 et longitude 2,3522. Sud et ouest sont négatifs.','Example: latitude 48.8566 and longitude 2.3522. South and west are negative.') : t('Exemple : 48 51 24 N et 2 21 08 E. Utilise N/S pour la latitude, E/O (ou W) pour la longitude.','Example: 48 51 24 N and 2 21 08 E. Use N/S for latitude, E/W for longitude.');
+    const notices={
+      waiting:t('Recherche de la position…','Getting location…'),
+      blocked:t('Position refusée. Tu peux renseigner un repère ou saisir les coordonnées.','Location denied. Enter a landmark or coordinates manually.'),
+      unavailable:t('Position indisponible. Tu peux renseigner un repère ou saisir les coordonnées.','Location unavailable. Enter a landmark or coordinates manually.'),
+      timeout:t('Le relevé a pris trop de temps. Réessaie ou indique un repère.','Location timed out. Try again or enter a landmark.')
+    };
+    gpsStatus.textContent=notices[fixMessage] || (!valid && (lat.value || lon.value)
+      ? t('Vérifie les deux coordonnées et leur format. Un repère peut être transmis seul.','Check both coordinates and their format. A landmark can be shared on its own.') : '');
+  }
+  locate.addEventListener('click',()=>{
+    if(!navigator.geolocation || !window.isSecureContext) {fixMessage='unavailable';updateGPS();return;}
+    const stamp=++requestId;
+    locate.disabled=true;
+    fixMessage='waiting';updateGPS();
+    navigator.geolocation.getCurrentPosition(position=>{
+      if(stamp!==requestId)return;
+      locate.disabled=false;fixMessage='';
+      gpsFix={accuracy:position.coords.accuracy,timestamp:position.timestamp};
+      setCoordinateFields(position.coords.latitude,position.coords.longitude);updateGPS();
+    },error=>{
+      if(stamp!==requestId)return;
+      locate.disabled=false;fixMessage=error.code===1?'blocked':error.code===3?'timeout':'unavailable';updateGPS();
+    },{enableHighAccuracy:true,timeout:12000,maximumAge:0});
+  });
+  function cancelFix() {requestId++;gpsFix=undefined;fixMessage='';locate.disabled=false;}
+  for(const field of [lat,lon])field.addEventListener('input',()=>{cancelFix();updateGPS();});
+  landmark.addEventListener('input',updateGPS);
+  format.addEventListener('change',()=>{
+    const a=readCoordinate(lat.value,90,previousFormat), b=readCoordinate(lon.value,180,previousFormat);
+    if(a!==null&&b!==null)setCoordinateFields(a,b);
+    previousFormat=format.value;updateGPS();
+  });
+  el('gps-clear').addEventListener('click',()=>{
+    cancelFix();[lat,lon,landmark].forEach(node=>set(node,''));
+    el('gps-copy-status').textContent='';updateGPS();
+  });
+  el('gps-copy').addEventListener('click',()=>copy(locationResult.value,el('gps-copy-status'),()=>{locationResult.focus();locationResult.select();}));
+  el('gps-to-call').addEventListener('click',()=>{
+    const call=el('sos-where');
+    call.value=locationResult.value.replaceAll('\n',' · ');
+    call.dispatchEvent(new Event('input',{bubbles:true}));
+    location.hash='call-tool';
+    requestAnimationFrame(()=>call.focus());
+  });
+
+  const evacFields=[["near","Rendez-vous près du domicile","Meeting point near home"],["far","Rendez-vous hors du quartier","Meeting point outside the neighbourhood"],["contact","Contact hors zone et téléphone","Out-of-area contact and phone"],["routes","Itinéraires et transports possibles","Routes and transport options"],["needs","Besoins des personnes et des animaux","People’s and pets’ needs"]];
+  const evacStatus=el('evac-status'), evacPreview=el('evac-preview');
+  const savedPlan=load('evac-plan',{});
+  for(const [id] of evacFields) {
+    const field=el('evac-'+id);
+    field.value=typeof savedPlan?.[id]==='string'?savedPlan[id]:'';
+    field.addEventListener('input',()=>{
+      renderPlan();
+      evacStatus.textContent='';
+      persist('evac-plan',Object.fromEntries(evacFields.map(([key])=>[key,el('evac-'+key).value])),evacStatus);
+    });
+  }
+  function renderPlan() {
+    const lines=evacFields.map(([id,fr,en])=>[t(fr,en),el('evac-'+id).value.trim()]).filter(([,value])=>value);
+    evacPreview.textContent=lines.map(([label,value])=>label+'\n'+value).join('\n\n');
+    evacPreview.hidden=!lines.length;
+    el('evac-copy').disabled=el('evac-print').disabled=!lines.length;
+  }
+  function selectPreview() {
+    const range=document.createRange();range.selectNodeContents(evacPreview);
+    const selection=window.getSelection();selection.removeAllRanges();selection.addRange(range);
+  }
+  el('evac-copy').addEventListener('click',()=>copy(evacPreview.textContent,evacStatus,selectPreview));
+  el('evac-print').addEventListener('click',()=>{
+    document.body.classList.add('print-evac');
+    try {window.print();}
+    finally {document.body.classList.remove('print-evac');}
+  });
+
+  const invStatus=el('inv-status'), invList=el('inv-list');
+  const savedInventory=load('kit-inventory',[]);
+  let items=Array.isArray(savedInventory)?savedInventory.filter(item=>typeof item?.name==='string'&&typeof item.id==='string'):[];
+  let editing;
+  const invFields=['name','quantity','place','date'];
+  function resetInventoryForm() {
+    editing=undefined;el('inventory-form').reset();updateInventoryButton();
+  }
+  function updateInventoryButton() {
+    el('inv-cancel').hidden=!editing;
+    el('inv-save').textContent=editing?t('Enregistrer','Save'):t('Ajouter l’objet','Add item');
+  }
+  function renderInventory() {
+    const today=new Date();today.setHours(0,0,0,0);
+    const soon=new Date(today);soon.setDate(soon.getDate()+30);
+    const formatter=new Intl.DateTimeFormat(locale(),{dateStyle:'medium'});
+    const sorted=[...items].sort((a,b)=>(a.date||'9999').localeCompare(b.date||'9999') || a.name.localeCompare(b.name,locale()));
+    invList.replaceChildren(...sorted.map(item=>{
+      const row=document.createElement('li');
+      row.append(block('strong',item.name));
+      const info=[item.quantity,item.place].filter(Boolean).join(' · ');
+      if(info)row.append(block('p',info));
+      const due=+new Date((item.date||'')+'T00:00:00');
+      if(Number.isFinite(due)) {
+        const mark=due < +today ? 'late' : due<=+soon ? 'soon' : '';
+        if(mark)row.dataset.due=mark;
+        const prefix=mark==='late'?t('Date dépassée','Date passed'):mark==='soon'?t('À vérifier bientôt','Check soon'):t('Date de contrôle / péremption','Check / expiry date');
+        row.append(block('p',prefix+' · '+formatter.format(due),'tool-note'));
+      }
+      const controls=block('div','','tool-actions');
+      controls.append(action(t('Modifier','Edit'),()=>{
+        editing=item.id;invFields.forEach(id=>set(el('inv-'+id),item[id] || ''));updateInventoryButton();el('inv-name').focus();
+      }),action(t('Supprimer','Delete'),()=>{
+        items=items.filter(entry=>entry.id!==item.id);
+        if(editing===item.id)resetInventoryForm();
+        invStatus.textContent='';persist('kit-inventory',items,invStatus);renderInventory();el('inv-name').focus();
+      }));
+      row.append(controls);
+      return row;
+    }));
+    el('inv-empty').hidden=Boolean(items.length);
+  }
+  el('inventory-form').addEventListener('submit',event=>{
+    event.preventDefault();
+    const values=Object.fromEntries(invFields.map(id=>[id,el('inv-'+id).value.trim()]));
+    if(!values.name) {invStatus.textContent=t('Indique le nom de l’objet.','Enter an item name.');return;}
+    const item={id:editing||uid(),...values};
+    items=editing?items.map(entry=>entry.id===editing?item:entry):[...items,item];
+    invStatus.textContent='';persist('kit-inventory',items,invStatus);resetInventoryForm();renderInventory();el('inv-name').focus();
+  });
+  el('inv-cancel').addEventListener('click',resetInventoryForm);
+
+  const journalStatus=el('journal-status'), journalList=el('journal-list'), journalKind=el('journal-kind');
+  const savedJournal=load('situation-log',[]);
+  let logs=Array.isArray(savedJournal)?savedJournal.filter(item=>typeof item?.note==='string'&&typeof item.id==='string'&&Number.isFinite(item.when)&&!isNaN(new Date(item.when))):[];
+  const journalExport=el('journal-export');
+  function journalLabel(kind) {
+    return Array.from(journalKind.options).find(option=>option.value===kind)?.dataset[locale()] || t('Entrée','Entry');
+  }
+  function renderJournal() {
+    const sorted=[...logs].sort((a,b)=>b.when-a.when);
+    journalList.replaceChildren(...sorted.map(item=>{
+      const row=document.createElement('li');
+      row.append(block('strong',dateTime(item.when)+' · '+journalLabel(item.kind)),block('p',item.note));
+      const controls=block('div','','tool-actions');
+      controls.append(action(t('Supprimer','Delete'),()=>{
+        logs=logs.filter(entry=>entry.id!==item.id);
+        journalStatus.textContent='';persist('situation-log',logs,journalStatus);renderJournal();el('journal-note').focus();
+      }));
+      row.append(controls);return row;
+    }));
+    journalExport.value=[t('Journal de situation','Situation log'),...sorted.slice().reverse().map(item=>formatTime(item.when)+' · '+journalLabel(item.kind)+'\n'+item.note)].join('\n\n');
+    journalExport.hidden=true;
+    el('journal-empty').hidden=Boolean(logs.length);
+    el('journal-copy').disabled=!logs.length;
+  }
+  el('journal-form').addEventListener('submit',event=>{
+    event.preventDefault();
+    const note=el('journal-note').value.trim();
+    const explicit=el('journal-when').value;
+    const when=explicit?+new Date(explicit):Date.now();
+    if(!note || !Number.isFinite(when)) {journalStatus.textContent=t('Renseigne une note et une date valide.','Enter a note and a valid date.');return;}
+    logs=[...logs,{id:uid(),note,when,kind:journalKind.value}];
+    journalStatus.textContent='';persist('situation-log',logs,journalStatus);
+    el('journal-note').value=el('journal-when').value='';
+    renderJournal();el('journal-note').focus();
+  });
+  el('journal-copy').addEventListener('click',()=>copy(journalExport.value,journalStatus,()=>{journalExport.hidden=false;journalExport.focus();journalExport.select();}));
+
+  function refresh() {
+    for(const select of [format,journalKind])for(const option of select.options)option.textContent=option.dataset[locale()];
+    updateGPS();renderPlan();updateInventoryButton();renderInventory();renderJournal();
+  }
+  new MutationObserver(refresh).observe(document.documentElement,{attributes:true,attributeFilter:['lang']});
+  refresh();
+})();
+</script>
+
 </body>
 </html>
