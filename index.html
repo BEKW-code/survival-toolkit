@@ -55,7 +55,8 @@ main>.directory,main>.toolkit-tools{margin-top:1.3rem}
 
 :root[data-zoe=true] .instruction-classic{display:none}.instruction-zoe{font-weight:inherit}.body .zoe-note{display:none}
 summary{grid-template-columns:2.4rem minmax(0,1fr) 1rem}summary h3{overflow-wrap:anywhere}.practice-material strong,.practice-limit strong{margin-bottom:.25rem}
-.tool-picker{display:block;max-width:32rem;margin:.8rem 0}.tool-picker select{display:block;width:100%;padding:.65rem;border:1px solid #a6ae9d;border-radius:5px;background:var(--cream);color:var(--ink);font:inherit;margin-top:.3rem}.tool-grid{display:block}.tool-box{max-width:56rem}.morse-tool textarea{width:100%;font-family:ui-monospace,monospace!important;white-space:pre-wrap;overflow-wrap:anywhere;resize:vertical}@media(max-width:560px){.morse-tool .tool-fields{grid-template-columns:1fr}}
+.tool-grid{display:block}.tool-box{max-width:56rem}.morse-tool textarea{width:100%;font-family:ui-monospace,monospace!important;white-space:pre-wrap;overflow-wrap:anywhere;resize:vertical}@media(max-width:560px){.morse-tool .tool-fields{grid-template-columns:1fr}}
+.tool-choices{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.7rem;margin:1rem 0}.tool-choices button{display:grid;grid-template-columns:2.2rem minmax(0,1fr) auto;align-items:center;gap:.65rem;min-height:3.6rem;border:1px solid var(--line);border-radius:8px;background:var(--cream);color:var(--ink);text-align:left;padding:.5rem .75rem;font:inherit;font-weight:720;cursor:pointer}.tool-icon{display:grid;place-items:center;width:2.2rem;height:2.2rem;border-radius:5px;background:#e7ebda;color:var(--accent);font-weight:800}.tool-arrow{color:var(--accent)}.tool-choices button:hover{border-color:var(--accent);background:#ebefdf}.tool-choices button[aria-expanded=true]{background:var(--deep);color:var(--cream);border-color:var(--deep)}.tool-choices button[aria-expanded=true] .tool-arrow{color:var(--fern);transform:rotate(90deg)}.tool-box{scroll-margin-top:9rem}@media(max-width:560px){.tool-choices{grid-template-columns:1fr;gap:.45rem}}@media print{.tool-choices{display:none}}
 </style>
 <link rel="manifest" href="./manifest.webmanifest">
 <link rel="apple-touch-icon" href="./icons/apple-touch-icon.png">
@@ -442,7 +443,7 @@ summary{grid-template-columns:2.4rem minmax(0,1fr) 1rem}summary h3{overflow-wrap
 </div>
 <section id="tools" data-view="tools" class="wrap toolkit-tools js-only" aria-labelledby="tools-title">
 <h2 id="tools-title"><span lang="fr">Outils pratiques</span><span lang="en">Practical tools</span></h2>
-<p class="zoe-voice zoe-intro"><strong>Zoé</strong> <span lang="fr">On sort le matos : compte ton eau, coche ton sac et prépare les mots à dire aux secours.</span><span lang="en">Gear out: count your water, check your pack and get the words ready for dispatch.</span></p><label class="tool-label tool-picker" for="tool-picker"><span lang="fr">Choisir un outil</span><span lang="en">Choose a tool</span><select id="tool-picker"></select></label>
+<p class="zoe-voice zoe-intro"><strong>Zoé</strong> <span lang="fr">On sort le matos : compte ton eau, coche ton sac et prépare les mots à dire aux secours.</span><span lang="en">Gear out: count your water, check your pack and get the words ready for dispatch.</span></p><div class="tool-choices" role="group" aria-label="Choix des outils / Tool selection"><button type="button" data-tool="water-tool" aria-controls="water-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">◉</span><span class="tool-button-label"><span lang="fr">Réserve d’eau</span><span lang="en">Water reserve</span></span><span class="tool-arrow" aria-hidden="true">→</span></button><button type="button" data-tool="checklist-tool" aria-controls="checklist-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">✓</span><span class="tool-button-label"><span lang="fr">Listes de préparation</span><span lang="en">Preparedness checklists</span></span><span class="tool-arrow" aria-hidden="true">→</span></button><button type="button" data-tool="call-tool" aria-controls="call-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">✚</span><span class="tool-button-label"><span lang="fr">Fiche d’appel aux secours</span><span lang="en">Emergency call prompt</span></span><span class="tool-arrow" aria-hidden="true">→</span></button><button type="button" data-tool="morse-tool" aria-controls="morse-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">·−</span><span class="tool-button-label"><span lang="fr">Traducteur morse</span><span lang="en">Morse translator</span></span><span class="tool-arrow" aria-hidden="true">→</span></button></div>
 <div class="tool-grid">
 <article class="tool-box" id="water-tool" aria-labelledby="water-title" hidden>
 <h3 id="water-title"><span lang="fr">Calculateur de réserve d’eau</span><span lang="en">Water reserve calculator</span></h3>
@@ -1214,8 +1215,7 @@ for (const button of document.querySelectorAll('[data-quick-group]')) {
   const lookup = id => document.getElementById(id);
   const english = () => document.documentElement.lang === 'en';
   const text = (fr,en) => english() ? en : fr;
-  const choices = [["water-tool","Réserve d’eau","Water reserve"],["checklist-tool","Listes de préparation","Preparedness checklists"],["call-tool","Fiche d’appel aux secours","Emergency call prompt"],["morse-tool","Traducteur morse","Morse translator"]];
-  const picker = lookup('tool-picker');
+  const buttons = [...document.querySelectorAll('[data-tool]')];
   const direction = lookup('morse-direction');
   const input = lookup('morse-input');
   const result = lookup('morse-result');
@@ -1226,17 +1226,26 @@ for (const button of document.querySelectorAll('[data-quick-group]')) {
   decode.set('...---...', 'SOS');
 
   function showTool(id) {
-    picker.value = id;
-    for (const [key] of choices) lookup(key).hidden = key !== id;
+    for (const button of buttons) {
+      const key = button.dataset.tool;
+      const opened = key === id;
+      button.setAttribute('aria-expanded', String(opened));
+      lookup(key).hidden = !opened;
+    }
   }
   function readToolLink() {
     const key = location.hash.slice(1);
-    if (choices.some(([id]) => key === id)) showTool(key);
+    if (buttons.some(button => button.dataset.tool === key)) showTool(key);
+    else if (key === 'tools') showTool('');
   }
-  picker.addEventListener('change', () => {
-    showTool(picker.value);
-    try { history.replaceState(null, '', '#' + (picker.value || 'tools')); } catch {}
-  });
+  for (const button of buttons) {
+    button.addEventListener('click', () => {
+      const key = button.getAttribute('aria-expanded') === 'true' ? '' : button.dataset.tool;
+      showTool(key);
+      try { history.replaceState(null, '', '#' + (key || 'tools')); } catch {}
+      if (key) lookup(key).scrollIntoView({block:'nearest'});
+    });
+  }
   window.addEventListener('hashchange', readToolLink);
 
   function translate() {
@@ -1286,9 +1295,6 @@ for (const button of document.querySelectorAll('[data-quick-group]')) {
     }
   });
   function refreshLanguage() {
-    const active = picker.value;
-    picker.replaceChildren(new Option(text('Sélectionner…','Select…'),''), ...choices.map(([id,fr,en]) => new Option(text(fr,en),id)));
-    showTool(active);
     const mode = direction.value || 'encode';
     direction.replaceChildren(new Option(text('Texte → morse','Text → Morse'),'encode'), new Option(text('Morse → texte','Morse → text'),'decode'));
     direction.value = mode;
