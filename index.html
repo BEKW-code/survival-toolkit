@@ -197,6 +197,15 @@ summary{grid-template-columns:2.4rem minmax(0,1fr) 1rem}summary h3{overflow-wrap
 .level-vial[data-mode="slope"]::before{inset:10% 43%;border-block:0;border-radius:0}
 @media(max-width:510px){#waypoints-tool .tool-fields,#daylight-tool .tool-fields{grid-template-columns:1fr}}
 </style>
+<style>
+.backup-options{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,15rem),1fr));gap:.4rem}
+.backup-options label{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:start;gap:.55rem;padding:.45rem .6rem;border:1px solid var(--line);border-radius:6px;background:var(--cream);cursor:pointer}
+.backup-options label:has(input:checked){border-color:var(--accent);background:#ebefdf}
+.backup-options input{accent-color:var(--accent);margin-top:.27rem}
+.backup-options small{display:block;color:var(--muted)}
+#backup-tool fieldset{margin-top:.75rem}
+#backup-tool select{max-width:32rem}
+</style>
 </head>
 <body>
 <header class="top"><div class="wrap"><a href="#survival-guides" class="mark">Survival Toolkit</a><nav class="view-menu" aria-label="Sections"><a href="#survival-guides" data-view-link="survival-guides" aria-current="page"><span lang="fr">Guides de survie</span><span lang="en">Survival guides</span></a><a href="#tools" data-view-link="tools"><span lang="fr">Outils</span><span lang="en">Tools</span></a><a href="#emergency-numbers" data-view-link="emergency-numbers"><span lang="fr">Numéros de secours</span><span lang="en">Emergency numbers</span></a><a href="#teams-protection" data-view-link="teams-protection">Teams Protection</a></nav><div class="top-actions"><button id="zoe-mode" class="zoe-mode" type="button" aria-pressed="false" aria-describedby="zoe-mode-help"><span lang="fr">Voix de Zoé</span><span lang="en">Zoé’s voice</span><span class="zoe-switch" aria-hidden="true"></span></button><span id="zoe-mode-help" class="sr-only"><span lang="fr">Remplace les explications classiques par la version de Zoé.</span><span lang="en">Switch the guide instructions to Zoé’s version.</span></span><nav class="language-menu" aria-label="Langue / Language"><button type="button" id="install-app" class="install-app"><span lang="fr">Installer</span><span lang="en">Install</span></button><a href="?lang=fr" hreflang="fr" lang="fr" aria-current="true">FR</a><a href="?lang=en" hreflang="en" lang="en">EN</a></nav></div></div></header>
@@ -690,7 +699,7 @@ summary{grid-template-columns:2.4rem minmax(0,1fr) 1rem}summary h3{overflow-wrap
 <section id="tools" data-view="tools" class="wrap toolkit-tools js-only" aria-labelledby="tools-title">
 <h2 id="tools-title"><span lang="fr">Outils pratiques</span><span lang="en">Practical tools</span></h2>
 <p class="zoe-voice zoe-intro"><strong>Zoé</strong> <span lang="fr">On sort le matos : compte ton eau, coche ton sac et prépare les mots à dire aux secours.</span><span lang="en">Gear out: count your water, check your pack and get the words ready for dispatch.</span></p><button class="tool-menu-toggle" type="button" id="tool-menu-toggle" aria-expanded="false" aria-controls="tool-menu"><span aria-hidden="true">☰</span><span lang="fr">Menu des outils</span><span lang="en">Tool menu</span></button>
-<div class="tool-workspace"><nav id="tool-menu" class="tool-choices" aria-label="Choix des outils / Tool selection" hidden><button type="button" data-tool="compass-tool" aria-controls="compass-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">🧭</span><span class="tool-button-label"><span lang="fr">Boussole</span><span lang="en">Compass</span></span><span class="tool-arrow" aria-hidden="true">→</span></button><button type="button" data-tool="level-tool" aria-controls="level-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">◉</span><span class="tool-button-label"><span lang="fr">Niveau à bulle et inclinomètre</span><span lang="en">Spirit level and inclinometer</span></span><span class="tool-arrow" aria-hidden="true">→</span></button><button type="button" data-tool="sky-tool" aria-controls="sky-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">✦</span><span class="tool-button-label"><span lang="fr">Carte du ciel</span><span lang="en">Sky map</span></span><span class="tool-arrow" aria-hidden="true">→</span></button><button type="button" data-tool="waypoints-tool" aria-controls="waypoints-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">⌖</span><span class="tool-button-label"><span lang="fr">Repères et cap à suivre</span><span lang="en">Waypoints and bearings</span></span><span class="tool-arrow" aria-hidden="true">→</span></button><button type="button" data-tool="gpx-tool" aria-controls="gpx-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">⌁</span><span class="tool-button-label"><span lang="fr">Lecteur de traces GPX</span><span lang="en">GPX track viewer</span></span><span class="tool-arrow" aria-hidden="true">→</span></button><button type="button" data-tool="daylight-tool" aria-controls="daylight-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">☀</span><span class="tool-button-label"><span lang="fr">Lumière restante</span><span lang="en">Daylight remaining</span></span><span class="tool-arrow" aria-hidden="true">→</span></button><button type="button" data-tool="water-tool" aria-controls="water-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">◉</span><span class="tool-button-label"><span lang="fr">Réserve d’eau</span><span lang="en">Water reserve</span></span><span class="tool-arrow" aria-hidden="true">→</span></button><button type="button" data-tool="checklist-tool" aria-controls="checklist-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">✓</span><span class="tool-button-label"><span lang="fr">Listes de préparation</span><span lang="en">Preparedness checklists</span></span><span class="tool-arrow" aria-hidden="true">→</span></button><button type="button" data-tool="call-tool" aria-controls="call-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">✚</span><span class="tool-button-label"><span lang="fr">Fiche d’appel aux secours</span><span lang="en">Emergency call prompt</span></span><span class="tool-arrow" aria-hidden="true">→</span></button><button type="button" data-tool="morse-tool" aria-controls="morse-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">·−</span><span class="tool-button-label"><span lang="fr">Traducteur morse</span><span lang="en">Morse translator</span></span><span class="tool-arrow" aria-hidden="true">→</span></button><button type="button" data-tool="trip-tool" aria-controls="trip-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">↗</span><span class="tool-button-label"><span lang="fr">Plan de sortie</span><span lang="en">Trip plan</span></span><span class="tool-arrow" aria-hidden="true">→</span></button><button type="button" data-tool="timer-tool" aria-controls="timer-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">◷</span><span class="tool-button-label"><span lang="fr">Minuteurs de terrain</span><span lang="en">Field timers</span></span><span class="tool-arrow" aria-hidden="true">→</span></button><button type="button" data-tool="runtime-tool" aria-controls="runtime-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">≈</span><span class="tool-button-label"><span lang="fr">Calculateur d’autonomie</span><span lang="en">Supply and battery runtime</span></span><span class="tool-arrow" aria-hidden="true">→</span></button><button type="button" data-tool="clocks-tool" aria-controls="clocks-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">⏱</span><span class="tool-button-label"><span lang="fr">Chronos et comptes à rebours</span><span lang="en">Stopwatches and countdowns</span></span><span class="tool-arrow" aria-hidden="true">→</span></button><button type="button" data-tool="gps-tool" aria-controls="gps-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">⌖</span><span class="tool-button-label"><span lang="fr">Mes coordonnées</span><span lang="en">My coordinates</span></span><span class="tool-arrow" aria-hidden="true">→</span></button><button type="button" data-tool="evac-tool" aria-controls="evac-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">⇥</span><span class="tool-button-label"><span lang="fr">Plan d’évacuation du foyer</span><span lang="en">Household evacuation plan</span></span><span class="tool-arrow" aria-hidden="true">→</span></button><button type="button" data-tool="inventory-tool" aria-controls="inventory-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">▤</span><span class="tool-button-label"><span lang="fr">Inventaire du sac</span><span lang="en">Kit inventory</span></span><span class="tool-arrow" aria-hidden="true">→</span></button><button type="button" data-tool="journal-tool" aria-controls="journal-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">✎</span><span class="tool-button-label"><span lang="fr">Journal de situation</span><span lang="en">Situation log</span></span><span class="tool-arrow" aria-hidden="true">→</span></button></nav>
+<div class="tool-workspace"><nav id="tool-menu" class="tool-choices" aria-label="Choix des outils / Tool selection" hidden><button type="button" data-tool="compass-tool" aria-controls="compass-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">🧭</span><span class="tool-button-label"><span lang="fr">Boussole</span><span lang="en">Compass</span></span><span class="tool-arrow" aria-hidden="true">→</span></button><button type="button" data-tool="level-tool" aria-controls="level-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">◉</span><span class="tool-button-label"><span lang="fr">Niveau à bulle et inclinomètre</span><span lang="en">Spirit level and inclinometer</span></span><span class="tool-arrow" aria-hidden="true">→</span></button><button type="button" data-tool="sky-tool" aria-controls="sky-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">✦</span><span class="tool-button-label"><span lang="fr">Carte du ciel</span><span lang="en">Sky map</span></span><span class="tool-arrow" aria-hidden="true">→</span></button><button type="button" data-tool="waypoints-tool" aria-controls="waypoints-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">⌖</span><span class="tool-button-label"><span lang="fr">Repères et cap à suivre</span><span lang="en">Waypoints and bearings</span></span><span class="tool-arrow" aria-hidden="true">→</span></button><button type="button" data-tool="gpx-tool" aria-controls="gpx-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">⌁</span><span class="tool-button-label"><span lang="fr">Lecteur de traces GPX</span><span lang="en">GPX track viewer</span></span><span class="tool-arrow" aria-hidden="true">→</span></button><button type="button" data-tool="daylight-tool" aria-controls="daylight-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">☀</span><span class="tool-button-label"><span lang="fr">Lumière restante</span><span lang="en">Daylight remaining</span></span><span class="tool-arrow" aria-hidden="true">→</span></button><button type="button" data-tool="backup-tool" aria-controls="backup-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">⇅</span><span class="tool-button-label"><span lang="fr">Sauvegarde et partage</span><span lang="en">Backup and sharing</span></span><span class="tool-arrow" aria-hidden="true">→</span></button><button type="button" data-tool="water-tool" aria-controls="water-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">◉</span><span class="tool-button-label"><span lang="fr">Réserve d’eau</span><span lang="en">Water reserve</span></span><span class="tool-arrow" aria-hidden="true">→</span></button><button type="button" data-tool="checklist-tool" aria-controls="checklist-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">✓</span><span class="tool-button-label"><span lang="fr">Listes de préparation</span><span lang="en">Preparedness checklists</span></span><span class="tool-arrow" aria-hidden="true">→</span></button><button type="button" data-tool="call-tool" aria-controls="call-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">✚</span><span class="tool-button-label"><span lang="fr">Fiche d’appel aux secours</span><span lang="en">Emergency call prompt</span></span><span class="tool-arrow" aria-hidden="true">→</span></button><button type="button" data-tool="morse-tool" aria-controls="morse-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">·−</span><span class="tool-button-label"><span lang="fr">Traducteur morse</span><span lang="en">Morse translator</span></span><span class="tool-arrow" aria-hidden="true">→</span></button><button type="button" data-tool="trip-tool" aria-controls="trip-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">↗</span><span class="tool-button-label"><span lang="fr">Plan de sortie</span><span lang="en">Trip plan</span></span><span class="tool-arrow" aria-hidden="true">→</span></button><button type="button" data-tool="timer-tool" aria-controls="timer-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">◷</span><span class="tool-button-label"><span lang="fr">Minuteurs de terrain</span><span lang="en">Field timers</span></span><span class="tool-arrow" aria-hidden="true">→</span></button><button type="button" data-tool="runtime-tool" aria-controls="runtime-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">≈</span><span class="tool-button-label"><span lang="fr">Calculateur d’autonomie</span><span lang="en">Supply and battery runtime</span></span><span class="tool-arrow" aria-hidden="true">→</span></button><button type="button" data-tool="clocks-tool" aria-controls="clocks-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">⏱</span><span class="tool-button-label"><span lang="fr">Chronos et comptes à rebours</span><span lang="en">Stopwatches and countdowns</span></span><span class="tool-arrow" aria-hidden="true">→</span></button><button type="button" data-tool="gps-tool" aria-controls="gps-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">⌖</span><span class="tool-button-label"><span lang="fr">Mes coordonnées</span><span lang="en">My coordinates</span></span><span class="tool-arrow" aria-hidden="true">→</span></button><button type="button" data-tool="evac-tool" aria-controls="evac-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">⇥</span><span class="tool-button-label"><span lang="fr">Plan d’évacuation du foyer</span><span lang="en">Household evacuation plan</span></span><span class="tool-arrow" aria-hidden="true">→</span></button><button type="button" data-tool="inventory-tool" aria-controls="inventory-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">▤</span><span class="tool-button-label"><span lang="fr">Inventaire du sac</span><span lang="en">Kit inventory</span></span><span class="tool-arrow" aria-hidden="true">→</span></button><button type="button" data-tool="journal-tool" aria-controls="journal-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">✎</span><span class="tool-button-label"><span lang="fr">Journal de situation</span><span lang="en">Situation log</span></span><span class="tool-arrow" aria-hidden="true">→</span></button></nav>
 <div class="tool-grid">
 <p id="tool-menu-empty" class="tool-menu-empty"><span lang="fr">Choisis un outil dans le menu.</span><span lang="en">Choose a tool from the menu.</span></p>
 <article class="tool-box" id="water-tool" aria-labelledby="water-title" hidden>
@@ -885,6 +894,40 @@ summary{grid-template-columns:2.4rem minmax(0,1fr) 1rem}summary h3{overflow-wrap
   <dl id="day-results" class="navigation-results"></dl>
   <div class="tool-actions"><button id="day-countdown" type="button" disabled><span lang="fr">Démarrer le compte à rebours du demi-tour</span><span lang="en">Start the turnaround countdown</span></button></div>
   <p class="tool-note"><span lang="fr">Estimation pour un horizon dégagé, affichée dans le fuseau du téléphone. Le relief et la météo peuvent réduire la lumière disponible.</span><span lang="en">Estimates assume a clear horizon and use your device’s time zone. Terrain and weather can shorten usable daylight.</span> <a href="https://gml.noaa.gov/grad/solcalc/solareqns.PDF">NOAA</a></p>
+</article>
+
+<article id="backup-tool" class="tool-box" aria-labelledby="backup-title" hidden>
+  <h3 id="backup-title"><span lang="fr">Sauvegarde et partage</span><span lang="en">Backup and sharing</span></h3>
+  <section class="navigation-box" aria-labelledby="backup-export-title">
+    <h4 id="backup-export-title"><span lang="fr">Exporter mes données</span><span lang="en">Export my data</span></h4>
+    <p class="tool-note"><span lang="fr">Le fichier peut contenir des noms, des numéros, des informations médicales ou des coordonnées GPS. Choisis les données que tu veux transmettre.</span><span lang="en">The file may contain names, phone numbers, medical information or GPS coordinates. Choose what you want to share.</span></p>
+    <fieldset>
+      <legend><span lang="fr">Données à inclure</span><span lang="en">Data to include</span></legend>
+      <div id="backup-export-options" class="backup-options"></div>
+    </fieldset>
+    <div class="tool-actions">
+      <button id="backup-download" type="button" disabled><span lang="fr">Télécharger le fichier</span><span lang="en">Download file</span></button>
+      <button id="backup-share" type="button" disabled hidden><span lang="fr">Partager le fichier</span><span lang="en">Share file</span></button>
+    </div>
+    <p id="backup-export-status" class="tool-note" role="status"></p>
+  </section>
+  <section class="navigation-box" aria-labelledby="backup-import-title">
+    <h4 id="backup-import-title"><span lang="fr">Importer un fichier</span><span lang="en">Import a file</span></h4>
+    <label for="backup-file"><span lang="fr">Fichier JSON du Survival Toolkit</span><span lang="en">Survival Toolkit JSON file</span></label>
+    <input type="file" id="backup-file" accept=".json,application/json">
+    <p id="backup-import-status" class="tool-note" role="status"></p>
+    <form id="backup-import-form" hidden>
+      <p id="backup-file-info" class="tool-note"></p>
+      <fieldset>
+        <legend><span lang="fr">Données à importer</span><span lang="en">Data to import</span></legend>
+        <div id="backup-import-options" class="backup-options"></div>
+      </fieldset>
+      <label for="backup-import-mode"><span lang="fr">Mode d’import</span><span lang="en">Import mode</span></label>
+      <select id="backup-import-mode"></select>
+      <p id="backup-import-mode-help" class="tool-note"></p>
+      <div class="tool-actions"><button id="backup-apply" type="submit"><span lang="fr">Importer la sélection</span><span lang="en">Import selection</span></button></div>
+    </form>
+  </section>
 </article>
 
 <article id="morse-tool" class="tool-box morse-tool" aria-labelledby="morse-title" hidden>
@@ -4588,6 +4631,344 @@ for (const {button, group, options} of quickFilters) {
   function refreshLanguage() {renderWaypoints();renderGpx();renderDaylight();}
   new MutationObserver(refreshLanguage).observe(root,{attributes:true,attributeFilter:['lang']});
   refreshLanguage();
+})();
+
+</script>
+<script>
+(() => {
+  const el=id=>document.getElementById('backup-'+id);
+  const language=()=>document.documentElement.lang==='en'?'en':'fr';
+  const t=(fr,en)=>language()==='fr'?fr:en;
+  const tool=el('tool'), exportOptions=el('export-options'), importOptions=el('import-options');
+  const downloadButton=el('download'), shareButton=el('share'), exportStatus=el('export-status');
+  const importForm=el('import-form'), importMode=el('import-mode'), importStatus=el('import-status');
+  const format='survival-toolkit-backup', version=1, prefix='survival-toolkit-';
+  const clockPrefix=prefix+'clock-v2:', migrationKey=prefix+'clock-storage-v2';
+  const restoredKey=prefix+'backup-import-complete', voiceKey=prefix+'zoe-voice';
+  const timers=['boil','thunder'];
+  let preview, readTicket=0;
+
+  function check(condition) {if(!condition)throw Error('invalid');}
+  function record(value) {
+    check(value!==null&&typeof value==='object'&&!Array.isArray(value));return value;
+  }
+  function string(value) {check(typeof value==='string');return value;}
+  function identifier(value) {check(typeof value==='string'&&value.length>0&&value.length<=180);return value;}
+  function boolean(value) {check(typeof value==='boolean');return value;}
+  function finite(value) {check(Number.isFinite(value));return value;}
+  function timestamp(value) {check(Number.isFinite(value)&&Number.isFinite(+new Date(value)));return value;}
+  function strings(row,fields) {
+    return Object.fromEntries(fields.filter(key=>Object.hasOwn(row,key)).map(key=>[key,string(row[key])]));
+  }
+  function rows(value,normalize) {
+    check(Array.isArray(value));
+    const clean=value.map(item=>normalize(record(item)));
+    check(new Set(clean.map(item=>item.id)).size===clean.length);
+    return clean;
+  }
+  function named(row,fields=[]) {
+    return {id:identifier(row.id),name:string(row.name),...strings(row,fields)};
+  }
+  function normalizeTeamData(value) {
+    const data=record(value);
+    return {
+      teams:rows(data.teams,row=>named(row,['icon','color'])),
+      members:rows(data.members,row=>{
+        const kit=record(row.kit??{});
+        const items=Object.entries(kit).map(([id,quantity])=>{
+          check(/^(base|custom):.+$/.test(id)&&id.length<=180);
+          const amount=typeof quantity==='string'?Number(quantity):quantity;
+          check(Number.isInteger(amount)&&amount>0&&amount<=9999);
+          return [id,amount];
+        });
+        return {...named(row,['role','phone','contact','contact-phone','medical','needs','team']),kit:Object.fromEntries(items)};
+      }),
+      catalogue:rows(data.catalogue,row=>named(row,['category']))
+    };
+  }
+  function normalClock(row) {
+    check(['stopwatch','timer','target'].includes(row.type));
+    return {...named(row,['preset','assignee']),type:row.type,duration:finite(row.duration),value:finite(row.value),
+      started:timestamp(row.started),deadline:timestamp(row.deadline),running:boolean(row.running??false),
+      alarm:boolean(row.alarm??false),acknowledged:boolean(row.acknowledged??false)};
+  }
+  function normalizeClocks(value) {
+    const data=record(value), fields=record(data.timers);
+    const fieldTimers=Object.fromEntries(timers.filter(id=>Object.hasOwn(fields,id)).map(id=>{
+      const item=record(fields[id]);
+      check((id==='boil'?[60,180]:[1800]).includes(item.duration));
+      return [id,{deadline:timestamp(item.deadline),duration:item.duration}];
+    }));
+    return {entries:rows(data.entries,normalClock),timers:fieldTimers};
+  }
+  function normalizeLog(value) {
+    return rows(value,row=>({id:identifier(row.id),note:string(row.note),when:timestamp(row.when),
+      ...strings(row,['kind','teamId','teamName','memberId','memberName'])}));
+  }
+  function normalizeWaypoints(value) {
+    return rows(value,row=>{
+      const latitude=finite(row.latitude),longitude=finite(row.longitude);
+      check(Math.abs(latitude)<=90&&Math.abs(longitude)<=180);
+      return {...named(row,['note']),latitude,longitude,onCompass:boolean(row.onCompass??false)};
+    });
+  }
+  function normalizeChecklist(value) {
+    check(Array.isArray(value));
+    return [...new Set(value.map(string))];
+  }
+  function normalizePlan(value) {
+    return strings(record(value),['near','far','contact','routes','needs']);
+  }
+  function mergeRows(current,incoming) {
+    const ids=new Set(current.map(row=>row.id));
+    return [...current,...incoming.filter(row=>!ids.has(row.id))];
+  }
+  const count=(value,fr,en,frPlural=fr+'s',enPlural=en+'s')=>value+' '+t(value===1?fr:frPlural,value===1?en:enPlural);
+  const categories=new Map([
+    ['teams',{title:['Teams Protection, sacs et catalogue','Teams Protection, kits and catalogue'],storage:'teams-protection-v1',
+      normalize:normalizeTeamData,summary:data=>[count(data.teams.length,'équipe','team'),count(data.members.length,'équipier','member'),
+        count(data.catalogue.length,'élément personnalisé','custom item','éléments personnalisés')].join(' · '),
+      merge:(old,data)=>({teams:mergeRows(old.teams,data.teams),members:mergeRows(old.members,data.members),catalogue:mergeRows(old.catalogue,data.catalogue)})}],
+    ['journal',{title:['Journal de situation','Situation log'],storage:'situation-log-v1',
+      normalize:normalizeLog,summary:data=>count(data.length,'événement','event'),merge:mergeRows}],
+    ['waypoints',{title:['Repères GPS','GPS waypoints'],storage:'waypoints-v1',
+      normalize:normalizeWaypoints,summary:data=>count(data.length,'repère','waypoint'),merge:mergeRows}],
+    ['inventory',{title:['Inventaire du sac','Kit inventory'],storage:'kit-inventory-v1',
+      normalize:value=>rows(value,row=>named(row,['quantity','place','date'])),summary:data=>count(data.length,'objet','item'),merge:mergeRows}],
+    ['evacuation',{title:['Plan d’évacuation du foyer','Household evacuation plan'],storage:'evac-plan-v1',
+      normalize:normalizePlan,summary:data=>count(Object.values(data).filter(Boolean).length,'champ renseigné','completed field','champs renseignés'),
+      merge:(old,data)=>({...data,...Object.fromEntries(Object.entries(old).filter(([,value])=>value.trim()))})}],
+    ['checklists',{title:['Listes de préparation','Preparedness checklists'],storage:'checklists-v1',
+      normalize:normalizeChecklist,summary:data=>count(data.length,'case cochée','checked item','cases cochées'),
+      merge:(old,data)=>[...new Set([...old,...data])]}],
+    ['clocks',{title:['Chronos, comptes à rebours et minuteurs','Clocks, countdowns and timers'],
+      normalize:normalizeClocks,summary:data=>[count(data.entries.length,'chrono','clock'),count(Object.keys(data.timers).length,'minuteur de terrain','field timer','minuteurs de terrain')].join(' · '),
+      merge:(old,data)=>({entries:mergeRows(old.entries,data.entries),timers:{...data.timers,...old.timers}})}],
+    ['preferences',{title:['Préférence du mode Zoé','Zoé mode preference'],normalize:boolean,
+      summary:data=>data?t('Zoé activée','Zoé on'):t('Zoé désactivée','Zoé off'),merge:old=>old}]
+  ]);
+  function read(category) {
+    const entry=categories.get(category);
+    if(entry.storage) {
+      const raw=localStorage.getItem(prefix+entry.storage);
+      return raw===null?undefined:entry.normalize(JSON.parse(raw));
+    }
+    if(category==='preferences') {
+      const raw=localStorage.getItem(voiceKey);
+      return raw===null?undefined:boolean(JSON.parse(raw));
+    }
+    const entries=[];
+    for(let index=0;index<localStorage.length;index++) {
+      const key=localStorage.key(index);
+      if(key?.startsWith(clockPrefix)) {
+        const clock=JSON.parse(localStorage.getItem(key));
+        check(key===clockPrefix+clock.id);
+        entries.push(clock);
+      }
+    }
+    const fields={};
+    for(const id of timers) {
+      const raw=localStorage.getItem(prefix+'field-timer-'+id);
+      if(raw!==null)fields[id]=JSON.parse(raw);
+    }
+    return entries.length||Object.keys(fields).length?normalizeClocks({entries,timers:fields}):undefined;
+  }
+  function getSelected(container) {
+    return [...container.querySelectorAll('input:checked')].map(input=>input.value);
+  }
+  function setOptions(container,data,selected) {
+    container.replaceChildren(...[...categories].flatMap(([id,entry])=>{
+      if(!Object.hasOwn(data,id))return [];
+      const label=document.createElement('label'), input=document.createElement('input'), contents=document.createElement('span');
+      input.type='checkbox';input.value=id;input.checked=selected.has(id);
+      const title=document.createElement('strong'), summary=document.createElement('small');
+      title.textContent=t(...entry.title);
+      summary.textContent=entry.summary(data[id]);
+      contents.append(title,summary);label.append(input,contents);
+      return [label];
+    }));
+  }
+  function updateExportButtons() {
+    const disabled=!getSelected(exportOptions).length;
+    downloadButton.disabled=shareButton.disabled=disabled;
+  }
+  function refreshExport() {
+    const previous=new Map([...exportOptions.querySelectorAll('input')].map(input=>[input.value,input.checked]));
+    const data={};
+    const unreadable=[];
+    for(const [id,entry] of categories) {
+      try {
+        const value=read(id);
+        if(value!==undefined)data[id]=value;
+      } catch {unreadable.push(t(...entry.title));}
+    }
+    const selected=new Set(Object.keys(data).filter(id=>previous.get(id)!==false));
+    setOptions(exportOptions,data,selected);
+    updateExportButtons();
+    if(unreadable.length)exportStatus.textContent=t('Données illisibles : ','Unreadable data: ')+unreadable.join(', ');
+    else if(!Object.keys(data).length)exportStatus.textContent=t('Aucune donnée enregistrée à exporter.','There is no saved data to export.');
+    else exportStatus.textContent='';
+  }
+  exportOptions.addEventListener('change',updateExportButtons);
+  function exportFile() {
+    const data={};
+    for(const id of getSelected(exportOptions)) {
+      const value=read(id);
+      if(value!==undefined)data[id]=value;
+    }
+    if(!Object.keys(data).length)throw Error('empty');
+    const date=new Date();
+    return new File([JSON.stringify({format,version,createdAt:date.toISOString(),sections:data},null,2)],
+      'survival-toolkit-'+date.toISOString().slice(0,10)+'.json',{type:'application/json'});
+  }
+  function download(file) {
+    const url=URL.createObjectURL(file);
+    const link=document.createElement('a');
+    link.href=url;link.download=file.name;
+    document.body.append(link);link.click();link.remove();
+    setTimeout(()=>URL.revokeObjectURL(url),60000);
+  }
+  async function exportSelected(share) {
+    let file;
+    try {file=exportFile();}
+    catch {exportStatus.textContent=t('Impossible de lire les données sélectionnées.','Could not read the selected data.');return;}
+    if(share) {
+      try {
+        if(navigator.canShare?.({files:[file]})) {
+          await navigator.share({files:[file]});
+          exportStatus.textContent=t('Fichier partagé.','File shared.');return;
+        }
+      } catch(error) {if(error.name==='AbortError')return;}
+    }
+    download(file);
+    exportStatus.textContent=share
+      ? t('Fichier téléchargé. Tu peux le joindre à ton message.','File downloaded. You can attach it to a message.')
+      : t('Fichier téléchargé.','File downloaded.');
+  }
+  downloadButton.addEventListener('click',()=>exportSelected(false));
+  shareButton.hidden=typeof navigator.share!=='function'||typeof navigator.canShare!=='function';
+  shareButton.addEventListener('click',()=>exportSelected(true));
+
+  function decodeFile(raw) {
+    const data=record(JSON.parse(raw.replace(/^\uFEFF/,'')));
+    check(data.format===format);
+    if(data.version!==version)throw Error('version');
+    const input=Object.entries(record(data.sections));
+    check(input.length>0&&input.every(([id])=>categories.has(id)));
+    const date=new Date(string(data.createdAt));
+    check(Number.isFinite(+date));
+    return {date,sections:Object.fromEntries(input.map(([id,value])=>[id,categories.get(id).normalize(value)]))};
+  }
+  function explainMode() {
+    el('import-mode-help').textContent=importMode.value==='replace'
+      ? t('Les données locales des catégories cochées seront remplacées par celles du fichier.','Local data in checked categories will be replaced with data from the file.')
+      : t('Les nouvelles entrées seront ajoutées. En cas de doublon, les données déjà présentes seront conservées.','New entries will be added. When an entry already exists, the local version will be kept.');
+  }
+  function updateApply() {el('apply').disabled=!getSelected(importOptions).length;}
+  function renderPreview(selected) {
+    importForm.hidden=!preview;
+    if(!preview)return;
+    setOptions(importOptions,preview.sections,selected);
+    const date=new Intl.DateTimeFormat(language(),{dateStyle:'medium',timeStyle:'short'}).format(preview.date);
+    el('file-info').textContent=preview.fileName+' · '+t('Export du ','Exported ')+date;
+    updateApply();explainMode();
+  }
+  importOptions.addEventListener('change',updateApply);
+  importMode.addEventListener('change',explainMode);
+  el('file').addEventListener('change',async event=>{
+    const ticket=++readTicket;
+    const file=event.currentTarget.files[0];
+    preview=null;importForm.hidden=true;importStatus.textContent='';
+    if(!file)return;
+    try {
+      if(file.size>16*1024*1024)throw Error('size');
+      const decoded=decodeFile(await file.text());
+      if(ticket!==readTicket)return;
+      preview={...decoded,fileName:file.name};
+      importMode.value='merge';
+      renderPreview(new Set(Object.keys(decoded.sections)));
+    } catch(error) {
+      if(ticket!==readTicket)return;
+      importStatus.textContent=error.message==='size'?t('Le fichier dépasse 16 Mo.','The file is larger than 16 MB.')
+        :error.message==='version'?t('Cette version du fichier nécessite une autre version du Toolkit.','This file needs a different version of the Toolkit.')
+        :t('Le fichier est incomplet ou son format est invalide.','The file is incomplete or its format is invalid.');
+    }
+  });
+  function planWrite(operations,id,data) {
+    const entry=categories.get(id);
+    if(entry.storage){operations.set(prefix+entry.storage,JSON.stringify(data));return;}
+    if(id==='preferences'){operations.set(voiceKey,String(data));return;}
+    const restored=new Map(data.entries.map(row=>[clockPrefix+row.id,JSON.stringify(row)]));
+    for(let index=0;index<localStorage.length;index++) {
+      const key=localStorage.key(index);
+      if(key?.startsWith(clockPrefix)&&!restored.has(key))operations.set(key,null);
+    }
+    for(const [key,value] of restored)operations.set(key,value);
+    for(const timer of timers)operations.set(prefix+'field-timer-'+timer,
+      Object.hasOwn(data.timers,timer)?JSON.stringify(data.timers[timer]):null);
+    operations.set(migrationKey,'done');
+  }
+  function commit(operations) {
+    const previous=new Map([...operations.keys()].map(key=>[key,localStorage.getItem(key)]));
+    const write=(key,value)=>value===null?localStorage.removeItem(key):localStorage.setItem(key,value);
+    const changed=[];
+    const ordered=[...operations].sort((a,b)=>Number(b[1]===null)-Number(a[1]===null));
+    try {
+      for(const [key,value] of ordered) {
+        if(previous.get(key)===value)continue;
+        write(key,value);changed.push(key);
+      }
+    } catch {
+      try {
+        for(const key of changed)if(previous.get(key)===null)write(key,null);
+        for(const key of changed)if(previous.get(key)!==null)write(key,previous.get(key));
+      } catch {throw Error('rollback');}
+      throw Error('storage');
+    }
+  }
+  importForm.addEventListener('submit',event=>{
+    event.preventDefault();
+    const selection=getSelected(importOptions);
+    if(!preview||!selection.length)return;
+    const mode=importMode.value;
+    const operations=new Map();
+    try {
+      for(const id of selection) {
+        const incoming=preview.sections[id];
+        const existing=mode==='merge'?read(id):undefined;
+        const data=existing===undefined?incoming:categories.get(id).merge(existing,incoming);
+        planWrite(operations,id,data);
+      }
+      commit(operations);
+    } catch(error) {
+      importStatus.textContent=error.message==='rollback'
+        ?t('Import interrompu. Le navigateur n’a pas restauré toutes les données précédentes.','Import interrupted. The browser could not restore all previous data.')
+        :t('Import impossible. Les données précédentes ont été conservées.','Import failed. Previous data was kept.');
+      return;
+    }
+    el('apply').disabled=true;
+    try {sessionStorage.setItem(restoredKey,'true');} catch {}
+    location.reload();
+  });
+
+  function refreshLanguage() {
+    const mode=importMode.value||'merge';
+    importMode.replaceChildren(new Option(t('Fusionner','Merge'),'merge'),
+      new Option(t('Remplacer les catégories sélectionnées','Replace selected categories'),'replace'));
+    importMode.value=mode;
+    refreshExport();
+    renderPreview(new Set(getSelected(importOptions)));
+  }
+  new MutationObserver(refreshLanguage).observe(document.documentElement,{attributes:true,attributeFilter:['lang']});
+  new MutationObserver(()=>{if(!tool.hidden)refreshExport();}).observe(tool,{attributes:true,attributeFilter:['hidden']});
+  window.addEventListener('storage',event=>{if(!tool.hidden && (!event.key||event.key.startsWith(prefix)))refreshExport();});
+  refreshLanguage();
+  try {
+    if(sessionStorage.getItem(restoredKey)==='true') {
+      sessionStorage.removeItem(restoredKey);
+      importStatus.textContent=t('Import terminé. Les données sont disponibles dans leurs outils.','Import complete. Your data is available in its tools.');
+    }
+  } catch {}
 })();
 
 </script>
