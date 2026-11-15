@@ -178,6 +178,26 @@ summary{grid-template-columns:2.4rem minmax(0,1fr) 1rem}summary h3{overflow-wrap
 .contour-spaced{background-image:repeating-linear-gradient(165deg,transparent 0 11px,#54653e 11px 13px)}
 .contour-tight{background-image:repeating-linear-gradient(165deg,transparent 0 4px,#54653e 4px 6px)}
 </style>
+<style>
+.navigation-box{margin:.85rem 0;padding:.8rem;border:1px solid var(--line);border-radius:8px;background:var(--paper)}
+.navigation-map{display:block;width:100%;height:auto;margin:.65rem 0;border:1px solid var(--line);border-radius:8px;background:#eef2ea}
+.navigation-rose{max-width:22rem}
+.navigation-wide{grid-column:1/-1}
+.navigation-box h4,#waypoints-tool>h4{margin:.6rem 0 .25rem}
+.navigation-list li p{margin:.15rem 0}
+.navigation-measure{font-weight:800;color:var(--accent)}
+.navigation-check{display:flex;align-items:center;gap:.45rem;margin:.35rem 0;font-size:.9rem}
+.navigation-check input{accent-color:var(--accent);min-width:1rem;min-height:1rem}
+.navigation-results{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:.3rem .85rem;margin:1rem 0}
+.navigation-results dd{margin:0;font-weight:750;text-align:right}
+.compass-waypoints{position:absolute;inset:0;pointer-events:none}
+.compass-waypoint-orbit{position:absolute;inset:0}
+.compass-waypoint-dot{position:absolute;top:5%;left:50%;display:grid;place-items:center;min-width:1.05rem;height:1.05rem;padding:0 .12rem;border:1px solid #fffdf5;border-radius:999px;background:#275870;color:#fffdf5;font-size:.63rem;font-weight:800;transform:translate(-50%,-50%) rotate(var(--upright))}
+#compass-correction{max-width:10rem}
+.level-vial[data-mode="slope"]{aspect-ratio:4;border-radius:999px}
+.level-vial[data-mode="slope"]::before{inset:10% 43%;border-block:0;border-radius:0}
+@media(max-width:510px){#waypoints-tool .tool-fields,#daylight-tool .tool-fields,#paper-map-tool .tool-fields{grid-template-columns:1fr}}
+</style>
 </head>
 <body>
 <header class="top"><div class="wrap"><a href="#survival-guides" class="mark">Survival Toolkit</a><nav class="view-menu" aria-label="Sections"><a href="#survival-guides" data-view-link="survival-guides" aria-current="page"><span lang="fr">Guides de survie</span><span lang="en">Survival guides</span></a><a href="#tools" data-view-link="tools"><span lang="fr">Outils</span><span lang="en">Tools</span></a><a href="#emergency-numbers" data-view-link="emergency-numbers"><span lang="fr">Numéros de secours</span><span lang="en">Emergency numbers</span></a><a href="#teams-protection" data-view-link="teams-protection">Teams Protection</a></nav><div class="top-actions"><button id="zoe-mode" class="zoe-mode" type="button" aria-pressed="false" aria-describedby="zoe-mode-help"><span lang="fr">Voix de Zoé</span><span lang="en">Zoé’s voice</span><span class="zoe-switch" aria-hidden="true"></span></button><span id="zoe-mode-help" class="sr-only"><span lang="fr">Remplace les explications classiques par la version de Zoé.</span><span lang="en">Switch the guide instructions to Zoé’s version.</span></span><nav class="language-menu" aria-label="Langue / Language"><button type="button" id="install-app" class="install-app"><span lang="fr">Installer</span><span lang="en">Install</span></button><a href="?lang=fr" hreflang="fr" lang="fr" aria-current="true">FR</a><a href="?lang=en" hreflang="en" lang="en">EN</a></nav></div></div></header>
@@ -671,7 +691,7 @@ summary{grid-template-columns:2.4rem minmax(0,1fr) 1rem}summary h3{overflow-wrap
 <section id="tools" data-view="tools" class="wrap toolkit-tools js-only" aria-labelledby="tools-title">
 <h2 id="tools-title"><span lang="fr">Outils pratiques</span><span lang="en">Practical tools</span></h2>
 <p class="zoe-voice zoe-intro"><strong>Zoé</strong> <span lang="fr">On sort le matos : compte ton eau, coche ton sac et prépare les mots à dire aux secours.</span><span lang="en">Gear out: count your water, check your pack and get the words ready for dispatch.</span></p><button class="tool-menu-toggle" type="button" id="tool-menu-toggle" aria-expanded="false" aria-controls="tool-menu"><span aria-hidden="true">☰</span><span lang="fr">Menu des outils</span><span lang="en">Tool menu</span></button>
-<div class="tool-workspace"><nav id="tool-menu" class="tool-choices" aria-label="Choix des outils / Tool selection" hidden><button type="button" data-tool="compass-tool" aria-controls="compass-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">🧭</span><span class="tool-button-label"><span lang="fr">Boussole</span><span lang="en">Compass</span></span><span class="tool-arrow" aria-hidden="true">→</span></button><button type="button" data-tool="level-tool" aria-controls="level-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">◉</span><span class="tool-button-label"><span lang="fr">Niveau à bulle</span><span lang="en">Spirit level</span></span><span class="tool-arrow" aria-hidden="true">→</span></button><button type="button" data-tool="sky-tool" aria-controls="sky-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">✦</span><span class="tool-button-label"><span lang="fr">Carte du ciel</span><span lang="en">Sky map</span></span><span class="tool-arrow" aria-hidden="true">→</span></button><button type="button" data-tool="water-tool" aria-controls="water-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">◉</span><span class="tool-button-label"><span lang="fr">Réserve d’eau</span><span lang="en">Water reserve</span></span><span class="tool-arrow" aria-hidden="true">→</span></button><button type="button" data-tool="checklist-tool" aria-controls="checklist-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">✓</span><span class="tool-button-label"><span lang="fr">Listes de préparation</span><span lang="en">Preparedness checklists</span></span><span class="tool-arrow" aria-hidden="true">→</span></button><button type="button" data-tool="call-tool" aria-controls="call-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">✚</span><span class="tool-button-label"><span lang="fr">Fiche d’appel aux secours</span><span lang="en">Emergency call prompt</span></span><span class="tool-arrow" aria-hidden="true">→</span></button><button type="button" data-tool="morse-tool" aria-controls="morse-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">·−</span><span class="tool-button-label"><span lang="fr">Traducteur morse</span><span lang="en">Morse translator</span></span><span class="tool-arrow" aria-hidden="true">→</span></button><button type="button" data-tool="trip-tool" aria-controls="trip-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">↗</span><span class="tool-button-label"><span lang="fr">Plan de sortie</span><span lang="en">Trip plan</span></span><span class="tool-arrow" aria-hidden="true">→</span></button><button type="button" data-tool="timer-tool" aria-controls="timer-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">◷</span><span class="tool-button-label"><span lang="fr">Minuteurs de terrain</span><span lang="en">Field timers</span></span><span class="tool-arrow" aria-hidden="true">→</span></button><button type="button" data-tool="runtime-tool" aria-controls="runtime-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">≈</span><span class="tool-button-label"><span lang="fr">Calculateur d’autonomie</span><span lang="en">Supply and battery runtime</span></span><span class="tool-arrow" aria-hidden="true">→</span></button><button type="button" data-tool="clocks-tool" aria-controls="clocks-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">⏱</span><span class="tool-button-label"><span lang="fr">Chronos et comptes à rebours</span><span lang="en">Stopwatches and countdowns</span></span><span class="tool-arrow" aria-hidden="true">→</span></button><button type="button" data-tool="gps-tool" aria-controls="gps-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">⌖</span><span class="tool-button-label"><span lang="fr">Mes coordonnées</span><span lang="en">My coordinates</span></span><span class="tool-arrow" aria-hidden="true">→</span></button><button type="button" data-tool="evac-tool" aria-controls="evac-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">⇥</span><span class="tool-button-label"><span lang="fr">Plan d’évacuation du foyer</span><span lang="en">Household evacuation plan</span></span><span class="tool-arrow" aria-hidden="true">→</span></button><button type="button" data-tool="inventory-tool" aria-controls="inventory-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">▤</span><span class="tool-button-label"><span lang="fr">Inventaire du sac</span><span lang="en">Kit inventory</span></span><span class="tool-arrow" aria-hidden="true">→</span></button><button type="button" data-tool="journal-tool" aria-controls="journal-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">✎</span><span class="tool-button-label"><span lang="fr">Journal de situation</span><span lang="en">Situation log</span></span><span class="tool-arrow" aria-hidden="true">→</span></button></nav>
+<div class="tool-workspace"><nav id="tool-menu" class="tool-choices" aria-label="Choix des outils / Tool selection" hidden><button type="button" data-tool="compass-tool" aria-controls="compass-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">🧭</span><span class="tool-button-label"><span lang="fr">Boussole</span><span lang="en">Compass</span></span><span class="tool-arrow" aria-hidden="true">→</span></button><button type="button" data-tool="level-tool" aria-controls="level-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">◉</span><span class="tool-button-label"><span lang="fr">Niveau à bulle et inclinomètre</span><span lang="en">Spirit level and inclinometer</span></span><span class="tool-arrow" aria-hidden="true">→</span></button><button type="button" data-tool="sky-tool" aria-controls="sky-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">✦</span><span class="tool-button-label"><span lang="fr">Carte du ciel</span><span lang="en">Sky map</span></span><span class="tool-arrow" aria-hidden="true">→</span></button><button type="button" data-tool="waypoints-tool" aria-controls="waypoints-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">⌖</span><span class="tool-button-label"><span lang="fr">Repères et cap à suivre</span><span lang="en">Waypoints and bearings</span></span><span class="tool-arrow" aria-hidden="true">→</span></button><button type="button" data-tool="gpx-tool" aria-controls="gpx-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">⌁</span><span class="tool-button-label"><span lang="fr">Lecteur de traces GPX</span><span lang="en">GPX track viewer</span></span><span class="tool-arrow" aria-hidden="true">→</span></button><button type="button" data-tool="daylight-tool" aria-controls="daylight-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">☀</span><span class="tool-button-label"><span lang="fr">Lumière restante</span><span lang="en">Daylight remaining</span></span><span class="tool-arrow" aria-hidden="true">→</span></button><button type="button" data-tool="paper-map-tool" aria-controls="paper-map-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">▤</span><span class="tool-button-label"><span lang="fr">Carte papier et rapporteur</span><span lang="en">Paper map and protractor</span></span><span class="tool-arrow" aria-hidden="true">→</span></button><button type="button" data-tool="water-tool" aria-controls="water-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">◉</span><span class="tool-button-label"><span lang="fr">Réserve d’eau</span><span lang="en">Water reserve</span></span><span class="tool-arrow" aria-hidden="true">→</span></button><button type="button" data-tool="checklist-tool" aria-controls="checklist-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">✓</span><span class="tool-button-label"><span lang="fr">Listes de préparation</span><span lang="en">Preparedness checklists</span></span><span class="tool-arrow" aria-hidden="true">→</span></button><button type="button" data-tool="call-tool" aria-controls="call-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">✚</span><span class="tool-button-label"><span lang="fr">Fiche d’appel aux secours</span><span lang="en">Emergency call prompt</span></span><span class="tool-arrow" aria-hidden="true">→</span></button><button type="button" data-tool="morse-tool" aria-controls="morse-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">·−</span><span class="tool-button-label"><span lang="fr">Traducteur morse</span><span lang="en">Morse translator</span></span><span class="tool-arrow" aria-hidden="true">→</span></button><button type="button" data-tool="trip-tool" aria-controls="trip-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">↗</span><span class="tool-button-label"><span lang="fr">Plan de sortie</span><span lang="en">Trip plan</span></span><span class="tool-arrow" aria-hidden="true">→</span></button><button type="button" data-tool="timer-tool" aria-controls="timer-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">◷</span><span class="tool-button-label"><span lang="fr">Minuteurs de terrain</span><span lang="en">Field timers</span></span><span class="tool-arrow" aria-hidden="true">→</span></button><button type="button" data-tool="runtime-tool" aria-controls="runtime-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">≈</span><span class="tool-button-label"><span lang="fr">Calculateur d’autonomie</span><span lang="en">Supply and battery runtime</span></span><span class="tool-arrow" aria-hidden="true">→</span></button><button type="button" data-tool="clocks-tool" aria-controls="clocks-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">⏱</span><span class="tool-button-label"><span lang="fr">Chronos et comptes à rebours</span><span lang="en">Stopwatches and countdowns</span></span><span class="tool-arrow" aria-hidden="true">→</span></button><button type="button" data-tool="gps-tool" aria-controls="gps-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">⌖</span><span class="tool-button-label"><span lang="fr">Mes coordonnées</span><span lang="en">My coordinates</span></span><span class="tool-arrow" aria-hidden="true">→</span></button><button type="button" data-tool="evac-tool" aria-controls="evac-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">⇥</span><span class="tool-button-label"><span lang="fr">Plan d’évacuation du foyer</span><span lang="en">Household evacuation plan</span></span><span class="tool-arrow" aria-hidden="true">→</span></button><button type="button" data-tool="inventory-tool" aria-controls="inventory-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">▤</span><span class="tool-button-label"><span lang="fr">Inventaire du sac</span><span lang="en">Kit inventory</span></span><span class="tool-arrow" aria-hidden="true">→</span></button><button type="button" data-tool="journal-tool" aria-controls="journal-tool" aria-expanded="false"><span class="tool-icon" aria-hidden="true">✎</span><span class="tool-button-label"><span lang="fr">Journal de situation</span><span lang="en">Situation log</span></span><span class="tool-arrow" aria-hidden="true">→</span></button></nav>
 <div class="tool-grid">
 <p id="tool-menu-empty" class="tool-menu-empty"><span lang="fr">Choisis un outil dans le menu.</span><span lang="en">Choose a tool from the menu.</span></p>
 <article class="tool-box" id="water-tool" aria-labelledby="water-title" hidden>
@@ -722,11 +742,22 @@ summary{grid-template-columns:2.4rem minmax(0,1fr) 1rem}summary h3{overflow-wrap
 </div>
 <div class="compass-face">
   <div id="compass-card" class="compass-card" aria-hidden="true" hidden><span class="compass-n">N</span><span class="compass-e">E</span><span class="compass-s">S</span><span class="compass-w"><span lang="fr">O</span><span lang="en">W</span></span></div>
+  <div id="compass-waypoint-markers" class="compass-waypoints" aria-hidden="true" hidden></div>
   <div id="compass-marker" class="compass-target-mark" aria-hidden="true" hidden></div>
   <div id="compass-value" class="compass-value">—</div>
 </div>
 <label for="compass-goal"><span lang="fr">Cap à suivre (0 à 359°)</span><span lang="en">Target bearing (0 to 359°)</span><input id="compass-goal" type="number" inputmode="numeric" min="0" max="359" step="1" placeholder="135"></label>
 <p id="compass-guidance" class="tool-note"></p>
+<p id="compass-waypoint-target" class="tool-note"></p>
+<details id="compass-waypoint-settings">
+  <summary><span lang="fr">Repères GPS et nord vrai</span><span lang="en">GPS waypoints and true north</span></summary>
+  <p class="tool-note"><span lang="fr">Les repères GPS indiquent des caps par rapport au nord géographique. Si le cap du téléphone est magnétique, ajoute la déclinaison locale (est positif, ouest négatif). Laisse 0 s’il indique déjà le nord vrai.</span><span lang="en">GPS waypoint bearings use geographic north. If the phone reports magnetic bearings, add local declination (east positive, west negative). Leave 0 if the phone already reports true north.</span> <a href="https://www.ncei.noaa.gov/products/magnetic-declination">NOAA</a></p>
+  <label><span lang="fr">Correction vers le nord vrai (°)</span><span lang="en">True north correction (°)</span><input id="compass-correction" type="number" min="-180" max="180" step="0.1" value="0"></label>
+  <a href="#waypoints-tool"><span lang="fr">Ouvrir le carnet de repères</span><span lang="en">Open the waypoint notebook</span></a>
+</details>
+<div class="tool-actions" id="compass-waypoint-actions" hidden><button id="compass-waypoint-gps" type="button"><span lang="fr">Actualiser ma position GPS</span><span lang="en">Refresh my GPS position</span></button></div>
+<p id="compass-waypoint-gps-status" class="tool-note" role="status"></p>
+<ul id="compass-waypoint-list" class="utility-list" hidden></ul>
 </article>
 <article id="level-tool" class="tool-box" aria-labelledby="level-title" hidden>
 <h3 id="level-title"><span lang="fr">Niveau à bulle</span><span lang="en">Spirit level</span></h3>
@@ -782,6 +813,83 @@ summary{grid-template-columns:2.4rem minmax(0,1fr) 1rem}summary h3{overflow-wrap
 <p id="sky-detail" class="tool-note" role="status"></p>
 <p class="tool-note"><span lang="fr">Positions approximatives. Les lignes relient les étoiles principales de quelques constellations.</span><span lang="en">Approximate positions. Lines connect the main stars of selected constellations.</span> <a href="https://heasarc.gsfc.nasa.gov/W3Browse/star-catalog/hipparcos.html">Hipparcos</a> · <a href="https://aa.usno.navy.mil/faq/alt_az">USNO</a></p>
 </article>
+<article id="waypoints-tool" class="tool-box" aria-labelledby="waypoints-title" hidden>
+  <h3 id="waypoints-title"><span lang="fr">Repères et cap à suivre</span><span lang="en">Waypoints and bearings</span></h3>
+  <h4><span lang="fr">Ma position de départ</span><span lang="en">My reference position</span></h4>
+  <div class="tool-fields">
+    <label><span lang="fr">Latitude</span><span lang="en">Latitude</span><input id="way-origin-lat" inputmode="decimal"></label>
+    <label><span lang="fr">Longitude</span><span lang="en">Longitude</span><input id="way-origin-lon" inputmode="decimal"></label>
+  </div>
+  <div class="tool-actions">
+    <button id="way-origin-gps" type="button"><span lang="fr">Obtenir ma position GPS</span><span lang="en">Get my GPS position</span></button>
+    <button id="way-origin-import" type="button"><span lang="fr">Reprendre Mes coordonnées</span><span lang="en">Use My coordinates</span></button>
+  </div>
+  <p id="way-origin-status" class="tool-note" role="status"></p>
+  <form id="way-form" class="navigation-box">
+    <h4 id="way-form-title"><span lang="fr">Ajouter un repère</span><span lang="en">Add a waypoint</span></h4>
+    <div class="tool-fields">
+      <label class="navigation-wide"><span lang="fr">Nom du repère</span><span lang="en">Waypoint name</span><input id="way-name" maxlength="80" required></label>
+      <label><span lang="fr">Latitude du repère</span><span lang="en">Waypoint latitude</span><input id="way-lat" inputmode="decimal" required></label>
+      <label><span lang="fr">Longitude du repère</span><span lang="en">Waypoint longitude</span><input id="way-lon" inputmode="decimal" required></label>
+      <label class="navigation-wide"><span lang="fr">Note (facultatif)</span><span lang="en">Note (optional)</span><textarea id="way-note" rows="2" maxlength="500"></textarea></label>
+    </div>
+    <div class="tool-actions">
+      <button id="way-point-gps" type="button"><span lang="fr">Obtenir les coordonnées GPS</span><span lang="en">Get GPS coordinates</span></button>
+      <button id="way-save" type="submit"><span lang="fr">Enregistrer le repère</span><span lang="en">Save waypoint</span></button>
+      <button id="way-cancel" type="button" hidden><span lang="fr">Annuler la modification</span><span lang="en">Cancel edit</span></button>
+    </div>
+    <p id="way-form-status" class="tool-note" role="status"></p>
+  </form>
+  <h4><span lang="fr">Carte relative</span><span lang="en">Relative map</span></h4>
+  <p class="tool-note"><span lang="fr">Nord en haut. Distances à vol d’oiseau depuis ta position de départ. Le tracé ne montre ni sentiers ni obstacles.</span><span lang="en">North is up. Straight-line distances are measured from your reference position. Paths and obstacles are outside this plot.</span></p>
+  <canvas id="way-map" class="navigation-map" width="720" height="500" role="img" aria-label="Carte relative / Relative map" hidden></canvas>
+  <p id="way-empty" class="tool-note"></p>
+  <ol id="way-list" class="utility-list navigation-list"></ol>
+  <p class="tool-note"><span lang="fr">Les repères et le choix des repères à afficher sur la boussole restent dans ce navigateur.</span><span lang="en">Waypoints and the choice of compass markers are saved in this browser.</span></p>
+</article>
+<article id="gpx-tool" class="tool-box" aria-labelledby="gpx-title" hidden>
+  <h3 id="gpx-title"><span lang="fr">Lecteur de traces GPX</span><span lang="en">GPX track viewer</span></h3>
+  <label><span lang="fr">Fichier GPX sur cet appareil</span><span lang="en">GPX file on this device</span><input id="gpx-file" type="file" accept=".gpx,application/gpx+xml,application/xml,text/xml"></label>
+  <p class="tool-note"><span lang="fr">Le fichier est lu sur cet appareil. Le tracé s’affiche sans fond de carte.</span><span lang="en">The file is read on this device. The track is drawn without a basemap.</span></p>
+  <div class="tool-actions">
+    <button id="gpx-gps" type="button"><span lang="fr">Me placer sur le tracé</span><span lang="en">Plot my GPS position</span></button>
+    <button id="gpx-import" type="button"><span lang="fr">Utiliser la position du carnet</span><span lang="en">Use waypoint notebook position</span></button>
+    <button id="gpx-clear" type="button" hidden><span lang="fr">Retirer ma position</span><span lang="en">Remove my position</span></button>
+  </div>
+  <p id="gpx-status" class="tool-note" role="status"></p>
+  <p id="gpx-summary" class="tool-note"></p>
+  <canvas id="gpx-map" class="navigation-map" width="720" height="500" role="img" aria-label="Trace GPX / GPX track" hidden></canvas>
+  <ol id="gpx-waypoints" class="utility-list navigation-list"></ol>
+</article>
+<article id="daylight-tool" class="tool-box" aria-labelledby="daylight-title" hidden>
+  <h3 id="daylight-title"><span lang="fr">Lumière restante</span><span lang="en">Daylight remaining</span></h3>
+  <div class="tool-fields">
+    <label><span lang="fr">Latitude</span><span lang="en">Latitude</span><input id="day-lat" inputmode="decimal"></label>
+    <label><span lang="fr">Longitude</span><span lang="en">Longitude</span><input id="day-lon" inputmode="decimal"></label>
+    <label><span lang="fr">Date</span><span lang="en">Date</span><input id="day-date" type="date"></label>
+    <label><span lang="fr">Marge avant le coucher (minutes)</span><span lang="en">Margin before sunset (minutes)</span><input id="day-margin" type="number" min="0" max="720" step="1" value="60"></label>
+  </div>
+  <div class="tool-actions">
+    <button id="day-gps" type="button"><span lang="fr">Obtenir ma position GPS</span><span lang="en">Get my GPS position</span></button>
+    <button id="day-import" type="button"><span lang="fr">Utiliser la position du carnet</span><span lang="en">Use waypoint notebook position</span></button>
+  </div>
+  <p id="day-status" class="tool-note" role="status"></p>
+  <dl id="day-results" class="navigation-results"></dl>
+  <div class="tool-actions"><button id="day-countdown" type="button" disabled><span lang="fr">Démarrer le compte à rebours du demi-tour</span><span lang="en">Start the turnaround countdown</span></button></div>
+  <p class="tool-note"><span lang="fr">Estimation pour un horizon dégagé, affichée dans le fuseau du téléphone. Le relief et la météo peuvent réduire la lumière disponible.</span><span lang="en">Estimates assume a clear horizon and use your device’s time zone. Terrain and weather can shorten usable daylight.</span> <a href="https://gml.noaa.gov/grad/solcalc/solareqns.PDF">NOAA</a></p>
+</article>
+<article id="paper-map-tool" class="tool-box" aria-labelledby="paper-map-title" hidden>
+  <h3 id="paper-map-title"><span lang="fr">Carte papier et rapporteur</span><span lang="en">Paper map and protractor</span></h3>
+  <div class="tool-fields">
+    <label><span lang="fr">Échelle 1 :</span><span lang="en">Scale 1:</span><input id="paper-scale" inputmode="numeric" value="25000"></label>
+    <label><span lang="fr">Distance mesurée (cm)</span><span lang="en">Measured distance (cm)</span><input id="paper-length" inputmode="decimal"></label>
+    <label><span lang="fr">Cap à reporter (0–359°)</span><span lang="en">Bearing to plot (0–359°)</span><input id="paper-bearing" type="number" min="0" max="359" step="1" value="0"></label>
+  </div>
+  <p id="paper-distance" class="tool-note" role="status"></p>
+  <canvas id="paper-rose" class="navigation-map navigation-rose" width="440" height="440" role="img" aria-label="Rose de report du cap / Bearing diagram"></canvas>
+  <p class="tool-note"><span lang="fr">Fais coïncider le nord du schéma avec celui utilisé sur la carte. Le trait indique l’angle à reporter dans le sens horaire depuis le nord. Mesure les tronçons courbés séparément et additionne-les.</span><span lang="en">Align the diagram’s north with the north reference on the map. The line shows the angle clockwise from north. Measure curved routes in separate legs and add them up.</span></p>
+</article>
+
 <article id="morse-tool" class="tool-box morse-tool" aria-labelledby="morse-title" hidden>
 <h3 id="morse-title"><span lang="fr">Traducteur morse</span><span lang="en">Morse translator</span></h3>
 <label class="tool-label" for="morse-direction"><span lang="fr">Sens de la traduction</span><span lang="en">Translation direction</span></label>
@@ -2540,6 +2648,19 @@ for (const {button, group, options} of quickFilters) {
     list.append(card);
     paint(clock,Date.now(),false);
   }
+  function startClock(clock) {
+    clocks.set(clock.id,clock);
+    addView(clock);save(clock);
+    if(clock.alarm)unlockSound();
+    syncTicker();
+    el('clocks-empty').hidden=true;
+  }
+  const clockId=()=>crypto.randomUUID ? crypto.randomUUID() : Array.from(crypto.getRandomValues(new Uint32Array(4))).join('-');
+  window.addEventListener('toolkit-turnaround-countdown',event=>{
+    const {deadline,name}=event.detail, now=Date.now();
+    if(!Number.isFinite(deadline)||deadline<=now)return;
+    startClock({id:clockId(),name,type:'target',preset:'',assignee:'',duration:0,deadline,started:now,value:0,running:true,alarm:false});
+  });
   form.addEventListener('submit',event=>{
     event.preventDefault();
     message.textContent='';
@@ -2549,16 +2670,11 @@ for (const {button, group, options} of quickFilters) {
     const now=Date.now();
     if(kind==='timer' && duration<=0) {message.textContent=text('Indique une durée supérieure à zéro.','Enter a duration greater than zero.');return;}
     if(kind==='target' && !(deadline>now)) {message.textContent=text('Choisis une date et une heure futures.','Choose a future date and time.');return;}
-    const id=crypto.randomUUID ? crypto.randomUUID() : Array.from(crypto.getRandomValues(new Uint32Array(4))).join('-');
+    const id=clockId();
     const label=types.find(([id])=>id===kind);
     const alarm=Boolean(Audio && kind!=='stopwatch' && event.submitter===startWithSound);
     const clock={id,name:name.value.trim()||text(label[1],label[2]),type:kind,preset:preset.value,assignee:assignment.value,duration,deadline,started:now,value:0,running:true,alarm};
-    clocks.set(id,clock);
-    addView(clock);
-    save(clock);
-    if(alarm)unlockSound();
-    syncTicker();
-    el('clocks-empty').hidden=true;
+    startClock(clock);
     if(document.activeElement?.tagName==='INPUT')document.activeElement.blur();
   });
 
@@ -3556,7 +3672,38 @@ for (const {button, group, options} of quickFilters) {
   const t=(fr,en)=>root.lang==='en'?en:fr;
   const wrap=angle=>((angle%360)+360)%360;
   const directions=()=>t(['N','NE','E','SE','S','SO','O','NO'],['N','NE','E','SE','S','SW','W','NW']);
-  let session=0, listening=false, message='', heading=null, timer, reading;
+  let session=0, listening=false, message='', heading=null, timer, reading, waypointName='';
+  const waypointMarks=el('waypoint-markers'), waypointList=el('waypoint-list'), correction=el('correction');
+  function setWaypointMarkers(markers) {
+    waypointMarks.replaceChildren();
+    waypointList.replaceChildren();
+    waypointList.hidden=!markers.length;
+    for(const {number,name,bearing,distance} of markers) {
+      if(bearing!==null) {
+        const orbit=document.createElement('span');
+        orbit.className='compass-waypoint-orbit';
+        orbit.dataset.bearing=bearing;
+        orbit.style.transform='rotate('+bearing+'deg)';
+        orbit.style.setProperty('--upright',(-bearing)+'deg');
+        const dot=document.createElement('span');
+        dot.className='compass-waypoint-dot';
+        dot.textContent=number;
+        orbit.append(dot);waypointMarks.append(orbit);
+      }
+      const item=document.createElement('li');
+      const label=bearing===null?'':wrap(Math.round(bearing))+'° · ';
+      item.textContent=number+' · '+name+' · '+label+distance;
+      waypointList.append(item);
+    }
+    render();
+  }
+  window.addEventListener('toolkit-waypoint-markers',event=>setWaypointMarkers(event.detail));
+  window.addEventListener('toolkit-waypoint-target',event=>{
+    waypointName=event.detail.name;
+    goal.value=Number.isFinite(event.detail.bearing)?wrap(Math.round(event.detail.bearing)):'';
+    render();
+  });
+  correction.addEventListener('input',render);
   if(/iPhone|iPad|iPod/i.test(navigator.userAgent) || (navigator.platform==='MacIntel' && navigator.maxTouchPoints>1)) {
     el('settings-ios').open=true;
   } else if(/Android/i.test(navigator.userAgent)) {
@@ -3564,20 +3711,30 @@ for (const {button, group, options} of quickFilters) {
   }
 
   function render() {
-    const status=message?t(...messages[message]):'';
+    const magnetic=heading!==null && reading?.magnetic && (waypointName || waypointMarks.childElementCount)
+      && (!correction.validity.valid || !Number.isFinite(correction.valueAsNumber) || correction.valueAsNumber===0);
+    const status=magnetic?t('Cap magnétique du téléphone. Vérifie la correction vers le nord vrai dans Repères GPS.',
+      'Phone reports magnetic heading. Check the true north correction under GPS waypoints.') : message?t(...messages[message]):'';
     if(el('status').textContent!==status)el('status').textContent=status;
-    dial.hidden=heading===null;
-    el('value').textContent=heading===null?'—':wrap(Math.round(heading))+'° '+directions()[Math.round(heading/45)%8];
-    if(heading!==null) {
-      dial.style.transform='rotate('+(-heading)+'deg)';
-      dial.style.setProperty('--upright',heading+'deg');
+    const adjusted=heading===null?null:wrap(heading+(correction.validity.valid?(correction.valueAsNumber||0):0));
+    dial.hidden=adjusted===null;
+    waypointMarks.hidden=adjusted===null||!waypointMarks.childElementCount;
+    el('value').textContent=adjusted===null?'—':wrap(Math.round(adjusted))+'° '+directions()[Math.round(adjusted/45)%8];
+    if(adjusted!==null) {
+      dial.style.transform='rotate('+(-adjusted)+'deg)';
+      dial.style.setProperty('--upright',adjusted+'deg');
+      waypointMarks.style.transform='rotate('+(-adjusted)+'deg)';
+      for(const orbit of waypointMarks.children) {
+        orbit.style.setProperty('--upright',adjusted-Number(orbit.dataset.bearing)+'deg');
+      }
     }
+    el('waypoint-target').textContent=waypointName?t('Repère suivi : ','Waypoint target: ')+waypointName:'';
     const target=goal.valueAsNumber;
     const guiding=heading!==null && goal.validity.valid && Number.isFinite(target);
     el('marker').hidden=!guiding;
     let guidance='';
     if(guiding) {
-      const delta=wrap(target-heading+180)-180, amount=Math.round(Math.abs(delta));
+      const delta=wrap(target-adjusted+180)-180, amount=Math.round(Math.abs(delta));
       el('marker').style.transform='rotate('+delta+'deg)';
       guidance=amount<=5?t('Garde ce cap.','Hold this bearing.')
         : amount===180?t('Fais demi-tour.','Turn around.')
@@ -3598,11 +3755,11 @@ for (const {button, group, options} of quickFilters) {
 
   function onOrientation(event) {
     const {webkitCompassHeading,webkitCompassAccuracy,alpha,absolute,beta,gamma}=event;
-    const bearing=Number.isFinite(webkitCompassHeading) && webkitCompassHeading>=0 && !(webkitCompassAccuracy<0)
-      ? webkitCompassHeading : absolute && Number.isFinite(alpha) ? -alpha : null;
+    const magnetic=Number.isFinite(webkitCompassHeading) && webkitCompassHeading>=0 && !(webkitCompassAccuracy<0);
+    const bearing=magnetic?webkitCompassHeading:absolute&&Number.isFinite(alpha)?-alpha:null;
     if(bearing===null)return;
     clearTimeout(timer);
-    reading={bearing,beta,gamma};
+    reading={bearing,beta,gamma,magnetic};
     readHeading();
   }
   function onScreenTurn(){if(reading)readHeading();}
@@ -3644,7 +3801,11 @@ for (const {button, group, options} of quickFilters) {
     window.addEventListener('orientationchange',onScreenTurn);
   });
   stop.addEventListener('click',()=>{reset();start.focus();});
-  goal.addEventListener('input',render);
+  goal.addEventListener('input',()=>{
+    waypointName='';
+    window.dispatchEvent(new Event('toolkit-waypoint-target-clear'));
+    render();
+  });
   const help=el('help'), settings=el('settings');
   help.addEventListener('click',()=>{
     settings.hidden=!settings.hidden;
@@ -3675,6 +3836,7 @@ for (const {button, group, options} of quickFilters) {
   const modes={
     flat:['À plat · deux axes','Flat · two axes','Pose le dos du téléphone sur la surface à mesurer.','Place the back of the phone on the surface.'],
     horizontal:['Sur la tranche · horizontale','On edge · horizontal','Pose un côté long du téléphone sur le bord à vérifier.','Rest a long side of the phone on the edge you want to check.'],
+    slope:['Inclinomètre · pente','Inclinometer · slope','Pose un côté long du téléphone le long de la pente.','Rest a long side of the phone along the slope.'],
     vertical:['Sur la tranche · verticale','On edge · vertical','Aligne un côté long du téléphone contre le bord vertical.','Hold a long side of the phone against the vertical edge.']
   };
   const messages={
@@ -3704,7 +3866,7 @@ for (const {button, group, options} of quickFilters) {
     // Gravity projected onto the phone's physical right, bottom and back axes.
     const right=Math.cos(beta)*Math.sin(gamma), down=Math.sin(beta), back=Math.cos(beta)*Math.cos(gamma);
     // The horizontal mode measures the long physical edge regardless of screen rotation.
-    if(mode.value==='horizontal')return [slope(down),0];
+    if(mode.value==='horizontal'||mode.value==='slope')return [slope(down),0];
     if(mode.value==='vertical') {
       const projected=Math.hypot(right,back);
       const scale=projected?slope(projected)/projected:0;
@@ -3731,8 +3893,9 @@ for (const {button, group, options} of quickFilters) {
     vial.style.setProperty('--bubble-y',(50-y*scale)+'%');
     vial.dataset.aligned=String(offset<=0.5);
     const angle=value=>format.format(Math.abs(value)<0.05?0:value)+'°';
+    const grade=mode.value==='slope'?(offset>=89.9?t('verticale','vertical'):format.format(Math.tan(radians(offset))*100)+' %'):'';
     const label=mode.value==='flat'?t('Gauche/droite ','Side to side ')+angle(x)+' · '+t('Avant/arrière ','Front to back ')+angle(y)
-      : t('Écart ','Deviation ')+angle(offset);
+      : mode.value==='slope'?t('Pente ','Slope ')+angle(offset)+' · '+grade:t('Écart ','Deviation ')+angle(offset);
     if(display.textContent!==label)display.textContent=label;
   }
   function renderLanguage() {
@@ -3987,6 +4150,451 @@ for (const {button, group, options} of quickFilters) {
   new MutationObserver(render).observe(root,{attributes:true,attributeFilter:['lang']});
   time.value=localInput(new Date());render();
 })();
+</script>
+<script>
+(() => {
+  const el=id=>document.getElementById(id);
+  const root=document.documentElement;
+  const t=(fr,en)=>root.lang==='en'?en:fr;
+  const key='survival-toolkit-waypoints-v1';
+  const rad=Math.PI/180, earth=6371008.8;
+  const wrap=angle=>((angle%360)+360)%360;
+  const text=(tag,value,css)=>{
+    const node=document.createElement(tag);
+    if(value)node.textContent=value;
+    if(css)node.className=css;
+    return node;
+  };
+  function button(label,run) {
+    const node=text('button',label);
+    node.type='button';
+    node.addEventListener('click',run);
+    return node;
+  }
+  function decimal(value) {
+    const cleaned=String(value??'').trim().replace(',','.');
+    return /^[+-]?(?:\d+(?:\.\d+)?|\.\d+)$/.test(cleaned)?Number(cleaned):NaN;
+  }
+  function point(latitude,longitude) {
+    return Number.isFinite(latitude)&&Number.isFinite(longitude)&&Math.abs(latitude)<=90&&Math.abs(longitude)<=180
+      ? {latitude,longitude}:null;
+  }
+  const inputs=prefix=>point(decimal(el(prefix+'-lat').value),decimal(el(prefix+'-lon').value));
+  function setInputs(prefix,position) {
+    el(prefix+'-lat').value=position.latitude.toFixed(6);
+    el(prefix+'-lon').value=position.longitude.toFixed(6);
+  }
+  function geometry(from,to) {
+    const a=from.latitude*rad,b=to.latitude*rad;
+    const dLat=b-a,dLon=(wrap(to.longitude-from.longitude+180)-180)*rad;
+    const h=Math.sin(dLat/2)**2+Math.cos(a)*Math.cos(b)*Math.sin(dLon/2)**2;
+    const distance=2*earth*Math.asin(Math.sqrt(Math.min(1,Math.max(0,h))));
+    const y=Math.sin(dLon)*Math.cos(b);
+    const x=Math.cos(a)*Math.sin(b)-Math.sin(a)*Math.cos(b)*Math.cos(dLon);
+    const bearing=Math.hypot(x,y)<1e-12?null:wrap(Math.atan2(y,x)/rad);
+    return {distance,bearing};
+  }
+  function projected(from,to) {
+    const {distance,bearing}=geometry(from,to);
+    return {x:distance*Math.sin((bearing??0)*rad),y:distance*Math.cos((bearing??0)*rad),distance};
+  }
+  const number=(value,digits=0)=>new Intl.NumberFormat(root.lang,{maximumFractionDigits:digits}).format(value);
+  const distanceLabel=value=>value<1000?number(value)+' m':number(value/1000,value<10000?2:1)+' km';
+  const bearingLabel=value=>value===null?'—':wrap(Math.round(value))+'°';
+  const positionLabel=position=>position.latitude.toFixed(6)+', '+position.longitude.toFixed(6);
+  function fromGpsTool() {
+    const data={};
+    window.dispatchEvent(new CustomEvent('toolkit-coordinates-request',{detail:data}));
+    return data.position;
+  }
+  const readOrigin=()=>inputs('way-origin');
+
+  function locate(trigger,status,complete) {
+    const hardware=navigator.geolocation;
+    if(!hardware||!window.isSecureContext) {
+      status.textContent=t('Localisation indisponible ici. Tu peux saisir les coordonnées à la main.','Location is unavailable here. You can enter coordinates manually.');
+      return;
+    }
+    trigger.disabled=true;
+    status.textContent=t('Recherche de la position…','Getting location…');
+    hardware.getCurrentPosition(result=>{
+      trigger.disabled=false;
+      const fix=point(result.coords.latitude,result.coords.longitude);
+      if(!fix)return;
+      status.textContent=Number.isFinite(result.coords.accuracy)
+        ? t('Relevé GPS · précision indiquée ±','GPS fix · reported accuracy ±')+Math.ceil(result.coords.accuracy)+' m'
+        : t('Position relevée.','Location received.');
+      complete(fix);
+    },error=>{
+      trigger.disabled=false;
+      status.replaceChildren(document.createTextNode(error.code===1
+        ? t('Localisation refusée. Consulte l’aide dans ','Location denied. See permission help in ')
+        : t('Position indisponible. Réessaie ou saisis-la dans ','Location unavailable. Try again or enter it in ')));
+      const link=text('a',t('Mes coordonnées','My coordinates'));
+      link.href='#gps-tool';status.append(link,'.');
+    },{enableHighAccuracy:true,maximumAge:0,timeout:15000});
+  }
+  function openTool(id) {
+    if(location.hash!=='#'+id)location.hash=id;
+  }
+  function onFields(ids,render) {
+    for(const id of ids)el(id).addEventListener('input',render);
+  }
+  function plot(canvas,points,{centered=false}={}) {
+    const ctx=canvas.getContext('2d');
+    if(!ctx)return null;
+    const width=canvas.width,height=canvas.height,pad=56;
+    const limits=points.reduce((box,p)=>({
+      minX:Math.min(box.minX,p.x),maxX:Math.max(box.maxX,p.x),
+      minY:Math.min(box.minY,p.y),maxY:Math.max(box.maxY,p.y)
+    }),{minX:0,maxX:0,minY:0,maxY:0});
+    const spanX=centered?2*Math.max(-limits.minX,limits.maxX):limits.maxX-limits.minX;
+    const spanY=centered?2*Math.max(-limits.minY,limits.maxY):limits.maxY-limits.minY;
+    const scale=Math.min((width-2*pad)/Math.max(50,spanX),(height-2*pad)/Math.max(50,spanY));
+    const midX=centered?0:(limits.minX+limits.maxX)/2,midY=centered?0:(limits.minY+limits.maxY)/2;
+    const at=p=>[width/2+(p.x-midX)*scale,height/2-(p.y-midY)*scale];
+    ctx.fillStyle='#eef2ea';ctx.fillRect(0,0,width,height);
+    ctx.strokeStyle='#d4ddd1';ctx.lineWidth=1;
+    ctx.beginPath();
+    for(let x=20;x<width;x+=34){ctx.moveTo(x,0);ctx.lineTo(x,height);}
+    for(let y=20;y<height;y+=34){ctx.moveTo(0,y);ctx.lineTo(width,y);}
+    ctx.stroke();
+    ctx.fillStyle='#253e35';ctx.font='bold 20px system-ui';ctx.textAlign='center';
+    ctx.fillText('↑ N',width-36,29);
+    const power=10**Math.floor(Math.log10(105/scale));
+    const bar=([5,2,1].find(value=>value*power*scale<=105)||1)*power;
+    ctx.fillStyle='#253e35';ctx.fillRect(18,height-18,bar*scale,3);
+    ctx.textAlign='left';ctx.font='16px system-ui';ctx.fillText(distanceLabel(bar),18,height-24);
+    return {ctx,at,scale};
+  }
+  function dot(ctx,x,y,label,color) {
+    ctx.beginPath();ctx.arc(x,y,13,0,2*Math.PI);
+    ctx.fillStyle=color;ctx.fill();
+    ctx.strokeStyle='#fffdf5';ctx.lineWidth=2;ctx.stroke();
+    ctx.fillStyle='#fffdf5';ctx.font='bold 13px system-ui';ctx.textAlign='center';ctx.textBaseline='middle';
+    ctx.fillText(label,x,y);ctx.textBaseline='alphabetic';
+  }
+  function loadWaypoints() {
+    try {
+      const saved=JSON.parse(localStorage.getItem(key)||'[]');
+      return Array.isArray(saved)?saved.filter(row=>typeof row?.id==='string'&&typeof row.name==='string'
+        && point(row.latitude,row.longitude)):[];
+    } catch {return [];}
+  }
+  let waypoints=loadWaypoints(), editing='', followed='';
+  const wayList=el('way-list'), wayMap=el('way-map'), wayStatus=el('way-form-status');
+  function saveWaypoints() {
+    // Confirm storage before reporting that a change will survive a reload.
+    try {localStorage.setItem(key,JSON.stringify(waypoints));return true;}
+    catch {wayStatus.textContent=t('Le repère est disponible dans cette page. Le navigateur n’a pas pu l’enregistrer.','The waypoint is available in this page. The browser could not save it.');return false;}
+  }
+  function sendCompass() {
+    const origin=readOrigin();
+    el('compass-waypoint-actions').hidden=!waypoints.some(row=>row.onCompass||row.id===followed);
+    const markers=origin?waypoints.flatMap((row,index)=>{
+      if(!row.onCompass)return [];
+      const {distance,bearing}=geometry(origin,row);
+      return [{number:index+1,name:row.name,distance:distanceLabel(distance),bearing}];
+    }):[];
+    window.dispatchEvent(new CustomEvent('toolkit-waypoint-markers',{detail:markers}));
+    if(followed) {
+      const target=waypoints.find(item=>item.id===followed);
+      const bearing=origin&&target?geometry(origin,target).bearing:null;
+      window.dispatchEvent(new CustomEvent('toolkit-waypoint-target',{detail:{bearing,name:target?.name||''}}));
+      if(!target)followed='';
+    }
+  }
+  window.addEventListener('toolkit-waypoint-target-clear',()=>{followed='';sendCompass();});
+  function paintWayMap(origin) {
+    wayMap.hidden=!origin||!waypoints.length;
+    if(wayMap.hidden)return;
+    const positions=waypoints.map(row=>projected(origin,row));
+    const view=plot(wayMap,positions,{centered:true});
+    if(!view)return;
+    const {ctx,at}=view;
+    const home=at({x:0,y:0});
+    const labels=[];
+    for(const p of positions) {
+      const spot=at(p);
+      ctx.beginPath();ctx.moveTo(...home);ctx.lineTo(...spot);ctx.strokeStyle='#829984';ctx.lineWidth=1.5;ctx.stroke();
+    }
+    positions.forEach((p,index)=>{
+      const spot=at(p);
+      dot(ctx,...spot,String(index+1),'#2e624d');
+      const label=distanceLabel(p.distance);
+      ctx.font='bold 17px system-ui';
+      const width=ctx.measureText(label).width+10;
+      const x=spot[0]+width+17<wayMap.width?spot[0]+17:spot[0]-width-17;
+      const y=spot[1]-11;
+      if(labels.some(other=>x<other.x+other.width&&x+width>other.x&&Math.abs(other.y-y)<24))return;
+      labels.push({x,y,width});
+      ctx.fillStyle='#fffdf5';ctx.fillRect(x,y,width,22);
+      ctx.fillStyle='#253e35';ctx.textAlign='left';ctx.fillText(label,x+5,y+16);
+    });
+    dot(ctx,...home,'●','#182f29');
+  }
+  function clearWayForm() {
+    editing='';
+    el('way-form').reset();
+    el('way-cancel').hidden=true;
+  }
+  function editWaypoint(row) {
+    editing=row.id;
+    el('way-name').value=row.name;
+    el('way-note').value=row.note||'';
+    setInputs('way',row);
+    el('way-cancel').hidden=false;
+    el('way-name').focus();
+  }
+  function renderWaypoints() {
+    const origin=readOrigin();
+    const empty=el('way-empty');
+    empty.textContent=!waypoints.length?t('Aucun repère enregistré.','No waypoints saved.')
+      :!origin?t('Renseigne ta position pour calculer les distances et placer les repères.','Enter your reference position to calculate distances and plot waypoints.'):'';
+    wayList.replaceChildren(...waypoints.map((row,index)=>{
+      const card=text('li');
+      card.append(text('strong',(index+1)+' · '+row.name),text('p',positionLabel(row),'tool-note'));
+      if(row.note)card.append(text('p',row.note));
+      const heading=origin?geometry(origin,row):null;
+      if(heading)card.append(text('p',distanceLabel(heading.distance)+' · '+t('cap vrai ','true bearing ')+bearingLabel(heading.bearing),'navigation-measure'));
+      const checkbox=document.createElement('input');checkbox.type='checkbox';checkbox.checked=Boolean(row.onCompass);
+      const label=text('label','','navigation-check');
+      label.append(checkbox,document.createTextNode(t('Afficher sur la boussole','Show on compass')));
+      checkbox.addEventListener('change',()=>{row.onCompass=checkbox.checked;saveWaypoints();sendCompass();});
+      const actions=text('div','','tool-actions');
+      if(heading&&heading.bearing!==null)actions.append(button(t('Suivre ce cap','Follow this bearing'),()=>{
+        followed=row.id;sendCompass();
+        openTool('compass-tool');
+      }));
+      actions.append(button(t('Modifier','Edit'),()=>editWaypoint(row)),button(t('Supprimer','Delete'),()=>{
+        if(!window.confirm(t('Supprimer le repère « '+row.name+' » ?','Delete waypoint “'+row.name+'”?')))return;
+        waypoints=waypoints.filter(item=>item.id!==row.id);
+        if(editing===row.id)clearWayForm();
+        saveWaypoints();renderWaypoints();el('way-name').focus();
+      }));
+      card.append(label,actions);
+      return card;
+    }));
+    paintWayMap(origin);sendCompass();
+  }
+  el('way-form').addEventListener('submit',event=>{
+    event.preventDefault();
+    const position=inputs('way'), name=el('way-name').value.trim();
+    if(!position||!name) {
+      wayStatus.textContent=t('Indique un nom et des coordonnées valides en degrés décimaux.','Enter a name and valid coordinates in decimal degrees.');
+      return;
+    }
+    const note=el('way-note').value.trim();
+    const row=waypoints.find(item=>item.id===editing);
+    if(row)Object.assign(row,{...position,name,note});
+    else waypoints.push({...position,id:crypto.randomUUID?.()||String(Date.now())+'-'+Math.random(),name,note,onCompass:false});
+    clearWayForm();
+    if(saveWaypoints())wayStatus.textContent=t('Repère enregistré.','Waypoint saved.');
+    renderWaypoints();
+  });
+  el('way-cancel').addEventListener('click',()=>{clearWayForm();wayStatus.textContent='';el('way-name').focus();});
+  el('way-origin-gps').addEventListener('click',()=>locate(el('way-origin-gps'),el('way-origin-status'),position=>{
+    setInputs('way-origin',position);renderWaypoints();
+  }));
+  el('compass-waypoint-gps').addEventListener('click',()=>locate(el('compass-waypoint-gps'),el('compass-waypoint-gps-status'),position=>{
+    setInputs('way-origin',position);renderWaypoints();
+  }));
+  el('way-point-gps').addEventListener('click',()=>{
+    const edited=editing;
+    locate(el('way-point-gps'),wayStatus,position=>{if(edited===editing)setInputs('way',position);});
+  });
+  el('way-origin-import').addEventListener('click',()=>{
+    const position=fromGpsTool();
+    if(position){setInputs('way-origin',position);el('way-origin-status').textContent='';renderWaypoints();}
+    else el('way-origin-status').textContent=t('Saisis d’abord une position dans Mes coordonnées.','Enter a location in My coordinates first.');
+  });
+  onFields(['way-origin-lat','way-origin-lon'],()=>{
+    el('way-origin-status').textContent='';
+    el('compass-waypoint-gps-status').textContent='';
+    renderWaypoints();
+  });
+  window.addEventListener('storage',event=>{if(event.key===key||event.key===null){waypoints=loadWaypoints();renderWaypoints();}});
+
+  let gpx=null, gpxPosition=null, upload=0;
+  const gpxStatus=el('gpx-status'), gpxMap=el('gpx-map');
+  function parseGpx(value) {
+    const data=new DOMParser().parseFromString(value,'application/xml');
+    if(data.documentElement.localName!=='gpx'||data.querySelector('parsererror')||data.doctype)throw Error('invalid');
+    const children=(node,tag)=>[...node.children].filter(child=>child.localName===tag);
+    function read(node) {
+      const location=point(decimal(node.getAttribute('lat')),decimal(node.getAttribute('lon')));
+      if(!location)throw Error('invalid');
+      return {...location,name:children(node,'name')[0]?.textContent.trim()||''};
+    }
+    const base=data.documentElement;
+    const segments=children(base,'trk').flatMap(track=>children(track,'trkseg').map(segment=>children(segment,'trkpt').map(read)));
+    segments.push(...children(base,'rte').map(route=>children(route,'rtept').map(read)));
+    const named=children(base,'wpt').map(read);
+    const visibleSegments=segments.filter(segment=>segment.length);
+    const count=visibleSegments.reduce((sum,segment)=>sum+segment.length,0);
+    if(count+named.length>50000)throw Error('large');
+    if(!count&&!named.length)throw Error('empty');
+    const distance=visibleSegments.reduce((sum,segment)=>sum+segment.slice(1).reduce(
+      (total,p,index)=>total+geometry(segment[index],p).distance,0),0);
+    return {segments:visibleSegments,named,count,distance};
+  }
+  function renderGpx() {
+    gpxMap.hidden=!gpx;
+    el('gpx-clear').hidden=!gpxPosition;
+    el('gpx-waypoints').replaceChildren();
+    if(!gpx){el('gpx-summary').textContent='';return;}
+    const origin=gpx.segments[0]?.[0]||gpx.named[0];
+    const segments=gpx.segments.map(segment=>segment.map(p=>projected(origin,p)));
+    const named=gpx.named.map(p=>projected(origin,p));
+    const marker=gpxPosition?projected(origin,gpxPosition):null;
+    const points=segments.flat().concat(named);
+    if(marker)points.push(marker);
+    const view=plot(gpxMap,points);
+    if(view) {
+      const {ctx,at}=view;
+      ctx.lineJoin='round';ctx.lineCap='round';ctx.lineWidth=4;ctx.strokeStyle='#2e624d';
+      for(const segment of segments) {
+        ctx.beginPath();ctx.moveTo(...at(segment[0]));for(const p of segment.slice(1))ctx.lineTo(...at(p));ctx.stroke();
+        if(segment.length===1)dot(ctx,...at(segment[0]),'•','#2e624d');
+      }
+      for(const [index,p] of named.entries())dot(ctx,...at(p),String(index+1),'#2e624d');
+      if(marker)dot(ctx,...at(marker),'●','#a64330');
+    }
+    const lines=[gpx.count+t(' points de tracé',' track points'),gpx.named.length+t(' repères',' waypoints'),distanceLabel(gpx.distance)+t(' de tracé',' of track')];
+    if(gpxPosition)lines.push(t('Ma position ','My position ')+positionLabel(gpxPosition));
+    el('gpx-summary').textContent=lines.join(' · ');
+    const legend=document.createDocumentFragment();
+    gpx.named.forEach((p,index)=>legend.append(text('li',(index+1)+' · '+(p.name||t('Repère','Waypoint'))+' · '+positionLabel(p))));
+    el('gpx-waypoints').replaceChildren(legend);
+  }
+  el('gpx-file').addEventListener('change',async event=>{
+    const stamp=++upload;
+    const file=event.currentTarget.files[0];
+    gpx=null;renderGpx();
+    if(!file){gpxStatus.textContent='';return;}
+    try {
+      if(file.size>8*1024*1024)throw Error('large');
+      const parsed=parseGpx(await file.text());
+      if(stamp!==upload)return;
+      gpx=parsed;gpxStatus.textContent=file.name;renderGpx();
+    } catch(error) {
+      if(stamp!==upload)return;
+      gpxStatus.textContent=error.message==='large'
+        ? t('Fichier trop volumineux (8 Mo ou 50 000 points maximum).','File too large (up to 8 MB or 50,000 points).')
+        : t('Ce fichier ne contient pas de tracé ni de repères GPX valides.','This file has no valid GPX tracks or waypoints.');
+    }
+  });
+  el('gpx-gps').addEventListener('click',()=>locate(el('gpx-gps'),gpxStatus,position=>{gpxPosition=position;renderGpx();}));
+  el('gpx-import').addEventListener('click',()=>{
+    const position=readOrigin();
+    if(position){gpxPosition=position;gpxStatus.textContent='';renderGpx();}
+    else gpxStatus.textContent=t('Renseigne ta position de départ dans le carnet.','Set your reference position in the waypoint notebook.');
+  });
+  el('gpx-clear').addEventListener('click',()=>{gpxPosition=null;gpxStatus.textContent='';renderGpx();});
+
+  const dayDate=el('day-date'), dayStatus=el('day-status'), countdown=el('day-countdown');
+  let deadline=null;
+  function localDate(now) {
+    return new Date(now.getTime()-now.getTimezoneOffset()*60000).toISOString().slice(0,10);
+  }
+  dayDate.value=localDate(new Date());
+  function solarTimes(date,position,zenith) {
+    // NOAA fractional-year approximation, evaluated near local solar noon.
+    const first=new Date(date);first.setUTCMonth(0,1);
+    const next=new Date(first);next.setUTCFullYear(first.getUTCFullYear()+1);
+    const day=(date-first)/86400000;
+    const yearDays=(next-first)/86400000;
+    const gamma=2*Math.PI/yearDays*(day-position.longitude/360);
+    const equation=229.18*(.000075+.001868*Math.cos(gamma)-.032077*Math.sin(gamma)
+      -.014615*Math.cos(2*gamma)-.040849*Math.sin(2*gamma));
+    const declination=.006918-.399912*Math.cos(gamma)+.070257*Math.sin(gamma)-.006758*Math.cos(2*gamma)
+      +.000907*Math.sin(2*gamma)-.002697*Math.cos(3*gamma)+.00148*Math.sin(3*gamma);
+    const latitude=position.latitude*rad;
+    const sine=Math.sin(latitude)*Math.sin(declination), amplitude=Math.cos(latitude)*Math.cos(declination);
+    const threshold=Math.cos(zenith*rad);
+    if(threshold<=sine-amplitude)return {continuous:'above'};
+    if(threshold>=sine+amplitude)return {continuous:'below'};
+    const half=4*Math.acos(Math.max(-1,Math.min(1,(threshold-sine)/amplitude)))/rad;
+    const noon=720-4*position.longitude-equation;
+    return {rise:+date+(noon-half)*60000,set:+date+(noon+half)*60000};
+  }
+  function renderDaylight() {
+    const position=inputs('day'), date=new Date(dayDate.value+'T00:00:00Z');
+    const margin=el('day-margin');
+    const rows=el('day-results');
+    rows.replaceChildren();deadline=null;countdown.disabled=true;
+    if(!position||!Number.isFinite(+date))return;
+    const solar=solarTimes(date,position,90.833), twilight=solarTimes(date,position,96);
+    const clock=new Intl.DateTimeFormat(root.lang,{timeStyle:'short'});
+    const full=new Intl.DateTimeFormat(root.lang,{dateStyle:'short',timeStyle:'short'});
+    const format=value=>localDate(new Date(value))===dayDate.value?clock.format(value):full.format(value);
+    const unavailable=t('Aucun passage à cet horizon','No crossing at this horizon');
+    const field=(label,value)=>rows.append(text('dt',label),text('dd',value));
+    field(t('Lever du soleil','Sunrise'),solar.rise===undefined?unavailable:format(solar.rise));
+    field(t('Coucher du soleil','Sunset'),solar.set===undefined?unavailable:format(solar.set));
+    field(t('Fin du crépuscule civil','End of civil twilight'),twilight.set===undefined?unavailable:format(twilight.set));
+    if(solar.continuous)field(t('Situation sur cette journée','Conditions for this date'),solar.continuous==='above'
+      ? t('Soleil au-dessus de l’horizon toute la journée.','Sun stays above the horizon all day.')
+      : t('Soleil sous l’horizon toute la journée.','Sun stays below the horizon all day.'));
+    const now=Date.now();
+    if(solar.set!==undefined&&dayDate.value===localDate(new Date(now))) {
+      const minutes=Math.max(0,Math.ceil((solar.set-now)/60000));
+      field(t('Jusqu’au coucher','Until sunset'),minutes>=60?Math.floor(minutes/60)+' h '+minutes%60+' min':minutes+' min');
+    }
+    if(solar.set!==undefined&&margin.validity.valid&&Number.isFinite(margin.valueAsNumber)) {
+      deadline=solar.set-margin.valueAsNumber*60000;
+      field(t('Heure de demi-tour','Turnaround time'),format(deadline));
+      countdown.disabled=deadline<=now;
+    }
+  }
+  el('day-gps').addEventListener('click',()=>locate(el('day-gps'),dayStatus,position=>{setInputs('day',position);renderDaylight();}));
+  el('day-import').addEventListener('click',()=>{
+    const position=readOrigin()||fromGpsTool();
+    if(position){setInputs('day',position);dayStatus.textContent='';renderDaylight();}
+    else dayStatus.textContent=t('Renseigne une position dans le carnet ou dans Mes coordonnées.','Set a location in the waypoint notebook or My coordinates.');
+  });
+  onFields(['day-lat','day-lon','day-date','day-margin'],()=>{dayStatus.textContent='';renderDaylight();});
+  countdown.addEventListener('click',()=>{
+    if(!(deadline>Date.now())){renderDaylight();return;}
+    window.dispatchEvent(new CustomEvent('toolkit-turnaround-countdown',{detail:{deadline,name:t('Demi-tour · lumière restante','Turnaround · remaining daylight')}}));
+    openTool('clocks-tool');
+  });
+  setInterval(()=>{if(!document.hidden&&!el('tools').hidden&&!el('daylight-tool').hidden)renderDaylight();},60000);
+
+  function renderPaper() {
+    const scale=decimal(el('paper-scale').value), length=decimal(el('paper-length').value), bearing=el('paper-bearing');
+    const distance=scale*length/100;
+    el('paper-distance').textContent=Number.isSafeInteger(scale)&&scale>0&&length>=0&&Number.isFinite(distance)
+      ? t('Distance sur le terrain : ','Ground distance: ')+distanceLabel(distance)
+      : t('Indique l’échelle et la longueur mesurée en centimètres.','Enter the scale and measured length in centimetres.');
+    const canvas=el('paper-rose'),ctx=canvas.getContext('2d');
+    if(!ctx)return;
+    const center=220,r=169;
+    const at=(angle,radius)=>[center+Math.sin(angle*rad)*radius,center-Math.cos(angle*rad)*radius];
+    ctx.fillStyle='#eef2ea';ctx.fillRect(0,0,440,440);
+    ctx.beginPath();ctx.arc(center,center,r,0,2*Math.PI);ctx.strokeStyle='#4c6654';ctx.lineWidth=2;ctx.stroke();
+    for(let angle=0;angle<360;angle+=5) {
+      const major=angle%30===0;
+      ctx.beginPath();ctx.moveTo(...at(angle,r));ctx.lineTo(...at(angle,r-(major?15:7)));ctx.stroke();
+      if(major) {
+        ctx.fillStyle='#344b40';ctx.font='15px system-ui';ctx.textAlign='center';ctx.textBaseline='middle';
+        ctx.fillText(angle+'°',...at(angle,r-28));
+      }
+    }
+    ctx.font='bold 22px system-ui';
+    for(const [angle,label] of [[0,'N'],[90,'E'],[180,'S'],[270,t('O','W')]])ctx.fillText(label,...at(angle,r+23));
+    if(bearing.validity.valid&&Number.isFinite(bearing.valueAsNumber)) {
+      const end=at(bearing.valueAsNumber,r-40);
+      ctx.beginPath();ctx.moveTo(center,center);ctx.lineTo(...end);ctx.strokeStyle='#a64330';ctx.lineWidth=4;ctx.stroke();
+      ctx.fillStyle='#a64330';ctx.beginPath();ctx.arc(...end,5,0,2*Math.PI);ctx.fill();
+    }
+  }
+  onFields(['paper-scale','paper-length','paper-bearing'],renderPaper);
+  function refreshLanguage() {renderWaypoints();renderGpx();renderDaylight();renderPaper();}
+  new MutationObserver(refreshLanguage).observe(root,{attributes:true,attributeFilter:['lang']});
+  refreshLanguage();
+})();
+
 </script>
 </body>
 </html>
