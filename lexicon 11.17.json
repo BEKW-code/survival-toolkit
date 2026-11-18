@@ -1,0 +1,107 @@
+      "en": "cadence; ending phrase in music",
+      "fr": "cadence musicale",
+      "category": "11 · Candidate expansion — Resonance and performance",
+      "origin": "new_candidate_v1.1",
+      "review_state": "unratified",
+      "source": "LEXICAL_PROPOSALS.tsv",
+      "proposed_on": "2026-11-17",
+      "echo": "hi"
+    },
+    {
+      "form": "niraven",
+      "pos": "noun",
+      "en": "articulation; joining and separating sounds",
+      "fr": "articulation musicale",
+      "category": "11 · Candidate expansion — Resonance and performance",
+      "origin": "new_candidate_v1.1",
+      "review_state": "unratified",
+      "source": "LEXICAL_PROPOSALS.tsv",
+      "proposed_on": "2026-11-17",
+      "echo": "ha"
+    },
+    {
+      "form": "verashol",
+      "pos": "noun",
+      "en": "harmonic series; overtones above a fundamental",
+      "fr": "série harmonique",
+      "category": "11 · Candidate expansion — Resonance and performance",
+      "origin": "new_candidate_v1.1",
+      "review_state": "unratified",
+      "source": "LEXICAL_PROPOSALS.tsv",
+      "proposed_on": "2026-11-17",
+      "echo": "ha"
+    },
+    {
+      "form": "rireval",
+      "pos": "verb",
+      "en": "echo a phrase vocally",
+      "fr": "répéter une phrase en écho",
+      "category": "11 · Candidate expansion — Resonance and performance",
+      "origin": "new_candidate_v1.1",
+      "review_state": "unratified",
+      "source": "LEXICAL_PROPOSALS.tsv",
+      "proposed_on": "2026-11-17",
+      "echo": "he"
+    },
+    {
+      "form": "marivenol",
+      "pos": "verb",
+      "en": "sustain a sung note",
+      "fr": "tenir une note",
+      "category": "11 · Candidate expansion — Resonance and performance",
+      "origin": "new_candidate_v1.1",
+      "review_state": "unratified",
+      "source": "LEXICAL_PROPOSALS.tsv",
+      "proposed_on": "2026-11-17",
+      "echo": "he"
+    },
+    {
+      "form": "talavor",
+      "pos": "verb",
+      "en": "alternate two singers' responses",
+      "fr": "alterner des réponses chantées",
+      "category": "11 · Candidate expansion — Resonance and performance",
+      "origin": "new_candidate_v1.1",
+      "review_state": "unratified",
+      "source": "LEXICAL_PROPOSALS.tsv",
+      "proposed_on": "2026-11-17",
+      "echo": "ha"
+    },
+    {
+      "form": "soravenil",
+      "pos": "verb",
+      "en": "match a reference pitch",
+      "fr": "s'accorder sur une hauteur de référence",
+      "category": "11 · Candidate expansion — Resonance and performance",
+      "origin": "new_candidate_v1.1",
+      "review_state": "unratified",
+      "source": "LEXICAL_PROPOSALS.tsv",
+      "proposed_on": "2026-11-17",
+      "echo": "he"
+    },
+    {
+      "form": "dumorá",
+      "pos": "adj",
+      "en": "dense; thick in volume",
+      "fr": "dense; épais",
+      "category": "11 · Candidate expansion — Qualities and states",
+      "origin": "new_candidate_v1.1",
+      "review_state": "unratified",
+      "source": "LEXICAL_PROPOSALS.tsv",
+      "proposed_on": "2026-11-17",
+      "echo": "ha"
+    },
+    {
+      "form": "zhunarim",
+      "pos": "verb",
+      "en": "nod in acknowledgment",
+      "fr": "acquiescer d'un signe de tête",
+      "category": "11 · Candidate expansion — Human relationships",
+      "origin": "new_candidate_v1.1",
+      "review_state": "unratified",
+      "source": "LEXICAL_PROPOSALS.tsv",
+      "proposed_on": "2026-11-17",
+      "echo": "ha"
+    }
+  ]
+}
